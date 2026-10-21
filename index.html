@@ -245,7 +245,7 @@
 
         // API Call with Retry Logic
         async function fetchQuestionsFromGemini(promptText, apiKey, retries = 3) {
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
             const payload = {
                 contents: [{ parts: [{ text: promptText }] }],
                 generationConfig: {
