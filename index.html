@@ -80,10 +80,30 @@
                 <span class="text-sm text-red-500 font-semibold">Note: Previous Year ke questions bhi isme include hain.</span>
             </p>
             
-            <div class="mb-8 max-w-md mx-auto">
-                <label for="apiKeyInput" class="block text-sm font-medium text-gray-700 mb-2 text-left">Gemini API Key (Required)</label>
-                <input type="password" id="apiKeyInput" placeholder="AIzaSy..." class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition shadow-sm" />
-                <p class="text-xs text-gray-500 mt-2 text-left">Get your free API key from <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-blue-600 hover:underline font-medium">Google AI Studio</a>.</p>
+            <!-- ================= MULTI-PROVIDER SETUP ================= -->
+            <div class="mb-8 max-w-lg mx-auto text-left bg-blue-50 p-5 rounded-xl border border-blue-200">
+                <label class="block text-sm font-bold text-blue-900 mb-2">1. AI Provider चुनें</label>
+                <select id="providerSelect" onchange="updateProviderFields()" class="w-full px-4 py-3 rounded-lg border border-blue-300 focus:ring-2 focus:ring-blue-500 outline-none transition mb-4 font-semibold text-gray-800">
+                    <option value="gemini">Google Gemini (Free & Fast)</option>
+                    <option value="openai">OpenAI (ChatGPT)</option>
+                    <option value="openrouter">OpenRouter (Multi-Model)</option>
+                    <option value="groq">Groq (Super Fast)</option>
+                </select>
+
+                <label class="block text-sm font-bold text-blue-900 mb-2">2. API Key डालें</label>
+                <input type="password" id="apiKeyInput" placeholder="API Key यहाँ डालें..." class="w-full px-4 py-3 rounded-lg border border-blue-300 focus:ring-2 focus:ring-blue-500 outline-none transition mb-4" />
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">API Base URL</label>
+                        <input type="text" id="baseUrlInput" value="https://generativelanguage.googleapis.com/v1beta/openai" class="w-full px-3 py-2 rounded border border-gray-300 text-xs bg-gray-100" readonly>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-600 mb-1">Model Name</label>
+                        <input type="text" id="modelInput" value="gemini-2.0-flash" class="w-full px-3 py-2 rounded border border-gray-300 text-xs bg-gray-100" readonly>
+                    </div>
+                </div>
+                <p class="text-xs text-blue-700 mt-3" id="providerHint">Free key: <a href="https://aistudio.google.com/app/apikey" target="_blank" class="underline font-bold">Google AI Studio</a> से लें।</p>
             </div>
 
             <button onclick="generateFullTest()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-10 rounded-xl shadow-lg transition transform hover:-translate-y-1 hover:shadow-xl text-xl w-full sm:w-auto">
@@ -191,7 +211,42 @@
         let timerInterval = null;
         let timeLeft = 150 * 60;
 
-        // ================= NEW: PREVIOUS YEAR QUESTIONS =================
+        // ================= PROVIDER CONFIG =================
+        const PROVIDERS = {
+            gemini: {
+                url: "https://generativelanguage.googleapis.com/v1beta/openai",
+                model: "gemini-2.0-flash",
+                hint: 'Free key: <a href="https://aistudio.google.com/app/apikey" target="_blank" class="underline font-bold">Google AI Studio</a> से लें।'
+            },
+            openai: {
+                url: "https://api.openai.com/v1",
+                model: "gpt-4o-mini",
+                hint: 'Key: <a href="https://platform.openai.com/api-keys" target="_blank" class="underline font-bold">OpenAI Platform</a> से लें। (Paid)'
+            },
+            openrouter: {
+                url: "https://openrouter.ai/api/v1",
+                model: "google/gemini-2.0-flash-001",
+                hint: 'Key: <a href="https://openrouter.ai/keys" target="_blank" class="underline font-bold">OpenRouter</a> से लें। (Free models available)'
+            },
+            groq: {
+                url: "https://api.groq.com/openai/v1",
+                model: "llama-3.3-70b-versatile",
+                hint: 'Key: <a href="https://console.groq.com/keys" target="_blank" class="underline font-bold">Groq Console</a> से लें। (Free & Super Fast)'
+            }
+        };
+
+        function updateProviderFields() {
+            const p = document.getElementById('providerSelect').value;
+            const config = PROVIDERS[p];
+            document.getElementById('baseUrlInput').value = config.url;
+            document.getElementById('modelInput').value = config.model;
+            document.getElementById('providerHint').innerHTML = config.hint;
+        }
+
+        // Initialize on load
+        updateProviderFields();
+
+        // ================= PREVIOUS YEAR QUESTIONS =================
         const PYQ = [
             {q:"एक आईपी नेटवर्क पर ध्वनि यातायात के लिए पैकेट स्विचिंग technology का उपयोग करता है, जहाँ प्रत्येक पैकेट अपने गंतव्य तक पहुँचने के लिए सर्वोत्तम मार्ग का अनुसरण करता है।",o:["ईमेल","एचटीटीपी","वीओआईपी","एसएमटीपी"],a:2,c:"Networks"},
             {q:"निम्नलिखित में से कौन सा डेटा अमूर्तता का स्तर बताता है कि डेटा वास्तव में कैसे संग्रहीत किया जाता है?",o:["वैचारिक स्तर","शारीरिक स्तर","फाइल स्तर","तार्किक स्तर"],a:1,c:"DBMS"},
@@ -210,7 +265,6 @@
             {q:"Abstract class in OOP is:",o:["A class with no methods","A class that cannot be instantiated","A class that can only have private members","A class that cannot have methods with parameters"],a:1,c:"C++ / OOP"}
         ];
 
-        // Split into smaller sub-batches to stay under RPM limit
         const subBatches = [
             { name: "OS & DBMS",                  count: 22, topics: "Operating Systems and Database Management Systems" },
             { name: "Networks & DSA",             count: 22, topics: "Computer Networks, Data Structures and Algorithms" },
@@ -221,7 +275,7 @@
         ];
 
         const DELAY_BETWEEN_CALLS = 25000; 
-        const STORAGE_KEY = 'stet_mock_cache_v1';
+        const STORAGE_KEY = 'stet_mock_cache_v2'; // Changed key for fresh start
 
         function buildPrompt(batch) {
             return `Generate exactly ${batch.count} unique Bihar STET (Secondary Teacher Eligibility Test) multiple-choice questions in Hindi. Topics: ${batch.topics}. Difficulty: Class 11-12 teacher level. Every question MUST have exactly 4 options. The 'correctIndex' must be 0, 1, 2, or 3. Provide a short explanation/trick in Hindi in the 'explanation' field. Return ONLY a valid JSON array, no markdown.`;
@@ -229,32 +283,26 @@
 
         async function fetchQuestions(promptText, apiKey, attempt = 1) {
             const MAX_ATTEMPTS = 4;
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+            const baseUrl = document.getElementById('baseUrlInput').value.trim();
+            const model = document.getElementById('modelInput').value.trim();
+            const apiUrl = `${baseUrl.replace(/\/+$/, '')}/chat/completions`;
+
             const payload = {
-                contents: [{ parts: [{ text: promptText }] }],
-                generationConfig: {
-                    responseMimeType: "application/json",
-                    responseSchema: {
-                        type: "ARRAY",
-                        items: {
-                            type: "OBJECT",
-                            properties: {
-                                question: { type: "STRING" },
-                                options: { type: "ARRAY", items: { type: "STRING" } },
-                                correctIndex: { type: "INTEGER" },
-                                category: { type: "STRING" },
-                                explanation: { type: "STRING" }
-                            },
-                            required: ["question", "options", "correctIndex", "category", "explanation"]
-                        }
-                    }
-                }
+                model: model,
+                messages: [
+                    { role: "system", content: "You return ONLY valid JSON arrays, nothing else." },
+                    { role: "user", content: promptText }
+                ],
+                temperature: 0.7
             };
 
             try {
                 const response = await fetch(apiUrl, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json', 
+                        'Authorization': `Bearer ${apiKey}` 
+                    },
                     body: JSON.stringify(payload)
                 });
 
@@ -278,9 +326,19 @@
                 }
 
                 const result = await response.json();
-                const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
-                if (!text) throw new Error('Empty response from Gemini');
-                const parsed = JSON.parse(text);
+                let content = result.choices?.[0]?.message?.content;
+                if (!content) throw new Error('Empty response from AI');
+                
+                content = content.replace(/```json\s*/gi, '').replace(/```\s*$/g, '').trim();
+
+                let parsed;
+                try { parsed = JSON.parse(content); } 
+                catch(e) {
+                    const m = content.match(/\[[\s\S]*\]/);
+                    if(m) parsed = JSON.parse(m[0]);
+                    else throw new Error('Invalid JSON from AI');
+                }
+                
                 if (!Array.isArray(parsed)) throw new Error('Expected JSON array');
 
                 return parsed.map(q => {
@@ -296,7 +354,7 @@
                 if (err.message === 'RATE_LIMIT_EXHAUSTED') throw err;
                 if (attempt < MAX_ATTEMPTS) {
                     const waitMs = Math.pow(2, attempt) * 4000;
-                    document.getElementById('loadingText').innerText = `Network error, retrying in ${Math.round(waitMs/1000)}s... (attempt ${attempt+1}/${MAX_ATTEMPTS})`;
+                    document.getElementById('loadingText').innerText = `Error, retrying in ${Math.round(waitMs/1000)}s... (attempt ${attempt+1}/${MAX_ATTEMPTS})`;
                     await new Promise(r => setTimeout(r, waitMs));
                     return fetchQuestions(promptText, apiKey, attempt + 1);
                 }
@@ -307,7 +365,7 @@
         async function generateFullTest() {
             const apiKey = document.getElementById('apiKeyInput').value.trim();
             if (!apiKey) {
-                showModal('API Key Required', 'कृपया अपना Gemini API Key दर्ज करें।\n\nFree key: https://aistudio.google.com/app/apikey', [
+                showModal('API Key Required', 'कृपया अपना AI API Key दर्ज करें।', [
                     { text: 'OK', className: 'bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg' }
                 ]);
                 return;
@@ -357,8 +415,7 @@
 
                 if (testData.length === 0) throw new Error('No questions returned');
                 
-                // ================= INJECT PREVIOUS YEAR QUESTIONS =================
-                // AI ke questions ke saath PYQ ko mix karein
+                // INJECT PREVIOUS YEAR QUESTIONS
                 const pyqToInclude = PYQ.map(item => ({
                     question: item.q,
                     options: item.o,
@@ -367,11 +424,8 @@
                     explanation: "Previous Year STET Question"
                 }));
                 
-                // Combine AI + PYQ and Shuffle to make it look like a real paper
                 testData = [...pyqToInclude, ...testData];
                 testData = testData.sort(() => Math.random() - 0.5);
-                
-                // Limit exactly 150
                 if (testData.length > 150) testData = testData.slice(0, 150);
 
                 userAnswers = {};
@@ -393,7 +447,7 @@
 
                 const isRateLimit = error.message === 'RATE_LIMIT_EXHAUSTED' || /429/.test(error.message);
                 const title = isRateLimit ? '⏸️ API Rate Limit' : 'सर्वर त्रुटि (Error)';
-                const msg = isRateLimit ? `आपकी API key की free quota खत्म हो गई है या rate limit hit हुई है।\n\nOptions:\n1. 1-2 minute रुक कर दुबारा try करें (free tier ~5 req/min)\n2. नई API key बनाएं: aistudio.google.com/app/apikey\n3. Google Cloud पर billing enable करें` : `प्रश्न जनरेट करने में तकनीकी समस्या आई है।\n\nError: ${error.message}\n\nकृपया पुनः प्रयास करें।`;
+                let msg = isRateLimit ? `आपकी API key की limit खत्म हो गई है।\n\nOptions:\n1. 1-2 minute रुक कर try करें\n2. नई API key बनाएं\n3. अलग Provider चुनें (जैसे Groq)` : `प्रश्न जनरेट करने में समस्या आई।\n\nError: ${error.message}\n\nकृपया API Key और Provider चेक करें।`;
 
                 showModal(title, msg, [{ text: 'OK', className: 'bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg' }]);
             }
