@@ -76,6 +76,8 @@
                 <br><br>
                 <span class="inline-block bg-gray-100 rounded-lg px-4 py-2 text-sm">100 Computer Science Core</span>
                 <span class="inline-block bg-gray-100 rounded-lg px-4 py-2 text-sm mt-2 md:mt-0">50 Art of Teaching & General</span>
+                <br><br>
+                <span class="text-sm text-red-500 font-semibold">Note: Previous Year ke questions bhi isme include hain.</span>
             </p>
             
             <div class="mb-8 max-w-md mx-auto">
@@ -189,30 +191,44 @@
         let timerInterval = null;
         let timeLeft = 150 * 60;
 
+        // ================= NEW: PREVIOUS YEAR QUESTIONS =================
+        const PYQ = [
+            {q:"एक आईपी नेटवर्क पर ध्वनि यातायात के लिए पैकेट स्विचिंग technology का उपयोग करता है, जहाँ प्रत्येक पैकेट अपने गंतव्य तक पहुँचने के लिए सर्वोत्तम मार्ग का अनुसरण करता है।",o:["ईमेल","एचटीटीपी","वीओआईपी","एसएमटीपी"],a:2,c:"Networks"},
+            {q:"निम्नलिखित में से कौन सा डेटा अमूर्तता का स्तर बताता है कि डेटा वास्तव में कैसे संग्रहीत किया जाता है?",o:["वैचारिक स्तर","शारीरिक स्तर","फाइल स्तर","तार्किक स्तर"],a:1,c:"DBMS"},
+            {q:"कौन सा इंटरनेट प्रोटोकॉल IP पतों को MAC पतों में मैप करने के लिए जिम्मेदार है?",o:["ARP","TCP","ICMP","HTTP"],a:0,c:"Networks"},
+            {q:"इंटर-प्रोसेस कम्युनिकेशन (IPC) का उपयोग किस लिए किया जाता है?",o:["प्रक्रियाओं को समवर्ती रूप से निष्पादित करने से रोकना","प्रक्रियाओं को बिना संचार के स्वतंत्र रूप से चलाना","सूचनाओं का आदान-प्रदान और कार्यों को सिंक्रनाइज़ करने के लिए प्रक्रियाओं को समन्वित करना","यादच्छिक क्रम में निष्पादित करने के लिए"],a:2,c:"OS"},
+            {q:"तालिका से विशिष्ट पंक्तियों को पुनर्प्राप्त करने के लिए किस SQL खंड का उपयोग किया जाता है?",o:["SELECT","FETCH","चुनना","GET"],a:0,c:"DBMS"},
+            {q:"JavaScript में asynchronous request कैसे कर सकते हैं?",o:["'async' keyword","'प्रतीक्षा' keyword","Fetch API या XMLHttpRequest","कॉलबैक फंक्शन"],a:2,c:"Web"},
+            {q:"सीखना एक सतत प्रक्रिया है—",o:["किशोरवस्था से मृत्यु तक","बचपन से बुढ़ापे तक","शैशवावस्था से व्यक्तता तक","पालना से कब्र तक या जन्म से अंत तक"],a:3,c:"Pedagogy"},
+            {q:"द्वादहट डब्ल्यू एलन द्वारा कौन-सी शिक्षण-अधिगम पद्धति शुरू की गई थी?",o:["सूक्ष्म शिक्षण","टीम शिक्षण","मानस मंथन","इंटरैक्टिव शिक्षण"],a:0,c:"Pedagogy"},
+            {q:"The primary difference between ROM and RAM is:",o:["ROM is faster than RAM","ROM is volatile, while RAM is non-volatile","ROM is used for data storage, while RAM is used for program execution","ROM stores permanent data, RAM stores temporary data"],a:3,c:"Digital Logic"},
+            {q:"What is the primary function of routing in the network layer?",o:["Data framing","Error correction","Finding the best path for data","Flow control"],a:2,c:"Networks"},
+            {q:"Who is known as the father of AI?",o:["Fisher Ada","Alan Turing","John McCarthy","Allen Newell"],a:2,c:"AI"},
+            {q:"Formative evaluation is conducted:",o:["After the teaching learning process","Before the teaching learning process","During the teaching learning process","All of the above"],a:2,c:"Pedagogy"},
+            {q:"Which of the following is NOT a network topology?",o:["Star","Ring","Disk","Mesh"],a:2,c:"Networks"},
+            {q:"What is the full form of HTML?",o:["Hyper Text Markup Language","Hyper Text Manipulation Language","Hyper Text Managing Links","Hyper Text Manipulating Links"],a:0,c:"Web"},
+            {q:"Abstract class in OOP is:",o:["A class with no methods","A class that cannot be instantiated","A class that can only have private members","A class that cannot have methods with parameters"],a:1,c:"C++ / OOP"}
+        ];
+
         // Split into smaller sub-batches to stay under RPM limit
-        // 6 batches × ~25 questions = 150 questions
-        // 25s delay between each → ~5 batches in 2 min → safe under 5 RPM
         const subBatches = [
-            { name: "OS & DBMS",                  count: 25, topics: "Operating Systems and Database Management Systems" },
-            { name: "Networks & DSA",             count: 25, topics: "Computer Networks, Data Structures and Algorithms" },
-            { name: "Digital Logic & Programming",count: 25, topics: "Digital Logic, C++, Java" },
-            { name: "AI, IoT, Web & SE",          count: 25, topics: "Artificial Intelligence, IoT, Web Technologies, Software Engineering" },
-            { name: "Pedagogy",                   count: 25, topics: "Art of Teaching (Pedagogy), Bloom's Taxonomy, Teaching Methods" },
+            { name: "OS & DBMS",                  count: 22, topics: "Operating Systems and Database Management Systems" },
+            { name: "Networks & DSA",             count: 22, topics: "Computer Networks, Data Structures and Algorithms" },
+            { name: "Digital Logic & Programming",count: 22, topics: "Digital Logic, C++, Java" },
+            { name: "AI, IoT, Web & SE",          count: 22, topics: "Artificial Intelligence, IoT, Web Technologies, Software Engineering" },
+            { name: "Pedagogy",                   count: 22, topics: "Art of Teaching (Pedagogy), Bloom's Taxonomy, Teaching Methods" },
             { name: "Reasoning & Math",           count: 25, topics: "Reasoning and Basic Mathematics" }
         ];
 
-        const DELAY_BETWEEN_CALLS = 25000; // 25 seconds — safe under 5 RPM
+        const DELAY_BETWEEN_CALLS = 25000; 
         const STORAGE_KEY = 'stet_mock_cache_v1';
 
-        // Build the prompt for each sub-batch
         function buildPrompt(batch) {
             return `Generate exactly ${batch.count} unique Bihar STET (Secondary Teacher Eligibility Test) multiple-choice questions in Hindi. Topics: ${batch.topics}. Difficulty: Class 11-12 teacher level. Every question MUST have exactly 4 options. The 'correctIndex' must be 0, 1, 2, or 3. Provide a short explanation/trick in Hindi in the 'explanation' field. Return ONLY a valid JSON array, no markdown.`;
         }
 
-        // Fetch with exponential backoff + Retry-After support
         async function fetchQuestions(promptText, apiKey, attempt = 1) {
             const MAX_ATTEMPTS = 4;
-            // Using stable gemini-2.0-flash (better free-tier quota than preview models)
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
             const payload = {
                 contents: [{ parts: [{ text: promptText }] }],
@@ -243,16 +259,10 @@
                 });
 
                 if (response.status === 429) {
-                    if (attempt >= MAX_ATTEMPTS) {
-                        throw new Error('RATE_LIMIT_EXHAUSTED');
-                    }
-                    // Respect Retry-After header if present, else exponential backoff
+                    if (attempt >= MAX_ATTEMPTS) throw new Error('RATE_LIMIT_EXHAUSTED');
                     const retryAfter = parseInt(response.headers.get('Retry-After') || '0', 10);
-                    const waitMs = retryAfter > 0
-                        ? retryAfter * 1000
-                        : Math.min(60000, Math.pow(2, attempt) * 8000); // 16s, 32s, 60s
-                    document.getElementById('loadingText').innerText =
-                        `Rate limit hit. Waiting ${Math.round(waitMs/1000)}s before retry (attempt ${attempt+1}/${MAX_ATTEMPTS})...`;
+                    const waitMs = retryAfter > 0 ? retryAfter * 1000 : Math.min(60000, Math.pow(2, attempt) * 8000);
+                    document.getElementById('loadingText').innerText = `Rate limit hit. Waiting ${Math.round(waitMs/1000)}s before retry (attempt ${attempt+1}/${MAX_ATTEMPTS})...`;
                     await new Promise(r => setTimeout(r, waitMs));
                     return fetchQuestions(promptText, apiKey, attempt + 1);
                 }
@@ -273,7 +283,6 @@
                 const parsed = JSON.parse(text);
                 if (!Array.isArray(parsed)) throw new Error('Expected JSON array');
 
-                // Normalize: ensure exactly 4 options + valid correctIndex
                 return parsed.map(q => {
                     let opts = Array.isArray(q.options) ? q.options : [];
                     while (opts.length < 4) opts.push("—");
@@ -287,8 +296,7 @@
                 if (err.message === 'RATE_LIMIT_EXHAUSTED') throw err;
                 if (attempt < MAX_ATTEMPTS) {
                     const waitMs = Math.pow(2, attempt) * 4000;
-                    document.getElementById('loadingText').innerText =
-                        `Network error, retrying in ${Math.round(waitMs/1000)}s... (attempt ${attempt+1}/${MAX_ATTEMPTS})`;
+                    document.getElementById('loadingText').innerText = `Network error, retrying in ${Math.round(waitMs/1000)}s... (attempt ${attempt+1}/${MAX_ATTEMPTS})`;
                     await new Promise(r => setTimeout(r, waitMs));
                     return fetchQuestions(promptText, apiKey, attempt + 1);
                 }
@@ -311,7 +319,6 @@
             testData = [];
             document.getElementById('allAnswersSection').classList.add('hidden');
 
-            // Try to load cached batches from localStorage (saves API quota if a previous run partially succeeded)
             let cache = {};
             try { cache = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) { cache = {}; }
 
@@ -320,12 +327,8 @@
                     const batch = subBatches[i];
                     const stepId = `step${Math.min(i+1, 3)}`;
                     const stepEl = document.getElementById(stepId);
-                    if (stepEl) {
-                        stepEl.classList.add('text-blue-600', 'font-bold');
-                        stepEl.innerText = `Fetching: ${batch.name}...`;
-                    }
+                    if (stepEl) { stepEl.classList.add('text-blue-600', 'font-bold'); stepEl.innerText = `Fetching: ${batch.name}...`; }
 
-                    // Use cached result if available
                     if (Array.isArray(cache[batch.name]) && cache[batch.name].length > 0) {
                         testData = testData.concat(cache[batch.name]);
                         if (stepEl) stepEl.innerText = `✓ Cached: ${batch.name} (${cache[batch.name].length} Qs)`;
@@ -333,23 +336,18 @@
                         continue;
                     }
 
-                    // Delay between calls (except first)
                     if (i > 0) {
                         const secs = DELAY_BETWEEN_CALLS / 1000;
                         for (let s = secs; s > 0; s--) {
-                            document.getElementById('loadingText').innerText =
-                                `Waiting ${s}s to avoid rate limit... (${i}/${subBatches.length} batches done)`;
+                            document.getElementById('loadingText').innerText = `Waiting ${s}s to avoid rate limit... (${i}/${subBatches.length} batches done)`;
                             await new Promise(r => setTimeout(r, 1000));
                         }
                     }
 
-                    document.getElementById('loadingText').innerText =
-                        `Generating ${batch.count} questions: ${batch.name} (${i+1}/${subBatches.length})`;
-
+                    document.getElementById('loadingText').innerText = `Generating ${batch.count} questions: ${batch.name} (${i+1}/${subBatches.length})`;
                     const questions = await fetchQuestions(buildPrompt(batch), apiKey);
                     testData = testData.concat(questions);
 
-                    // Save to cache
                     cache[batch.name] = questions;
                     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(cache)); } catch(e) {}
 
@@ -358,6 +356,22 @@
                 }
 
                 if (testData.length === 0) throw new Error('No questions returned');
+                
+                // ================= INJECT PREVIOUS YEAR QUESTIONS =================
+                // AI ke questions ke saath PYQ ko mix karein
+                const pyqToInclude = PYQ.map(item => ({
+                    question: item.q,
+                    options: item.o,
+                    correctIndex: item.a,
+                    category: item.c,
+                    explanation: "Previous Year STET Question"
+                }));
+                
+                // Combine AI + PYQ and Shuffle to make it look like a real paper
+                testData = [...pyqToInclude, ...testData];
+                testData = testData.sort(() => Math.random() - 0.5);
+                
+                // Limit exactly 150
                 if (testData.length > 150) testData = testData.slice(0, 150);
 
                 userAnswers = {};
@@ -379,24 +393,9 @@
 
                 const isRateLimit = error.message === 'RATE_LIMIT_EXHAUSTED' || /429/.test(error.message);
                 const title = isRateLimit ? '⏸️ API Rate Limit' : 'सर्वर त्रुटि (Error)';
-                const msg = isRateLimit
-                    ? `आपकी API key की free quota खत्म हो गई है या rate limit hit हुई है।
+                const msg = isRateLimit ? `आपकी API key की free quota खत्म हो गई है या rate limit hit हुई है।\n\nOptions:\n1. 1-2 minute रुक कर दुबारा try करें (free tier ~5 req/min)\n2. नई API key बनाएं: aistudio.google.com/app/apikey\n3. Google Cloud पर billing enable करें` : `प्रश्न जनरेट करने में तकनीकी समस्या आई है।\n\nError: ${error.message}\n\nकृपया पुनः प्रयास करें।`;
 
-Options:
-1. 1-2 minute रुक कर दुबारा try करें (free tier ~5 req/min)
-2. नई API key बनाएं: aistudio.google.com/app/apikey
-3. Google Cloud पर billing enable करें (higher quota)
-
-पहले से generate हुए batches cache में save हैं — दुबारा try करने पर सिर्फ बाकी fetch होंगे।`
-                    : `प्रश्न जनरेट करने में तकनीकी समस्या आई है।
-
-Error: ${error.message}
-
-कृपया पुनः प्रयास करें।`;
-
-                showModal(title, msg, [
-                    { text: 'OK', className: 'bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg' }
-                ]);
+                showModal(title, msg, [{ text: 'OK', className: 'bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg' }]);
             }
         }
 
@@ -416,8 +415,7 @@ Error: ${error.message}
                 const qDiv = document.createElement('div');
                 qDiv.className = 'bg-white p-6 rounded-xl shadow-sm border border-gray-100 question-box';
                 qDiv.id = `qbox-${qIndex}`;
-                const badgeColor = (item.category || '').includes("Teaching") || (item.category || '').includes("Pedagogy")
-                    ? "bg-purple-100 text-purple-800" : "bg-blue-100 text-blue-800";
+                const badgeColor = (item.category || '').includes("Teaching") || (item.category || '').includes("Pedagogy") ? "bg-purple-100 text-purple-800" : "bg-blue-100 text-blue-800";
 
                 const headerHtml = `
                     <div class="flex justify-between items-start mb-4">
@@ -492,8 +490,7 @@ Error: ${error.message}
             userAnswers[qIndex] = oIndex;
             const pBtn = document.getElementById(`pbtn-${qIndex}`);
             pBtn.classList.add('answered');
-            document.getElementById('answeredCountDisplay').innerText =
-                `Answered: ${Object.keys(userAnswers).length} / ${testData.length}`;
+            document.getElementById('answeredCountDisplay').innerText = `Answered: ${Object.keys(userAnswers).length} / ${testData.length}`;
         }
 
         function revealAnswer(qIndex) {
@@ -625,8 +622,7 @@ Error: ${error.message}
 
         function resetApp() {
             testData = []; userAnswers = {};
-            // Clear cache so next generation is fresh
-            localStorage.removeItem(STORAGE_KEY);
+            localStorage.removeItem(STORAGE_KEY); // Clear cache
             document.getElementById('timerContainer').classList.add('hidden');
             document.getElementById('bottomSubmitContainer').classList.remove('hidden');
             const topHeader = document.querySelector('#quizContentArea .sticky');
