@@ -3,644 +3,436 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bihar STET CS Mock Test (150 Questions)</title>
+    <title>STET CRACK - 10 Day Plan</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; scroll-behavior: smooth; }
-        .spinner { border: 4px solid rgba(37,99,235,0.1); width:56px; height:56px; border-radius:50%; border-left-color:#2563eb; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .radio-custom input[type="radio"] { display: none; }
-        .radio-custom label { display:flex; align-items:flex-start; padding:1rem; border:1px solid #e2e8f0; border-radius:0.5rem; cursor:pointer; transition:all 0.2s ease; background:#fff; box-shadow:0 1px 2px rgba(0,0,0,0.02); }
-        .radio-custom label:hover { border-color:#93c5fd; background-color:#f0f9ff; }
-        .radio-custom input[type="radio"]:checked + label { border-color:#2563eb; background-color:#eff6ff; font-weight:500; box-shadow:0 0 0 2px rgba(37,99,235,0.2); }
-        .radio-custom input[type="radio"]:disabled + label { cursor:not-allowed; opacity:0.8; }
-        .correct-answer label { border-color:#22c55e !important; background-color:#f0fdf4 !important; color:#166534; box-shadow:0 0 0 2px rgba(34,197,94,0.3) !important; }
-        .wrong-answer label { border-color:#ef4444 !important; background-color:#fef2f2 !important; color:#991b1b; }
-        .palette-btn { width:36px; height:36px; display:flex; align-items:center; justify-content:center; border-radius:0.375rem; border:1px solid #cbd5e1; font-size:0.875rem; cursor:pointer; transition:all 0.2s; background:#fff; }
-        .palette-btn.answered { background:#2563eb; color:#fff; border-color:#1d4ed8; }
-        .palette-btn.correct { background:#22c55e; color:#fff; border-color:#16a34a; }
-        .palette-btn.wrong { background:#ef4444; color:#fff; border-color:#dc2626; }
-        .progress-bar-fill { transition: width 0.3s ease; }
-
+        body { font-family: system-ui, -apple-system, sans-serif; background: #f1f5f9; }
+        .tab-btn { padding: 12px 20px; font-weight: 600; border-bottom: 3px solid transparent; cursor: pointer; background: none; border-top: none; border-left: none; border-right: none; font-size: 16px; }
+        .tab-btn.active { color: #2563eb; border-bottom-color: #2563eb; }
+        .topic-card { background: #fff; border-radius: 12px; padding: 20px; margin-bottom: 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-left: 4px solid #2563eb; }
+        .topic-card h3 { font-weight: 700; color: #1e293b; margin-bottom: 12px; font-size: 18px; }
+        .topic-card ul { list-style-type: disc; padding-left: 20px; color: #475569; font-size: 15px; line-height: 1.8; }
+        .opt { display: flex; align-items: flex-start; padding: 12px 16px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 8px; cursor: pointer; background: #fff; transition: all 0.2s; }
+        .opt:hover { border-color: #93c5fd; background: #f8fafc; }
+        .opt input { margin-right: 12px; margin-top: 4px; }
+        .correct { border-color: #22c55e !important; background: #f0fdf4 !important; }
+        .wrong { border-color: #ef4444 !important; background: #fef2f2 !important; }
+        .spinner { border: 4px solid #dbeafe; width: 40px; height: 40px; border-radius: 50%; border-left-color: #2563eb; animation: spin 1s linear infinite; margin: 0 auto; }
+        @keyframes spin { to { transform: rotate(360deg); } }
         @media print {
-            @page { size: A4; margin: 10mm 8mm 8mm 8mm; }
-            body { background: #fff !important; font-size: 10.5pt; }
-            nav, #timerContainer, #quizSidebarArea, #resultScreen, #customModal, #welcomeScreen, #loadingScreen, .no-print, #allAnswersSection.no-print { display: none !important; }
-            #quizContentArea { width: 100% !important; max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
-            #questionsContainer { display: block !important; }
-            .question-box { break-inside: avoid; page-break-inside: avoid; margin: 0 0 3mm 0 !important; padding: 2mm 3mm !important; border: 1px solid #999 !important; border-radius: 2px !important; box-shadow: none !important; background: #fff !important; }
-            .question-box button, .question-box [id^="explanation-"], .no-print-inline { display: none !important; }
-            .question-box .flex.justify-between.items-start { margin-bottom: 1mm !important; }
-            .question-box .text-xs { font-size: 7.5pt !important; padding: 1px 6px !important; }
-            .question-box .text-sm { font-size: 8pt !important; }
-            .question-box h3 { font-size: 10.5pt !important; line-height: 1.25 !important; margin: 0 0 2mm 0 !important; font-weight: 600 !important; color: #000 !important; }
-            .radio-custom { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 1mm 4mm !important; }
-            .radio-custom > div { margin: 0 !important; }
-            .radio-custom label { display: flex !important; padding: 0.5mm 0 !important; border: none !important; background: none !important; box-shadow: none !important; font-size: 9.5pt !important; line-height: 1.2 !important; min-height: 0 !important; font-weight: 400 !important; color: #000 !important; }
-            .radio-custom label span:first-child { margin-right: 1.5mm !important; padding-right: 1.5mm !important; border-right: 1px solid #ccc !important; font-size: 8.5pt !important; color: #333 !important; min-width: 5mm; }
-            .correct-answer label, .wrong-answer label { border: none !important; background: none !important; color: #000 !important; box-shadow: none !important; }
-            #allAnswersSection { break-before: page !important; page-break-before: always !important; margin: 0 !important; padding: 3mm 0 !important; border: none !important; box-shadow: none !important; background: #fff !important; }
-            #allAnswersSection h2 { font-size: 12pt !important; margin: 0 0 2mm 0 !important; padding: 0 0 1mm 0 !important; border-bottom: 1.5px solid #000 !important; }
-            #answerKeyList { display: grid !important; grid-template-columns: repeat(4, 1fr) !important; gap: 0.8mm 3mm !important; font-size: 8.5pt !important; line-height: 1.25 !important; }
-            .print-answer-line { padding: 0.4mm 1mm !important; border: none !important; background: none !important; border-bottom: 1px dotted #bbb !important; border-radius: 0 !important; font-size: 8.5pt !important; }
-            .print-answer-line span:first-child { font-weight: 700; color: #000 !important; }
-            body::after { content: "Bihar STET CS Mock Test — Answer Key at the end"; position: fixed; bottom: 3mm; left: 0; right: 0; text-align: center; font-size: 7pt; color: #666; }
+            nav, #studyTab, #testSetup, #testLoading, .no-print { display: none !important; }
+            body { background: #fff; }
+            .question-box { break-inside: avoid; page-break-inside: avoid; border: 1px solid #ccc; margin-bottom: 10px; padding: 10px; }
         }
     </style>
 </head>
-<body class="text-slate-800 flex flex-col min-h-screen">
+<body>
 
-    <nav class="bg-blue-700 text-white shadow-md sticky top-0 z-40 no-print">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                <h1 class="text-xl font-bold tracking-wide hidden sm:block">Bihar STET Portal</h1>
-            </div>
-            <div id="timerContainer" class="hidden flex items-center space-x-4 bg-blue-800 px-4 py-2 rounded-lg shadow-inner">
-                <div class="text-sm uppercase tracking-wider text-blue-200">Time Left</div>
-                <div class="font-mono text-2xl font-bold text-yellow-300" id="timerDisplay">150:00</div>
-            </div>
-        </div>
-    </nav>
+<nav class="bg-blue-700 text-white p-4 sticky top-0 z-50 shadow-md no-print">
+    <div class="max-w-5xl mx-auto flex justify-between items-center">
+        <span class="font-bold text-xl">STET CRACK - 10 Day Plan</span>
+        <div id="timerBar" class="hidden bg-blue-800 px-4 py-1 rounded text-sm font-mono font-bold" id="timerDisplay">150:00</div>
+    </div>
+</nav>
 
-    <main class="flex-grow w-full max-w-7xl mx-auto px-4 py-6 md:py-8 flex flex-col lg:flex-row gap-6 relative">
-        
-        <div id="welcomeScreen" class="w-full bg-white rounded-2xl shadow-xl p-8 md:p-16 text-center lg:col-span-3 lg:mx-auto max-w-4xl mt-10 border border-gray-100 no-print">
-            <div class="inline-block p-4 bg-blue-50 rounded-full mb-6">
-                <svg class="w-16 h-16 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-            </div>
-            <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">Bihar STET CS Mock Test</h2>
-            <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-                Click the button below to generate a comprehensive, syllabus-aligned test of <strong class="text-blue-600">150 unique questions</strong>.
-                <br><br>
-                <span class="inline-block bg-gray-100 rounded-lg px-4 py-2 text-sm">100 Computer Science Core</span>
-                <span class="inline-block bg-gray-100 rounded-lg px-4 py-2 text-sm mt-2 md:mt-0">50 Art of Teaching & General</span>
-            </p>
-            
-            <div class="mb-8 max-w-md mx-auto">
-                <label for="apiKeyInput" class="block text-sm font-medium text-gray-700 mb-2 text-left">Gemini API Key (Required)</label>
-                <input type="password" id="apiKeyInput" placeholder="AIzaSy..." class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition shadow-sm" />
-                <p class="text-xs text-gray-500 mt-2 text-left">Get your free API key from <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-blue-600 hover:underline font-medium">Google AI Studio</a>.</p>
-            </div>
+<main class="max-w-5xl mx-auto p-4 pb-20">
 
-            <button onclick="generateFullTest()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-10 rounded-xl shadow-lg transition transform hover:-translate-y-1 hover:shadow-xl text-xl w-full sm:w-auto">
-                Generate 150 Questions
-            </button>
-            <p class="text-sm text-gray-400 mt-6">Generation now takes ~3 minutes (rate-limit safe). Please don't close the tab.</p>
+    <!-- WELCOME / SETUP -->
+    <div id="welcome" class="bg-white rounded-xl p-6 mt-4 shadow-sm no-print">
+        <h1 class="text-2xl font-bold mb-2">Bihar STET CS - 10 Day Crack Plan</h1>
+        <p class="text-gray-600 mb-6">Target: <b>~64 Marks</b> (EBC Category) | Pattern: 100 CS + 50 Pedagogy/GK</p>
+
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-5 mb-6">
+            <p class="font-semibold text-blue-900 mb-3">🔑 AI Setup (एक बार करें)</p>
+            <input type="password" id="apiKey" placeholder="Gemini API Key यहाँ डालें" class="w-full px-3 py-2 rounded border mb-3">
+            <input type="text" id="baseUrl" value="https://generativelanguage.googleapis.com/v1beta/openai" class="w-full px-3 py-2 rounded border text-xs mb-2" readonly>
+            <input type="text" id="model" value="gemini-2.0-flash" class="w-full px-3 py-2 rounded border text-xs" readonly>
+            <p class="text-xs text-blue-700 mt-2">Free key: <a href="https://aistudio.google.com/app/apikey" target="_blank" class="underline">aistudio.google.com</a></p>
         </div>
 
-        <div id="loadingScreen" class="hidden w-full bg-white rounded-2xl shadow-lg p-16 text-center max-w-3xl mx-auto mt-10 border border-gray-100 flex-col items-center justify-center no-print">
-            <div class="spinner mb-8 mx-auto"></div>
-            <h3 class="text-2xl font-bold text-gray-800 mb-4">AI is Drafting Your Exam...</h3>
-            <div class="w-full bg-gray-200 rounded-full h-3 mb-4 overflow-hidden">
-                <div id="loadingProgress" class="bg-blue-600 h-3 rounded-full progress-bar-fill" style="width: 0%"></div>
-            </div>
-            <p class="text-gray-600 font-medium text-lg" id="loadingText">Initializing AI models...</p>
-            <ul class="text-sm text-gray-400 mt-6 text-left max-w-xs mx-auto space-y-2 list-disc pl-4" id="loadingSteps">
-                <li id="step1">Fetching CS Core (Part 1)...</li>
-                <li id="step2">Fetching CS Core (Part 2)...</li>
-                <li id="step3">Fetching Pedagogy & GK...</li>
-            </ul>
-        </div>
-
-        <div id="quizContentArea" class="hidden w-full lg:w-3/4 order-2 lg:order-1">
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6 sticky top-[76px] z-30 flex justify-between items-center backdrop-blur-md bg-opacity-95 no-print">
-                <div>
-                    <h2 class="text-lg font-bold text-gray-800">Exam in Progress</h2>
-                    <p class="text-sm font-medium text-blue-600" id="answeredCountDisplay">Answered: 0 / 150</p>
-                </div>
-                <div class="flex gap-2">
-                    <button onclick="printPaper()" class="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-5 rounded-lg shadow transition flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-                        Print / PDF
-                    </button>
-                    <button onclick="confirmSubmit()" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-5 rounded-lg shadow transition flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        Submit Test
-                    </button>
-                </div>
-            </div>
-
-            <div id="questionsContainer" class="space-y-6"></div>
-
-            <div id="allAnswersSection" class="hidden mt-8 bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-                <h2 class="text-2xl font-bold text-gray-900 mb-4 border-b pb-2">📋 Answer Key (All Questions)</h2>
-                <div id="answerKeyList" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-2 text-sm"></div>
-            </div>
-
-            <div class="mt-10 mb-20 text-center no-print" id="bottomSubmitContainer">
-                <button onclick="confirmSubmit()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-12 rounded-xl shadow-lg text-lg transition hover:shadow-xl">Final Submit & Check Score</button>
-                <button onclick="printPaper()" class="ml-4 bg-gray-600 hover:bg-gray-700 text-white font-bold py-4 px-12 rounded-xl shadow-lg text-lg transition hover:shadow-xl">Print / Save as PDF</button>
-            </div>
-        </div>
-
-        <div id="quizSidebarArea" class="hidden w-full lg:w-1/4 order-1 lg:order-2 no-print">
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 sticky top-[76px] max-h-[85vh] flex flex-col">
-                <h3 class="font-bold text-gray-800 mb-4 border-b pb-2">Question Palette</h3>
-                <div class="flex gap-4 text-xs text-gray-600 mb-4 justify-center">
-                    <div class="flex items-center gap-1"><div class="w-3 h-3 bg-blue-600 rounded-sm"></div> Answered</div>
-                    <div class="flex items-center gap-1"><div class="w-3 h-3 bg-white border border-gray-300 rounded-sm"></div> Unanswered</div>
-                </div>
-                <div id="questionPalette" class="grid grid-cols-5 gap-2 overflow-y-auto pb-4 px-1 flex-grow scrollbar-thin"></div>
-            </div>
-        </div>
-
-        <div id="resultScreen" class="hidden w-full bg-white rounded-2xl shadow-xl p-8 md:p-16 text-center max-w-4xl mx-auto mt-10 border border-gray-100 no-print">
-            <div class="inline-block p-4 bg-green-100 rounded-full mb-6">
-                <svg class="w-20 h-20 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </div>
-            <h2 class="text-4xl font-extrabold text-gray-900 mb-2">Exam Completed!</h2>
-            <p class="text-gray-500 mb-8">Detailed performance analysis</p>
-            <div class="bg-gray-50 rounded-xl p-8 mb-8 flex justify-center items-center gap-12 border border-gray-200">
-                <div>
-                    <p class="text-sm font-semibold text-gray-500 uppercase">Total Score</p>
-                    <p class="text-5xl font-black text-blue-600 mt-1" id="scoreDisplay">0</p>
-                    <p class="text-md text-gray-400 mt-1">out of <span id="totalDisplay">150</span></p>
-                </div>
-                <div class="h-20 w-px bg-gray-300"></div>
-                <div class="text-left space-y-2">
-                    <p class="text-green-600 font-medium"><span id="correctCount">0</span> Correct Answers</p>
-                    <p class="text-red-600 font-medium"><span id="wrongCount">0</span> Wrong Answers</p>
-                    <p class="text-gray-600 font-medium"><span id="skippedCount">0</span> Skipped</p>
-                </div>
-            </div>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <button onclick="reviewAnswers()" class="bg-blue-100 hover:bg-blue-200 text-blue-800 font-bold py-3 px-8 rounded-xl transition">Review Question Paper</button>
-                <button onclick="showAllAnswers()" class="bg-indigo-100 hover:bg-indigo-200 text-indigo-800 font-bold py-3 px-8 rounded-xl transition">📋 View All Answers</button>
-                <button onclick="printPaper()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-8 rounded-xl transition">🖨️ Print / PDF</button>
-                <button onclick="resetApp()" class="bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 px-8 rounded-xl transition shadow-lg hover:shadow-xl">Generate New 150Q Test</button>
-            </div>
-        </div>
-
-    </main>
-
-    <div id="customModal" class="fixed inset-0 bg-slate-900 bg-opacity-60 hidden flex-col items-center justify-center z-50 p-4 transition-opacity backdrop-blur-sm no-print">
-        <div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md transform transition-all border border-gray-100">
-            <h3 id="modalTitle" class="text-2xl font-bold text-gray-900 mb-4">Message</h3>
-            <p id="modalMessage" class="text-gray-600 mb-8 leading-relaxed text-lg whitespace-pre-line"></p>
-            <div class="flex justify-end gap-3" id="modalActions"></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <button onclick="showTab('study')" class="bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-xl shadow transition">📖 Self Study (VVI Theory)</button>
+            <button onclick="showTab('test')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow transition">📝 Full Test (150Q)</button>
         </div>
     </div>
 
-    <script>
-        let testData = [];
-        let userAnswers = {};
-        let timerInterval = null;
-        let timeLeft = 150 * 60;
+    <!-- STUDY TAB -->
+    <div id="studyTab" class="hidden mt-6">
+        <div class="flex justify-between items-center mb-4 no-print">
+            <h2 class="text-xl font-bold">📖 VVI Theory - जो एग्जाम में आया है</h2>
+            <button onclick="showTab('welcome')" class="text-blue-600 font-semibold">← वापस</button>
+        </div>
+        <div id="studyContent"></div>
+    </div>
 
-        // Split into smaller sub-batches to stay under RPM limit
-        // 6 batches × ~25 questions = 150 questions
-        // 25s delay between each → ~5 batches in 2 min → safe under 5 RPM
-        const subBatches = [
-            { name: "OS & DBMS",                  count: 25, topics: "Operating Systems and Database Management Systems" },
-            { name: "Networks & DSA",             count: 25, topics: "Computer Networks, Data Structures and Algorithms" },
-            { name: "Digital Logic & Programming",count: 25, topics: "Digital Logic, C++, Java" },
-            { name: "AI, IoT, Web & SE",          count: 25, topics: "Artificial Intelligence, IoT, Web Technologies, Software Engineering" },
-            { name: "Pedagogy",                   count: 25, topics: "Art of Teaching (Pedagogy), Bloom's Taxonomy, Teaching Methods" },
-            { name: "Reasoning & Math",           count: 25, topics: "Reasoning and Basic Mathematics" }
-        ];
+    <!-- TEST TAB -->
+    <div id="testTab" class="hidden mt-6">
+        <div class="flex justify-between items-center mb-4 no-print">
+            <h2 class="text-xl font-bold">📝 STET Full Test</h2>
+            <button onclick="showTab('welcome')" class="text-blue-600 font-semibold">← वापस</button>
+        </div>
 
-        const DELAY_BETWEEN_CALLS = 25000; // 25 seconds — safe under 5 RPM
-        const STORAGE_KEY = 'stet_mock_cache_v1';
+        <div id="testSetup" class="bg-white p-6 rounded-xl shadow-sm text-center">
+            <p class="text-gray-600 mb-4">असली STET पैटर्न: <b>100 CS + 30 Pedagogy + 20 GK/Math</b></p>
+            <p class="text-sm text-red-500 mb-4">नोट: इसमें पिछले सालों के असली सवाल भी शामिल हैं।</p>
+            <button onclick="startTest()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg text-lg">🚀 Test Generate करें</button>
+        </div>
 
-        // Build the prompt for each sub-batch
-        function buildPrompt(batch) {
-            return `Generate exactly ${batch.count} unique Bihar STET (Secondary Teacher Eligibility Test) multiple-choice questions in Hindi. Topics: ${batch.topics}. Difficulty: Class 11-12 teacher level. Every question MUST have exactly 4 options. The 'correctIndex' must be 0, 1, 2, or 3. Provide a short explanation/trick in Hindi in the 'explanation' field. Return ONLY a valid JSON array, no markdown.`;
+        <div id="testLoading" class="hidden text-center py-10">
+            <div class="spinner mb-4"></div>
+            <p id="loadText" class="text-gray-600 font-semibold">पेपर तैयार हो रहा है...</p>
+        </div>
+
+        <div id="testQuiz" class="hidden">
+            <div class="bg-white p-4 rounded-xl shadow-sm mb-4 flex justify-between items-center sticky top-16 z-40 no-print">
+                <span class="font-bold text-sm">Answered: <span id="ansCount">0</span>/150</span>
+                <div class="flex gap-2">
+                    <button onclick="window.print()" class="bg-gray-600 text-white text-xs px-3 py-2 rounded">🖨️ Print</button>
+                    <button onclick="submitTest()" class="bg-green-600 text-white text-xs px-3 py-2 rounded font-bold">✅ Submit</button>
+                </div>
+            </div>
+            <div id="qContainer" class="space-y-4"></div>
+            <div class="mt-6 mb-20 text-center no-print">
+                <button onclick="submitTest()" class="bg-green-600 text-white font-bold py-4 px-10 rounded-xl shadow-lg">Final Submit & See Result</button>
+            </div>
+            <div id="answerKey" class="hidden mt-6 bg-white p-4 rounded-xl"></div>
+        </div>
+
+        <div id="testResult" class="hidden bg-white rounded-xl p-8 mt-4 text-center shadow-sm">
+            <h2 class="text-2xl font-bold mb-4">Result</h2>
+            <div class="text-6xl font-black text-blue-600" id="score">0</div>
+            <p class="text-gray-500 mb-6">/ 150</p>
+            <div class="flex justify-center gap-6 text-sm mb-6">
+                <p class="text-green-600 font-bold">✅ Correct: <span id="correctN">0</span></p>
+                <p class="text-red-600 font-bold">❌ Wrong: <span id="wrongN">0</span></p>
+                <p class="text-gray-500 font-bold">⏭️ Skipped: <span id="skipN">0</span></p>
+            </div>
+            <p class="text-gray-600 mb-4">Target: 64 Marks (EBC). क्या आप पास हुए?</p>
+            <button onclick="location.reload()" class="bg-slate-800 text-white px-8 py-3 rounded-lg font-bold">नया टेस्ट दें</button>
+        </div>
+    </div>
+
+</main>
+
+<script>
+// ==========================================
+// 1. VVI THEORY (जो आपने भेजा है उससे)
+// ==========================================
+const VVI = {
+"Operating System": [
+"Process states: New → Ready → Running → Waiting → Terminated",
+"Deadlock की 4 conditions: Mutual exclusion, Hold & wait, No preemption, Circular wait",
+"Paging vs Segmentation: Paging fixed size, Segmentation variable size",
+"Buffer cache: frequently used files को memory में store करना (2023 में पूछा गया)",
+"Page table: Virtual address को Physical address में translate करता है (2023 में पूछा गया)",
+"Safeguards: Unauthorized access से बचाना (2025 में पूछा गया)"
+],
+"DBMS": [
+"Data abstraction: Physical level = डेटा कैसे store होता है (2025 में पूछा गया)",
+"Keys: Primary, Candidate, Foreign, Super key",
+"Normalization: 1NF → 2NF → 3NF → BCNF",
+"ACID: Atomicity, Consistency, Isolation, Durability",
+"SQL: SELECT (retrieve), GRANT (DCL), DELETE (remove)",
+"DBMS: Data को store, modify और retrieve करता है (2023 में पूछा गया)",
+"Locks: Transactional integrity और consistency के लिए (2023 में पूछा गया)"
+],
+"Computer Networks": [
+"OSI 7 Layers: Physical, Data Link, Network, Transport, Session, Presentation, Application",
+"ARP: IP address को MAC address में map करता है (2025 में पूछा गया)",
+"TCP: Reliable, connection-oriented | UDP: Fast, connectionless",
+"DNS: Domain name को IP address में बदलता है (2025 में पूछा गया)",
+"VoIP: IP network पर voice packets (2025 में पूछा गया)",
+"Router: Network के बीच packets forward करता है (2019 में पूछा गया)"
+],
+"Data Structures": [
+"Stack: LIFO | Queue: FIFO",
+"Divide & Conquer: Problem को छोटे हिस्सों में तोड़ना",
+"Time Complexity: Merge Sort = O(n log n), Bubble Sort = O(n²)",
+"Tree: Binary Tree, BST",
+"Hash Tables: Time-space tradeoff (2023 में पूछा गया)"
+],
+"Digital Logic": [
+"Number System: Binary, Decimal, Hex",
+"Logic Gates: AND, OR, NOT, NAND, NOR, XOR",
+"K-Map: Simplify boolean expression",
+"Flip-Flops: SR, JK, D, T",
+"Full Adder: 3 inputs (A, B, Cin) (2025 में पूछा गया)"
+],
+"C++ / OOP": [
+"Method Overloading: Same name, different parameters (2025 में पूछा गया)",
+"Polymorphism: Overloading (Compile-time) vs Overriding (Run-time)",
+"Abstract Class: जिसका object नहीं बनाया जा सकता (2023 में पूछा गया)",
+"Keywords: 'new' (instance बनाना), 'super' (parent class को refer करना)"
+],
+"Software Engineering": [
+"SDLC Models: Waterfall, Spiral (Risk analysis), Agile",
+"Adaptive Maintenance: नए environment के लिए update (2025 में पूछा गया)",
+"Testing: Unit Testing (individual components), System Testing (full system)",
+"Reverse Engineering: Existing software को समझना (2023 में पूछा गया)"
+],
+"Pedagogy (सबसे ज्यादा Scoring)": [
+"Learning = Behavior modification (व्यवहार में स्थायी परिवर्तन)",
+"Micro-teaching: Dwight W. Allen (1963, Stanford)",
+"Bloom's Taxonomy: Remember, Understand, Apply, Analyze, Evaluate, Create",
+"Teaching = Art + Science",
+"Curriculum: Teacher-centered, Learner-centered, Problem-centered",
+"Formative Evaluation: Teaching के दौरान (2023 में पूछा गया)",
+"Summative Evaluation: Teaching के बाद",
+"Discussion Method: Student participation बढ़ाने के लिए (2023 में पूछा गया)"
+],
+"Web / AI / IoT": [
+"HTML: Web page बनाने के लिए",
+"CSS: Styling (Design) के लिए",
+"JavaScript: Asynchronous request के लिए Fetch API (2025 में पूछा गया)",
+"AI: Machine को intelligent बनाना",
+"John McCarthy: Father of AI (2023 में पूछा गया)",
+"IoT: Sensors और Actuators का उपयोग (2023 में पूछा गया)"
+]
+};
+
+// ==========================================
+// 2. PREVIOUS YEAR QUESTIONS (आपके भेजे पेपर से)
+// ==========================================
+const PYQ = [
+{q:"एक आईपी नेटवर्क पर ध्वनि यातायात के लिए पैकेट स्विचिंग technology का उपयोग करता है, जहाँ प्रत्येक पैकेट अपने गंतव्य तक पहुँचने के लिए सर्वोत्तम मार्ग का अनुसरण करता है।",o:["ईमेल","एचटीटीपी","वीओआईपी","एसएमटीपी"],a:2,c:"Networks"},
+{q:"निम्नलिखित में से कौन सा डेटा अमूर्तता का स्तर बताता है कि डेटा वास्तव में कैसे संग्रहीत किया जाता है?",o:["वैचारिक स्तर","शारीरिक स्तर","फाइल स्तर","तार्किक स्तर"],a:1,c:"DBMS"},
+{q:"कौन सा इंटरनेट प्रोटोकॉल IP पतों को MAC पतों में मैप करने के लिए जिम्मेदार है?",o:["ARP","TCP","ICMP","HTTP"],a:0,c:"Networks"},
+{q:"इंटर-प्रोसेस कम्युनिकेशन (IPC) का उपयोग किस लिए किया जाता है?",o:["प्रक्रियाओं को समवर्ती रूप से निष्पादित करने से रोकना","प्रक्रियाओं को बिना संचार के स्वतंत्र रूप से चलाना","सूचनाओं का आदान-प्रदान और कार्यों को सिंक्रनाइज़ करने के लिए प्रक्रियाओं को समन्वित करना","यादच्छिक क्रम में निष्पादित करने के लिए"],a:2,c:"OS"},
+{q:"तालिका से विशिष्ट पंक्तियों को पुनर्प्राप्त करने के लिए किस SQL खंड का उपयोग किया जाता है?",o:["SELECT","FETCH","चुनना","GET"],a:0,c:"DBMS"},
+{q:"JavaScript में asynchronous request कैसे कर सकते हैं?",o:["'async' keyword","'प्रतीक्षा' keyword","Fetch API या XMLHttpRequest","कॉलबैक फंक्शन"],a:2,c:"Web"},
+{q:"सीखना एक सतत प्रक्रिया है—",o:["किशोरवस्था से मृत्यु तक","बचपन से बुढ़ापे तक","शैशवावस्था से व्यक्तता तक","पालना से कब्र तक या जन्म से अंत तक"],a:3,c:"Pedagogy"},
+{q:"द्वादहट डब्ल्यू एलन द्वारा कौन-सी शिक्षण-अधिगम पद्धति शुरू की गई थी?",o:["सूक्ष्म शिक्षण","टीम शिक्षण","मानस मंथन","इंटरैक्टिव शिक्षण"],a:0,c:"Pedagogy"},
+{q:"The primary difference between ROM and RAM is:",o:["ROM is faster than RAM","ROM is volatile, while RAM is non-volatile","ROM is used for data storage, while RAM is used for program execution","ROM stores permanent data, RAM stores temporary data"],a:3,c:"Digital Logic"},
+{q:"What is the primary function of routing in the network layer?",o:["Data framing","Error correction","Finding the best path for data","Flow control"],a:2,c:"Networks"},
+{q:"Who is known as the father of AI?",o:["Fisher Ada","Alan Turing","John McCarthy","Allen Newell"],a:2,c:"AI"},
+{q:"Formative evaluation is conducted:",o:["After the teaching learning process","Before the teaching learning process","During the teaching learning process","All of the above"],a:2,c:"Pedagogy"},
+{q:"Which of the following is NOT a network topology?",o:["Star","Ring","Disk","Mesh"],a:2,c:"Networks"},
+{q:"What is the full form of HTML?",o:["Hyper Text Markup Language","Hyper Text Manipulation Language","Hyper Text Managing Links","Hyper Text Manipulating Links"],a:0,c:"Web"},
+{q:"Abstract class in OOP is:",o:["A class with no methods","A class that cannot be instantiated","A class that can only have private members","A class that cannot have methods with parameters"],a:1,c:"C++ / OOP"}
+];
+
+let testData = [], answers = {}, timerInt, timeLeft = 150*60;
+
+function showTab(name){
+    document.getElementById('welcome').classList.add('hidden');
+    document.getElementById('studyTab').classList.add('hidden');
+    document.getElementById('testTab').classList.add('hidden');
+    document.getElementById(name+'Tab').classList.remove('hidden');
+    if(name==='study') renderStudy();
+}
+
+function renderStudy(){
+    const c = document.getElementById('studyContent');
+    c.innerHTML = Object.entries(VVI).map(([topic,points])=>`
+        <div class="topic-card">
+            <h3>📌 ${topic}</h3>
+            <ul>${points.map(p=>`<li>${p}</li>`).join('')}</ul>
+        </div>
+    `).join('');
+}
+
+// ==========================================
+// 3. TEST LOGIC (AI + Previous Year)
+// ==========================================
+function buildPrompt(batch){
+    return `Generate exactly ${batch.count} Bihar STET Computer Science MCQs in Hindi on topics: ${batch.topics}. 4 options each, correctIndex 0-3, short explanation. Return ONLY JSON array: [{"question":"...","options":["A","B","C","D"],"correctIndex":0,"category":"Topic","explanation":"..."}]`;
+}
+
+const BATCHES = [
+    {name:"CS Core 1", count:50, topics:"OS, DBMS, Networks, DSA"},
+    {name:"CS Core 2", count:50, topics:"Digital Logic, C++, OOP, Software Engg, Web, AI, IoT"},
+    {name:"Pedagogy + Reasoning", count:30, topics:"Art of Teaching, Bloom's Taxonomy, Teaching Methods, Reasoning"},
+    {name:"GK + Math + Environment", count:20, topics:"Basic GK, Mathematical Aptitude, Environment Science"}
+];
+
+async function fetchBatch(prompt, key, base, model, attempt=1){
+    const url = base.replace(/\/+$/,'')+'/chat/completions';
+    try {
+        const res = await fetch(url,{
+            method:'POST',
+            headers:{'Content-Type':'application/json','Authorization':`Bearer ${key}`},
+            body:JSON.stringify({model, messages:[{role:'system',content:'Return only JSON array.'},{role:'user',content:prompt}], temperature:0.7})
+        });
+        
+        if(res.status===429){
+            if(attempt>=4) throw new Error('RATE_LIMIT');
+            const w = Math.min(60000, Math.pow(2,attempt)*8000);
+            document.getElementById('loadText').innerText = `Rate limit. ${Math.round(w/1000)}s wait...`;
+            await new Promise(r=>setTimeout(r,w));
+            return fetchBatch(prompt,key,base,model,attempt+1);
         }
+        
+        if(!res.ok){
+            if(attempt<4){await new Promise(r=>setTimeout(r,Math.pow(2,attempt)*4000));return fetchBatch(prompt,key,base,model,attempt+1);}
+            throw new Error(`HTTP ${res.status}`);
+        }
+        
+        const data = await res.json();
+        let content = data.choices?.[0]?.message?.content;
+        if(!content) throw new Error('Empty');
+        content = content.replace(/```json\s*/gi,'').replace(/```\s*$/g,'').trim();
+        
+        let parsed;
+        try{parsed = JSON.parse(content);}catch{
+            const m = content.match(/\[[\s\S]*\]/);
+            if(m) parsed = JSON.parse(m[0]);
+            else throw new Error('Invalid JSON');
+        }
+        
+        if(!Array.isArray(parsed)) throw new Error('Not array');
+        return parsed.map(q=>{
+            let opts = Array.isArray(q.options)?q.options:[];
+            while(opts.length<4) opts.push('—');
+            if(opts.length>4) opts=opts.slice(0,4);
+            let ci = Number(q.correctIndex);
+            if(!Number.isInteger(ci)||ci<0||ci>3) ci=0;
+            return {question:q.question||'प्रश्न',options:opts,correctIndex:ci,category:q.category||'General',explanation:q.explanation||''};
+        });
+    } catch(err) {
+        if(err.message==='RATE_LIMIT') throw err;
+        if(attempt<4){await new Promise(r=>setTimeout(r,Math.pow(2,attempt)*4000));return fetchBatch(prompt,key,base,model,attempt+1);}
+        throw err;
+    }
+}
 
-        // Fetch with exponential backoff + Retry-After support
-        async function fetchQuestions(promptText, apiKey, attempt = 1) {
-            const MAX_ATTEMPTS = 4;
-            // Using stable gemini-2.0-flash (better free-tier quota than preview models)
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-            const payload = {
-                contents: [{ parts: [{ text: promptText }] }],
-                generationConfig: {
-                    responseMimeType: "application/json",
-                    responseSchema: {
-                        type: "ARRAY",
-                        items: {
-                            type: "OBJECT",
-                            properties: {
-                                question: { type: "STRING" },
-                                options: { type: "ARRAY", items: { type: "STRING" } },
-                                correctIndex: { type: "INTEGER" },
-                                category: { type: "STRING" },
-                                explanation: { type: "STRING" }
-                            },
-                            required: ["question", "options", "correctIndex", "category", "explanation"]
-                        }
-                    }
+async function startTest(){
+    const key = document.getElementById('apiKey').value.trim();
+    const base = document.getElementById('baseUrl').value.trim();
+    const model = document.getElementById('model').value.trim();
+    
+    if(!key){alert('API Key डालें!'); return;}
+    
+    document.getElementById('testSetup').classList.add('hidden');
+    document.getElementById('testLoading').classList.remove('hidden');
+    testData = [];
+    
+    try {
+        // AI से सवाल लाओ
+        for(let i=0;i<BATCHES.length;i++){
+            const b = BATCHES[i];
+            document.getElementById('loadText').innerText = `${b.name} (${i+1}/${BATCHES.length})...`;
+            
+            if(i>0){
+                for(let s=15;s>0;s--){
+                    document.getElementById('loadText').innerText = `${s}s wait (rate limit)...`;
+                    await new Promise(r=>setTimeout(r,1000));
                 }
-            };
-
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                if (response.status === 429) {
-                    if (attempt >= MAX_ATTEMPTS) {
-                        throw new Error('RATE_LIMIT_EXHAUSTED');
-                    }
-                    // Respect Retry-After header if present, else exponential backoff
-                    const retryAfter = parseInt(response.headers.get('Retry-After') || '0', 10);
-                    const waitMs = retryAfter > 0
-                        ? retryAfter * 1000
-                        : Math.min(60000, Math.pow(2, attempt) * 8000); // 16s, 32s, 60s
-                    document.getElementById('loadingText').innerText =
-                        `Rate limit hit. Waiting ${Math.round(waitMs/1000)}s before retry (attempt ${attempt+1}/${MAX_ATTEMPTS})...`;
-                    await new Promise(r => setTimeout(r, waitMs));
-                    return fetchQuestions(promptText, apiKey, attempt + 1);
-                }
-
-                if (!response.ok) {
-                    const body = await response.text().catch(() => '');
-                    if (attempt < MAX_ATTEMPTS) {
-                        const waitMs = Math.pow(2, attempt) * 4000;
-                        await new Promise(r => setTimeout(r, waitMs));
-                        return fetchQuestions(promptText, apiKey, attempt + 1);
-                    }
-                    throw new Error(`HTTP ${response.status}: ${body.slice(0, 200)}`);
-                }
-
-                const result = await response.json();
-                const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
-                if (!text) throw new Error('Empty response from Gemini');
-                const parsed = JSON.parse(text);
-                if (!Array.isArray(parsed)) throw new Error('Expected JSON array');
-
-                // Normalize: ensure exactly 4 options + valid correctIndex
-                return parsed.map(q => {
-                    let opts = Array.isArray(q.options) ? q.options : [];
-                    while (opts.length < 4) opts.push("—");
-                    if (opts.length > 4) opts = opts.slice(0, 4);
-                    let ci = Number(q.correctIndex);
-                    if (!Number.isInteger(ci) || ci < 0 || ci > 3) ci = 0;
-                    return { ...q, options: opts, correctIndex: ci };
-                });
-
-            } catch (err) {
-                if (err.message === 'RATE_LIMIT_EXHAUSTED') throw err;
-                if (attempt < MAX_ATTEMPTS) {
-                    const waitMs = Math.pow(2, attempt) * 4000;
-                    document.getElementById('loadingText').innerText =
-                        `Network error, retrying in ${Math.round(waitMs/1000)}s... (attempt ${attempt+1}/${MAX_ATTEMPTS})`;
-                    await new Promise(r => setTimeout(r, waitMs));
-                    return fetchQuestions(promptText, apiKey, attempt + 1);
-                }
-                throw err;
             }
+            
+            const qs = await fetchBatch(buildPrompt(b),key,base,model);
+            testData = testData.concat(qs);
         }
+        
+        if(testData.length===0) throw new Error('No Q generated');
+        
+        // Previous Year के सवालों को शुरू में जोड़ें (लगभग 15-20 सवाल)
+        const pyqToUse = PYQ.slice(0, Math.min(PYQ.length, 20));
+        // बाकी जगह AI के सवालों से भरें
+        testData = pyqToUse.concat(testData).slice(0, 150);
+        
+        answers = {};
+        buildQuizUI();
+        
+        document.getElementById('testLoading').classList.add('hidden');
+        document.getElementById('testQuiz').classList.remove('hidden');
+        startTimer();
+        
+    } catch(err) {
+        document.getElementById('testLoading').classList.add('hidden');
+        document.getElementById('testSetup').classList.remove('hidden');
+        alert('Error: '+err.message+'\n\nRate limit हो तो 1-2 min बाद try करें या नई key बनाएं।');
+    }
+}
 
-        async function generateFullTest() {
-            const apiKey = document.getElementById('apiKeyInput').value.trim();
-            if (!apiKey) {
-                showModal('API Key Required', 'कृपया अपना Gemini API Key दर्ज करें।\n\nFree key: https://aistudio.google.com/app/apikey', [
-                    { text: 'OK', className: 'bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg' }
-                ]);
-                return;
-            }
+function buildQuizUI(){
+    const c = document.getElementById('qContainer');
+    c.innerHTML = '';
+    testData.forEach((item,i)=>{
+        const d = document.createElement('div');
+        d.className = 'question-box bg-white p-5 rounded-xl shadow-sm border';
+        d.id = 'q'+i;
+        let html = `
+            <div class="flex justify-between mb-2">
+                <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded font-bold">${item.category}</span>
+                <span class="text-xs font-bold text-gray-400">Q${i+1}</span>
+            </div>
+            <p class="font-semibold mb-4 text-gray-800">${i+1}. ${esc(item.question)}</p>
+        `;
+        item.options.forEach((opt,oi)=>{
+            html += `
+                <label class="opt" id="ow${i}_${oi}">
+                    <input type="radio" name="q${i}" value="${oi}" onchange="record(${i},${oi})">
+                    <span class="font-medium">${String.fromCharCode(65+oi)}. ${esc(opt)}</span>
+                </label>
+            `;
+        });
+        html += `
+            <button onclick="reveal(${i})" class="text-xs text-blue-600 mt-2 font-semibold no-print">👁️ उत्तर देखें</button>
+            <div id="exp${i}" class="hidden mt-3 p-3 bg-yellow-50 rounded border border-yellow-200 text-sm">
+                <b class="text-green-700">सही उत्तर: ${String.fromCharCode(65+item.correctIndex)}</b> - ${esc(item.explanation||'')}
+            </div>
+        `;
+        d.innerHTML = html;
+        c.appendChild(d);
+    });
+    document.getElementById('ansCount').innerText = '0';
+}
 
-            document.getElementById('welcomeScreen').classList.add('hidden');
-            document.getElementById('loadingScreen').classList.remove('hidden');
-            document.getElementById('loadingScreen').classList.add('flex');
-            testData = [];
-            document.getElementById('allAnswersSection').classList.add('hidden');
+function record(i,oi){
+    answers[i]=oi;
+    document.getElementById('ansCount').innerText=Object.keys(answers).length;
+}
 
-            // Try to load cached batches from localStorage (saves API quota if a previous run partially succeeded)
-            let cache = {};
-            try { cache = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) { cache = {}; }
+function reveal(i){
+    document.getElementById('exp'+i).classList.toggle('hidden');
+    document.getElementById('ow'+i+'_'+testData[i].correctIndex).classList.add('correct');
+    document.getElementsByName('q'+i).forEach(r=>r.disabled=true);
+}
 
-            try {
-                for (let i = 0; i < subBatches.length; i++) {
-                    const batch = subBatches[i];
-                    const stepId = `step${Math.min(i+1, 3)}`;
-                    const stepEl = document.getElementById(stepId);
-                    if (stepEl) {
-                        stepEl.classList.add('text-blue-600', 'font-bold');
-                        stepEl.innerText = `Fetching: ${batch.name}...`;
-                    }
+function startTimer(){
+    document.getElementById('timerBar').classList.remove('hidden');
+    timeLeft = 150*60;
+    clearInterval(timerInt);
+    timerInt = setInterval(()=>{
+        timeLeft--;
+        const h=Math.floor(timeLeft/3600), m=Math.floor((timeLeft%3600)/60).toString().padStart(2,'0'), s=(timeLeft%60).toString().padStart(2,'0');
+        document.getElementById('timerDisplay').innerText = h>0?`${h}:${m}:${s}`:`${m}:${s}`;
+        if(timeLeft<=0){clearInterval(timerInt);submitTest();}
+    },1000);
+}
 
-                    // Use cached result if available
-                    if (Array.isArray(cache[batch.name]) && cache[batch.name].length > 0) {
-                        testData = testData.concat(cache[batch.name]);
-                        if (stepEl) stepEl.innerText = `✓ Cached: ${batch.name} (${cache[batch.name].length} Qs)`;
-                        updateProgress((i + 1) / subBatches.length);
-                        continue;
-                    }
-
-                    // Delay between calls (except first)
-                    if (i > 0) {
-                        const secs = DELAY_BETWEEN_CALLS / 1000;
-                        for (let s = secs; s > 0; s--) {
-                            document.getElementById('loadingText').innerText =
-                                `Waiting ${s}s to avoid rate limit... (${i}/${subBatches.length} batches done)`;
-                            await new Promise(r => setTimeout(r, 1000));
-                        }
-                    }
-
-                    document.getElementById('loadingText').innerText =
-                        `Generating ${batch.count} questions: ${batch.name} (${i+1}/${subBatches.length})`;
-
-                    const questions = await fetchQuestions(buildPrompt(batch), apiKey);
-                    testData = testData.concat(questions);
-
-                    // Save to cache
-                    cache[batch.name] = questions;
-                    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(cache)); } catch(e) {}
-
-                    if (stepEl) stepEl.innerText = `✓ ${batch.name} (${questions.length} Qs)`;
-                    updateProgress((i + 1) / subBatches.length);
-                }
-
-                if (testData.length === 0) throw new Error('No questions returned');
-                if (testData.length > 150) testData = testData.slice(0, 150);
-
-                userAnswers = {};
-                buildQuizUI();
-                buildAnswerKey();
-
-                document.getElementById('loadingScreen').classList.add('hidden');
-                document.getElementById('loadingScreen').classList.remove('flex');
-                document.getElementById('quizContentArea').classList.remove('hidden');
-                document.getElementById('quizSidebarArea').classList.remove('hidden');
-                startTimer();
-                window.scrollTo(0, 0);
-
-            } catch (error) {
-                console.error('Compilation Error:', error);
-                document.getElementById('loadingScreen').classList.add('hidden');
-                document.getElementById('loadingScreen').classList.remove('flex');
-                document.getElementById('welcomeScreen').classList.remove('hidden');
-
-                const isRateLimit = error.message === 'RATE_LIMIT_EXHAUSTED' || /429/.test(error.message);
-                const title = isRateLimit ? '⏸️ API Rate Limit' : 'सर्वर त्रुटि (Error)';
-                const msg = isRateLimit
-                    ? `आपकी API key की free quota खत्म हो गई है या rate limit hit हुई है।
-
-Options:
-1. 1-2 minute रुक कर दुबारा try करें (free tier ~5 req/min)
-2. नई API key बनाएं: aistudio.google.com/app/apikey
-3. Google Cloud पर billing enable करें (higher quota)
-
-पहले से generate हुए batches cache में save हैं — दुबारा try करने पर सिर्फ बाकी fetch होंगे।`
-                    : `प्रश्न जनरेट करने में तकनीकी समस्या आई है।
-
-Error: ${error.message}
-
-कृपया पुनः प्रयास करें।`;
-
-                showModal(title, msg, [
-                    { text: 'OK', className: 'bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg' }
-                ]);
-            }
+function submitTest(){
+    clearInterval(timerInt);
+    let sc=0,co=0,wr=0,sk=0;
+    testData.forEach((item,i)=>{
+        const ua = answers[i];
+        const ca = item.correctIndex;
+        document.getElementsByName('q'+i).forEach(r=>r.disabled=true);
+        if(ua!==undefined){
+            if(ua===ca){sc++;co++;document.getElementById('ow'+i+'_'+ua).classList.add('correct');}
+            else{wr++;document.getElementById('ow'+i+'_'+ua).classList.add('wrong');document.getElementById('ow'+i+'_'+ca).classList.add('correct');}
+        }else{
+            sk++;document.getElementById('ow'+i+'_'+ca).classList.add('correct');
         }
+    });
+    
+    document.getElementById('score').innerText = sc;
+    document.getElementById('correctN').innerText = co;
+    document.getElementById('wrongN').innerText = wr;
+    document.getElementById('skipN').innerText = sk;
+    document.getElementById('testQuiz').classList.add('hidden');
+    document.getElementById('testResult').classList.remove('hidden');
+    
+    // Answer Key
+    const ak = document.getElementById('answerKey');
+    ak.innerHTML = '<h3 class="font-bold mb-2 text-lg">📋 Answer Key</h3><div class="grid grid-cols-4 gap-2 text-sm">'+testData.map((q,i)=>`<div><b>Q${i+1}:</b> ${String.fromCharCode(65+q.correctIndex)}</div>`).join('')+'</div>';
+    ak.classList.remove('hidden');
+}
 
-        function updateProgress(ratio) {
-            document.getElementById('loadingProgress').style.width = `${ratio * 100}%`;
-        }
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 
-        function buildQuizUI() {
-            const container = document.getElementById('questionsContainer');
-            const palette = document.getElementById('questionPalette');
-            container.innerHTML = '';
-            palette.innerHTML = '';
-            document.getElementById('answeredCountDisplay').innerText = `Answered: 0 / ${testData.length}`;
-
-            testData.forEach((item, qIndex) => {
-                const qNum = qIndex + 1;
-                const qDiv = document.createElement('div');
-                qDiv.className = 'bg-white p-6 rounded-xl shadow-sm border border-gray-100 question-box';
-                qDiv.id = `qbox-${qIndex}`;
-                const badgeColor = (item.category || '').includes("Teaching") || (item.category || '').includes("Pedagogy")
-                    ? "bg-purple-100 text-purple-800" : "bg-blue-100 text-blue-800";
-
-                const headerHtml = `
-                    <div class="flex justify-between items-start mb-4">
-                        <span class="inline-block ${badgeColor} text-xs px-3 py-1 rounded-full font-bold uppercase tracking-wider">${item.category || 'General'}</span>
-                        <span class="text-sm font-bold text-gray-400">Q ${qNum}</span>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-5 leading-relaxed">${qNum}. ${item.question}</h3>
-                `;
-                let optionsHtml = '<div class="space-y-3 radio-custom">';
-                item.options.forEach((opt, oIndex) => {
-                    optionsHtml += `
-                        <div class="option-wrapper" id="opt-wrapper-${qIndex}-${oIndex}">
-                            <input type="radio" id="q${qIndex}o${oIndex}" name="q${qIndex}" value="${oIndex}" onchange="recordAnswer(${qIndex}, ${oIndex})">
-                            <label for="q${qIndex}o${oIndex}" class="w-full text-gray-700 text-md">
-                                <span class="mr-4 font-bold text-gray-400 border-r border-gray-200 pr-4">${String.fromCharCode(65 + oIndex)}</span>
-                                <span>${opt}</span>
-                            </label>
-                        </div>
-                    `;
-                });
-                optionsHtml += '</div>';
-
-                const answerBtnHtml = `
-                    <div class="mt-6 border-t pt-4 no-print">
-                        <button onclick="revealAnswer(${qIndex})" class="text-sm font-semibold text-blue-600 hover:text-blue-800 transition flex items-center gap-2">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
-                            उत्तर और Short Trick देखें
-                        </button>
-                    </div>
-                    <div id="explanation-${qIndex}" class="hidden mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg text-sm text-gray-800 shadow-inner">
-                        <p class="font-bold text-green-700 mb-2 text-base">सही उत्तर: ${String.fromCharCode(65 + item.correctIndex)}. ${item.options[item.correctIndex] || '—'}</p>
-                        <p><span class="font-bold text-yellow-800">Short Trick / व्याख्या:</span> ${item.explanation || 'कोई व्याख्या उपलब्ध नहीं है।'}</p>
-                    </div>
-                `;
-                qDiv.innerHTML = headerHtml + optionsHtml + answerBtnHtml;
-                container.appendChild(qDiv);
-
-                const pBtn = document.createElement('button');
-                pBtn.className = 'palette-btn';
-                pBtn.id = `pbtn-${qIndex}`;
-                pBtn.innerText = qNum;
-                pBtn.onclick = () => { document.getElementById(`qbox-${qIndex}`).scrollIntoView({ behavior: 'smooth', block: 'center' }); };
-                palette.appendChild(pBtn);
-            });
-        }
-
-        function buildAnswerKey() {
-            const answerKeyList = document.getElementById('answerKeyList');
-            answerKeyList.innerHTML = '';
-            testData.forEach((item, qIndex) => {
-                const qNum = qIndex + 1;
-                const correctOption = String.fromCharCode(65 + item.correctIndex);
-                const correctText = item.options[item.correctIndex] || '—';
-                const answerDiv = document.createElement('div');
-                answerDiv.className = 'print-answer-line p-2 bg-gray-50 rounded border border-gray-200';
-                answerDiv.innerHTML = `
-                    <span class="font-bold text-blue-700">Q${qNum}.</span>
-                    <span class="font-semibold text-green-700">${correctOption}</span>
-                    <span class="text-gray-700 text-sm">${correctText.length > 40 ? correctText.substring(0, 40) + '...' : correctText}</span>
-                `;
-                answerKeyList.appendChild(answerDiv);
-            });
-        }
-
-        function showAllAnswers() {
-            const section = document.getElementById('allAnswersSection');
-            section.classList.remove('hidden');
-            section.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function recordAnswer(qIndex, oIndex) {
-            userAnswers[qIndex] = oIndex;
-            const pBtn = document.getElementById(`pbtn-${qIndex}`);
-            pBtn.classList.add('answered');
-            document.getElementById('answeredCountDisplay').innerText =
-                `Answered: ${Object.keys(userAnswers).length} / ${testData.length}`;
-        }
-
-        function revealAnswer(qIndex) {
-            const expDiv = document.getElementById(`explanation-${qIndex}`);
-            expDiv.classList.toggle('hidden');
-            const correctIndex = testData[qIndex].correctIndex;
-            const correctLabel = document.getElementById(`opt-wrapper-${qIndex}-${correctIndex}`);
-            if (!expDiv.classList.contains('hidden')) {
-                correctLabel.classList.add('correct-answer');
-                document.getElementsByName(`q${qIndex}`).forEach(r => r.disabled = true);
-            }
-        }
-
-        function startTimer() {
-            document.getElementById('timerContainer').classList.remove('hidden');
-            timeLeft = 150 * 60;
-            updateTimerDisplay();
-            clearInterval(timerInterval);
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                updateTimerDisplay();
-                if (timeLeft <= 300) {
-                    document.getElementById('timerDisplay').classList.remove('text-yellow-300');
-                    document.getElementById('timerDisplay').classList.add('text-red-400');
-                }
-                if (timeLeft <= 0) { clearInterval(timerInterval); forceSubmit(); }
-            }, 1000);
-        }
-
-        function updateTimerDisplay() {
-            const h = Math.floor(timeLeft / 3600);
-            const m = Math.floor((timeLeft % 3600) / 60).toString().padStart(2, '0');
-            const s = (timeLeft % 60).toString().padStart(2, '0');
-            document.getElementById('timerDisplay').innerText = h > 0 ? `${h}:${m}:${s}` : `${m}:${s}`;
-        }
-        function stopTimer() { clearInterval(timerInterval); }
-
-        function showModal(title, message, buttons) {
-            document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalMessage').innerText = message;
-            const actionsContainer = document.getElementById('modalActions');
-            actionsContainer.innerHTML = '';
-            buttons.forEach(btn => {
-                const buttonEl = document.createElement('button');
-                buttonEl.innerText = btn.text;
-                buttonEl.className = btn.className || 'bg-gray-200 hover:bg-gray-300 text-gray-800 px-5 py-2 rounded-lg font-semibold transition';
-                buttonEl.onclick = () => {
-                    document.getElementById('customModal').classList.add('hidden');
-                    document.getElementById('customModal').classList.remove('flex');
-                    if (btn.onClick) btn.onClick();
-                };
-                actionsContainer.appendChild(buttonEl);
-            });
-            document.getElementById('customModal').classList.remove('hidden');
-            document.getElementById('customModal').classList.add('flex');
-        }
-
-        function printPaper() {
-            buildAnswerKey();
-            document.getElementById('allAnswersSection').classList.remove('hidden');
-            window.print();
-        }
-
-        function confirmSubmit() {
-            const answeredCount = Object.keys(userAnswers).length;
-            const total = testData.length;
-            let msg = `आपने ${total} में से ${answeredCount} प्रश्नों के उत्तर दिए हैं।\n`;
-            if (answeredCount < total) msg += `आपके ${total - answeredCount} प्रश्न अभी बाकी हैं। क्या आप निश्चित रूप से टेस्ट सबमिट करना चाहते हैं?`;
-            else msg += `क्या आप अपना रिजल्ट देखने के लिए तैयार हैं?`;
-            showModal('टेस्ट सबमिट करें', msg, [
-                { text: 'रद्द करें (Cancel)', className: 'bg-gray-200 hover:bg-gray-300 text-gray-800 px-5 py-2 rounded-lg' },
-                { text: 'सबमिट करें (Submit)', className: 'bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg font-bold shadow-md', onClick: processSubmission }
-            ]);
-        }
-
-        function forceSubmit() {
-            showModal('समय समाप्त!', 'आपके 150 मिनट पूरे हो गए हैं। टेस्ट ऑटो-सबमिट हो रहा है।', [
-                { text: 'अपना स्कोर देखें', className: 'bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-bold', onClick: processSubmission }
-            ]);
-        }
-
-        function processSubmission() {
-            stopTimer();
-            let score = 0, correct = 0, wrong = 0, skipped = 0;
-            testData.forEach((item, qIndex) => {
-                const userAns = userAnswers[qIndex];
-                const correctAns = item.correctIndex;
-                const pBtn = document.getElementById(`pbtn-${qIndex}`);
-                document.getElementsByName(`q${qIndex}`).forEach(r => r.disabled = true);
-                if (userAns !== undefined) {
-                    if (userAns === correctAns) {
-                        score++; correct++;
-                        document.getElementById(`opt-wrapper-${qIndex}-${userAns}`).classList.add('correct-answer');
-                        pBtn.className = 'palette-btn correct';
-                    } else {
-                        wrong++;
-                        document.getElementById(`opt-wrapper-${qIndex}-${userAns}`).classList.add('wrong-answer');
-                        document.getElementById(`opt-wrapper-${qIndex}-${correctAns}`).classList.add('correct-answer');
-                        pBtn.className = 'palette-btn wrong';
-                    }
-                } else {
-                    skipped++;
-                    document.getElementById(`opt-wrapper-${qIndex}-${correctAns}`).classList.add('correct-answer');
-                    pBtn.className = 'palette-btn bg-gray-100 text-gray-400';
-                }
-            });
-            document.getElementById('scoreDisplay').innerText = score;
-            document.getElementById('totalDisplay').innerText = testData.length;
-            document.getElementById('correctCount').innerText = correct;
-            document.getElementById('wrongCount').innerText = wrong;
-            document.getElementById('skippedCount').innerText = skipped;
-            buildAnswerKey();
-            document.getElementById('allAnswersSection').classList.remove('hidden');
-            document.getElementById('quizContentArea').classList.add('hidden');
-            document.getElementById('quizSidebarArea').classList.add('hidden');
-            document.getElementById('resultScreen').classList.remove('hidden');
-            window.scrollTo(0, 0);
-        }
-
-        function reviewAnswers() {
-            document.getElementById('resultScreen').classList.add('hidden');
-            document.getElementById('quizContentArea').classList.remove('hidden');
-            document.getElementById('quizSidebarArea').classList.remove('hidden');
-            document.getElementById('bottomSubmitContainer').classList.add('hidden');
-            const topHeader = document.querySelector('#quizContentArea .sticky');
-            if (topHeader) topHeader.classList.add('hidden');
-            window.scrollTo(0, 0);
-        }
-
-        function resetApp() {
-            testData = []; userAnswers = {};
-            // Clear cache so next generation is fresh
-            localStorage.removeItem(STORAGE_KEY);
-            document.getElementById('timerContainer').classList.add('hidden');
-            document.getElementById('bottomSubmitContainer').classList.remove('hidden');
-            const topHeader = document.querySelector('#quizContentArea .sticky');
-            if (topHeader) topHeader.classList.remove('hidden');
-            ['step1', 'step2', 'step3'].forEach(id => {
-                document.getElementById(id).classList.remove('text-blue-600', 'font-bold');
-                document.getElementById(id).innerText = `Fetching ${id}...`;
-            });
-            document.getElementById('loadingProgress').style.width = '0%';
-            document.getElementById('resultScreen').classList.add('hidden');
-            document.getElementById('allAnswersSection').classList.add('hidden');
-            document.getElementById('welcomeScreen').classList.remove('hidden');
-            window.scrollTo(0, 0);
-        }
-    </script>
+// Init
+showTab('welcome');
+</script>
 </body>
 </html>
