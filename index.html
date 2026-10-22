@@ -88,38 +88,26 @@
                 <span class="text-sm text-red-500 font-semibold">Note: Previous Year ke questions bhi isme include hain.</span>
             </p>
             
-            <!-- AI Inputs -->
+            <!-- AI Inputs (SIRF 3 FREE AI) -->
             <div class="mb-8 max-w-lg mx-auto text-left bg-blue-50 p-5 rounded-xl border border-blue-200">
-                <p class="font-bold text-blue-900 mb-3">🔑 AI Keys (एक बार डालो, हमेशा याद रहेंगी):</p>
+                <p class="font-bold text-blue-900 mb-3">🔑 AI Keys (सिर्फ ये 3 फ्री हैं, इन्हें ही भरो):</p>
                 
-                <div class="ai-input mb-3">
-                    <label class="text-xs font-bold text-gray-600">1. Groq (Llama 3.1 8B) - Fastest for Pedagogy/Math</label>
-                    <input type="password" id="key-groq" placeholder="gsk_..." class="w-full px-2 py-1 rounded border text-sm">
-                    <p class="text-[10px] text-gray-500">Free key: console.groq.com/keys</p>
+                <div class="ai-input mb-4">
+                    <label class="text-xs font-bold text-gray-700">1. Groq (Llama 3.1 8B) - सबसे तेज़ और फ्री</label>
+                    <input type="password" id="key-groq" placeholder="gsk_..." class="w-full px-3 py-2 rounded border border-blue-300 text-sm">
+                    <p class="text-[10px] text-gray-500 mt-1">Free key: <a href="https://console.groq.com/keys" target="_blank" class="text-blue-600 underline">console.groq.com/keys</a></p>
                 </div>
 
-                <div class="ai-input mb-3">
-                    <label class="text-xs font-bold text-gray-600">2. Cerebras (Llama 3.3 70B) - Good for OS/DBMS</label>
-                    <input type="password" id="key-cerebras" placeholder="csk_..." class="w-full px-2 py-1 rounded border text-sm">
-                    <p class="text-[10px] text-gray-500">Free key: cloud.cerebras.ai</p>
+                <div class="ai-input mb-4">
+                    <label class="text-xs font-bold text-gray-700">2. Google Gemini (Flash) - फ्री और स्मार्ट</label>
+                    <input type="password" id="key-gemini" placeholder="AIza..." class="w-full px-3 py-2 rounded border border-blue-300 text-sm">
+                    <p class="text-[10px] text-gray-500 mt-1">Free key: <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-blue-600 underline">aistudio.google.com/app/apikey</a></p>
                 </div>
 
-                <div class="ai-input mb-3">
-                    <label class="text-xs font-bold text-gray-600">3. Mistral (Mistral Small) - Good for Logic/C++</label>
-                    <input type="password" id="key-mistral" placeholder="..." class="w-full px-2 py-1 rounded border text-sm">
-                    <p class="text-[10px] text-gray-500">Free key: console.mistral.ai</p>
-                </div>
-
-                <div class="ai-input mb-3">
-                    <label class="text-xs font-bold text-gray-600">4. Gemini (Flash) - Good for AI/Web/SE</label>
-                    <input type="password" id="key-gemini" placeholder="AIza..." class="w-full px-2 py-1 rounded border text-sm">
-                    <p class="text-[10px] text-gray-500">Free key: aistudio.google.com/app/apikey</p>
-                </div>
-
-                <div class="ai-input mb-3">
-                    <label class="text-xs font-bold text-gray-600">5. OpenRouter (Backup) - openrouter/free</label>
-                    <input type="password" id="key-openrouter" placeholder="sk-or-..." class="w-full px-2 py-1 rounded border text-sm">
-                    <p class="text-[10px] text-gray-500">Free key: openrouter.ai/keys</p>
+                <div class="ai-input mb-4">
+                    <label class="text-xs font-bold text-gray-700">3. OpenRouter (Backup) - कई फ्री मॉडल्स</label>
+                    <input type="password" id="key-openrouter" placeholder="sk-or-..." class="w-full px-3 py-2 rounded border border-blue-300 text-sm">
+                    <p class="text-[10px] text-gray-500 mt-1">Free key: <a href="https://openrouter.ai/keys" target="_blank" class="text-blue-600 underline">openrouter.ai/keys</a></p>
                 </div>
             </div>
 
@@ -245,7 +233,6 @@
             10: "Pedagogy + Networks + OS Revise (No New Test)"
         };
 
-        // Calculate Current Day (Based on start date saved in localStorage)
         function getCurrentDay() {
             let startDate = localStorage.getItem('stet_start_date');
             if (!startDate) {
@@ -256,7 +243,7 @@
             const today = new Date();
             const diffTime = Math.abs(today - start);
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
-            return Math.min(diffDays, 10); // Cap at 10
+            return Math.min(diffDays, 10);
         }
 
         function updateDayBanner() {
@@ -265,19 +252,17 @@
             document.getElementById('todayTargetDisplay').innerText = DAY_PLAN[day] || "Exam Day!";
         }
 
-        // ================= AI CPU ROUTER CONFIG =================
+        // ================= AI CPU ROUTER CONFIG (SIRF 3 FREE AI) =================
         const AI_ROUTER = {
-            "groq": { keyId: "key-groq", url: "https://api.groq.com/openai/v1/chat/completions", model: "llama-3.1-8b-instant", topics: ["Pedagogy", "Reasoning & Math"] },
-            "cerebras": { keyId: "key-cerebras", url: "https://api.cerebras.ai/v1/chat/completions", model: "llama3.3-70b", topics: ["OS & DBMS"] },
-            "mistral": { keyId: "key-mistral", url: "https://api.mistral.ai/v1/chat/completions", model: "mistral-small-latest", topics: ["Digital Logic & Programming"] },
-            "gemini": { keyId: "key-gemini", url: "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", model: "gemini-2.0-flash", topics: ["AI, IoT, Web & SE"] },
+            "groq": { keyId: "key-groq", url: "https://api.groq.com/openai/v1/chat/completions", model: "llama-3.1-8b-instant", topics: ["Pedagogy", "Reasoning & Math", "OS & DBMS", "Networks & DSA"] },
+            "gemini": { keyId: "key-gemini", url: "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", model: "gemini-2.0-flash", topics: ["AI, IoT, Web & SE", "Digital Logic & Programming"] },
             "openrouter": { keyId: "key-openrouter", url: "https://openrouter.ai/api/v1/chat/completions", model: "openrouter/free", topics: ["All"] }
         };
 
         const SUB_BATCHES = [
-            { name: "OS & DBMS", topics: "Operating Systems and Database Management Systems", count: 25, ai: "cerebras" },
-            { name: "Networks & DSA", topics: "Computer Networks, Data Structures and Algorithms", count: 25, ai: "cerebras" },
-            { name: "Digital Logic & Programming", topics: "Digital Logic, C++, Java", count: 25, ai: "mistral" },
+            { name: "OS & DBMS", topics: "Operating Systems and Database Management Systems", count: 25, ai: "groq" },
+            { name: "Networks & DSA", topics: "Computer Networks, Data Structures and Algorithms", count: 25, ai: "groq" },
+            { name: "Digital Logic & Programming", topics: "Digital Logic, C++, Java", count: 25, ai: "gemini" },
             { name: "AI, IoT, Web & SE", topics: "Artificial Intelligence, IoT, Web Technologies, Software Engineering", count: 25, ai: "gemini" },
             { name: "Pedagogy", topics: "Art of Teaching (Pedagogy), Bloom's Taxonomy, Teaching Methods", count: 25, ai: "groq" },
             { name: "Reasoning & Math", topics: "Reasoning and Basic Mathematics", count: 25, ai: "groq" }
@@ -319,13 +304,11 @@
             } catch(e) {}
         }
 
-        // Load keys on page load
         document.addEventListener('DOMContentLoaded', () => {
             loadKeys();
             updateDayBanner();
         });
 
-        // Save keys whenever user types
         document.querySelectorAll('input[type="password"]').forEach(input => {
             input.addEventListener('input', saveKeys);
         });
@@ -394,7 +377,6 @@
         }
 
         async function generateFullTest() {
-            // Check if at least one key is present
             const hasKey = Object.values(AI_ROUTER).some(ai => document.getElementById(ai.keyId).value.trim() !== '');
             if(!hasKey) {
                 showModal('API Key Required', 'कृपया कम से कम एक AI की API Key दर्ज करें।', [
