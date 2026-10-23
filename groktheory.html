@@ -3,275 +3,377 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STET AI Theory Book - Groq</title>
+    <title>STET 2026 Crack Plan - 10 Days</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>tailwind.config = { darkMode: 'class' }</script>
     <style>
         body { font-family: system-ui, sans-serif; background: #f8fafc; }
-        .dark body { background: #0f172a; color: #e2e8f0; }
-        .chapter-card { transition: all 0.2s; cursor: pointer; }
-        .chapter-card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); }
-        .theory-content h3 { font-weight: 700; color: #1e40af; margin-top: 1.5rem; margin-bottom: 0.5rem; font-size: 1.1rem; }
-        .dark .theory-content h3 { color: #93c5fd; }
-        .theory-content p { margin-bottom: 0.75rem; line-height: 1.7; }
-        .theory-content ul { list-style: disc; padding-left: 1.5rem; margin-bottom: 1rem; }
-        .exam-point { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 0.75rem 1rem; margin: 1rem 0; border-radius: 0.375rem; font-size: 0.9rem; }
-        .dark .exam-point { background: #422006; border-left-color: #f59e0b; }
-        .formula-box { background: #e0f2fe; padding: 0.75rem 1rem; border-radius: 0.5rem; font-family: monospace; margin: 0.5rem 0; font-size: 0.9rem; }
-        .dark .formula-box { background: #0c4a6e; }
-        .spinner { border: 4px solid #e2e8f0; border-left-color: #2563eb; width: 50px; height: 50px; border-radius: 50%; animation: spin 1s linear infinite; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .day-card { transition: all 0.2s; }
+        .day-card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); }
+        .topic-check { width: 1.25rem; height: 1.25rem; cursor: pointer; accent-color: #16a34a; }
+        .completed { background: #f0fdf4 !important; border-color: #22c55e !important; }
+        .completed .topic-title { text-decoration: line-through; color: #16a34a; }
+        .focus-box { background: #eff6ff; border-left: 4px solid #2563eb; padding: 0.5rem 0.75rem; margin: 0.25rem 0; border-radius: 0.25rem; font-size: 0.85rem; }
+        .vvi-box { background: #fef2f2; border-left: 4px solid #ef4444; padding: 0.5rem 0.75rem; margin: 0.25rem 0; border-radius: 0.25rem; font-size: 0.85rem; font-weight: 600; }
+        .pyq-box { background: #f5f3ff; border-left: 4px solid #8b5cf6; padding: 0.5rem 0.75rem; margin: 0.25rem 0; border-radius: 0.25rem; font-size: 0.85rem; }
+        .example-box { background: #f0f9ff; border: 1px dashed #7dd3fc; padding: 0.5rem 0.75rem; margin: 0.25rem 0; border-radius: 0.25rem; font-size: 0.85rem; }
+        .passing-box { background: #ecfdf5; border: 1px solid #22c55e; padding: 0.75rem; border-radius: 0.5rem; font-size: 0.85rem; }
+        @media print { .no-print { display: none; } }
     </style>
 </head>
 <body class="min-h-screen">
 
-    <nav class="bg-blue-700 text-white shadow-md sticky top-0 z-40 dark:bg-slate-900">
+    <nav class="bg-blue-700 text-white shadow-md sticky top-0 z-40 no-print">
         <div class="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <h1 class="text-lg font-bold">📖 STET AI Theory Book</h1>
-                <span class="text-xs bg-blue-600 px-2 py-1 rounded dark:bg-blue-800">Groq</span>
-            </div>
-            <button id="darkToggle" onclick="toggleDark()" class="bg-blue-800 px-3 py-2 rounded-lg text-sm">🌙 Dark</button>
+            <h1 class="text-lg font-bold">📚 STET 2026 Crack Plan</h1>
+            <span class="text-xs bg-red-600 px-2 py-1 rounded">10 Days</span>
         </div>
     </nav>
 
     <main class="max-w-5xl mx-auto px-4 py-6">
 
-        <!-- API Key Setup -->
-        <div id="setupScreen" class="bg-white rounded-xl shadow p-6 mb-6 dark:bg-slate-800">
-            <h2 class="text-xl font-bold mb-4 dark:text-white">🔑 Groq API Key Daalein</h2>
-            <p class="text-sm text-gray-600 mb-3 dark:text-slate-400">Free key: <a href="https://console.groq.com/keys" target="_blank" class="text-blue-600 underline">console.groq.com/keys</a></p>
-            <input type="password" id="apiKeyInput" placeholder="gsk_..." class="w-full p-3 border rounded-lg mb-3 dark:bg-slate-700 dark:border-slate-600 dark:text-white">
-            <button onclick="saveKey()" class="bg-blue-600 text-white px-6 py-2 rounded-lg font-bold">Save Key</button>
-            <p class="text-xs text-gray-500 mt-2 dark:text-slate-400">⚠️ Ek baar mein sirf 1 chapter generate hoga. Daily limit 1,000 requests hai.</p>
+        <!-- Passing Marks -->
+        <div class="passing-box mb-6">
+            <h2 class="font-bold text-green-800 mb-2">🎯 Passing Marks (2026)</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
+                <div class="bg-white p-2 rounded"><b>General:</b> 75</div>
+                <div class="bg-white p-2 rounded"><b>BC:</b> 68.25</div>
+                <div class="bg-white p-2 rounded"><b>EBC/OBC:</b> 63.75</div>
+                <div class="bg-white p-2 rounded"><b>SC/ST/Female:</b> 60</div>
+            </div>
+            <p class="text-xs text-gray-600 mt-2">Negative marking nahi hai. Saare 150 attempt karein.</p>
         </div>
 
         <!-- Progress -->
-        <div class="bg-white rounded-xl shadow p-4 mb-6 dark:bg-slate-800">
+        <div class="bg-white rounded-xl shadow p-4 mb-6 no-print">
             <div class="flex justify-between items-center mb-2">
-                <span class="text-sm font-bold dark:text-white">📊 Progress</span>
-                <span class="text-sm text-blue-600 dark:text-blue-400" id="progressText">0 / 10 chapters</span>
+                <span class="text-sm font-bold">📊 Progress</span>
+                <span class="text-sm text-blue-600" id="progressText">0 / 10 days</span>
             </div>
-            <div class="w-full bg-gray-200 rounded-full h-3 dark:bg-slate-700">
+            <div class="w-full bg-gray-200 rounded-full h-3">
                 <div id="progressBar" class="bg-green-500 h-3 rounded-full transition-all" style="width:0%"></div>
             </div>
+            <button onclick="window.print()" class="mt-3 text-xs bg-gray-200 px-3 py-1 rounded no-print">🖨️ Print / PDF</button>
         </div>
 
-        <!-- Chapter Grid -->
-        <div id="chapterGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8"></div>
+        <!-- Day-wise Plan -->
+        <div id="dayGrid" class="space-y-4"></div>
 
-        <!-- Chapter Viewer -->
-        <div id="viewer" class="hidden bg-white rounded-xl shadow p-6 md:p-8 dark:bg-slate-800">
-            <div class="flex justify-between items-center mb-4">
-                <h2 id="viewerTitle" class="text-2xl font-bold text-gray-900 dark:text-white"></h2>
-                <button onclick="closeViewer()" class="text-gray-500 hover:text-gray-700 dark:text-slate-400 text-2xl">✕</button>
-            </div>
-            <div id="viewerBody" class="theory-content text-gray-700 dark:text-slate-300"></div>
-            <div id="viewerLoader" class="hidden text-center py-8">
-                <div class="spinner mx-auto mb-4"></div>
-                <p class="text-gray-600 dark:text-slate-400" id="loaderText">Groq AI chapter likh raha hai...</p>
-            </div>
-            <div id="viewerError" class="hidden bg-red-50 border border-red-300 p-4 rounded-lg text-red-700 dark:bg-red-900 dark:border-red-700 dark:text-red-200 whitespace-pre-line"></div>
+        <!-- Footer -->
+        <div class="mt-8 p-4 bg-yellow-50 border border-yellow-300 rounded-lg text-sm no-print">
+            <b>📌 Note:</b> Yeh analysis 2025 ke actual question papers (Shift 1 & 2) par based hai. 2026 ka syllabus same hai, isliye yeh topics VVI hain. Har din checkbox tick karein, progress save rahegi.
         </div>
 
     </main>
 
     <script>
-        // ================= CHAPTERS =================
-        const chapters = [
-            { id: "digital", title: "Chapter 1: Digital Logic", icon: "🔌", prompt: "Digital Logic: Number systems (Binary, Octal, Hex, BCD), Boolean algebra, Logic gates (AND, OR, NOT, NAND, NOR, XOR), De Morgan's theorem, K-Map simplification, Combinational circuits (Adder, MUX, Decoder), Sequential circuits (Flip-Flops: SR, JK, D, T), Memory (RAM, ROM). Bihar STET Paper 2 level." },
-            { id: "coa", title: "Chapter 2: Computer Organization", icon: "🖥️", prompt: "Computer Organization & Architecture: CPU (ALU, Control Unit, Registers), Von Neumann vs Harvard, Addressing modes, Cache memory (L1, L2, L3, hit/miss, locality), Memory hierarchy, Error detection (Parity, Hamming code). Bihar STET Paper 2 level." },
-            { id: "os", title: "Chapter 3: Operating System", icon: "⚙️", prompt: "Operating System: Process states, CPU Scheduling (FCFS, SJF, Round Robin, Priority), Deadlock (4 conditions, prevention, avoidance), Memory Management (Paging, Segmentation, Virtual Memory, Page fault, Thrashing), File system basics. Bihar STET Paper 2 level." },
-            { id: "dbms", title: "Chapter 4: DBMS", icon: "🗄️", prompt: "DBMS: 3-level architecture, ER model, Keys (Primary, Foreign, Candidate), Normalization (1NF, 2NF, 3NF, BCNF), SQL commands (DDL, DML, DCL), ACID properties, Transactions. Bihar STET Paper 2 level." },
-            { id: "cn", title: "Chapter 5: Computer Networks", icon: "🌐", prompt: "Computer Networks: OSI model (7 layers), TCP/IP model, Protocols (HTTP, FTP, SMTP, DNS, TCP, UDP), IP addressing (IPv4, IPv6, classes, private IP), Network devices (Hub, Switch, Router), Routing basics. Bihar STET Paper 2 level." },
-            { id: "ds", title: "Chapter 6: Data Structures", icon: "📊", prompt: "Data Structures: Array, Linked List (singly, doubly, circular), Stack (LIFO, applications), Queue (FIFO, circular, priority), Trees (Binary Tree, BST, traversals), Sorting (Bubble, Selection, Insertion, Merge, Quick), Searching (Linear, Binary), Hashing. Bihar STET Paper 2 level." },
-            { id: "se", title: "Chapter 7: Software Engineering", icon: "🔧", prompt: "Software Engineering: SDLC models (Waterfall, Prototype, Spiral, Agile), Testing (Unit, Integration, System, Black box, White box), Verification vs Validation, COCOMO, Maintenance types. Bihar STET Paper 2 level." },
-            { id: "oop", title: "Chapter 8: OOP (C++)", icon: "🧩", prompt: "Object Oriented Programming (C++): 4 pillars (Encapsulation, Inheritance, Polymorphism, Abstraction), Class & Object, Constructor/Destructor, Function overloading vs overriding, Virtual functions, Inheritance types. Bihar STET Paper 2 level." },
-            { id: "web", title: "Chapter 9: Web Technologies", icon: "🌍", prompt: "Web Technologies: HTML basics, CSS (selectors, box model), JavaScript basics, Internet (URL, HTTP/HTTPS, DNS), Client vs Server. Bihar STET Paper 2 level." },
-            { id: "pedagogy", title: "Chapter 10: Pedagogy", icon: "👨‍🏫", prompt: "Pedagogy (Art of Teaching): Teaching phases, Bloom's Taxonomy (Cognitive, Affective, Psychomotor), Teaching methods, Lesson planning, Assessment (Formative, Summative, CCE). Bihar STET Paper 2 level." }
+        // ================= 10 DAY PLAN WITH 2025 PYQ ANALYSIS =================
+        const plan = [
+            {
+                day: 1,
+                title: "Computer Networks (Sabse Zyada Questions)",
+                icon: "🌐",
+                focus: [
+                    "OSI Model (7 Layers) aur TCP/IP Model (4 Layers)",
+                    "Protocols: SMTP, HTTP, FTP, DNS, TCP, UDP, ARP, VoIP",
+                    "IP Addressing: IPv4, IPv6, Classes, Private IP",
+                    "Network Devices: Hub, Switch, Router",
+                    "Routing: RIP, OSPF"
+                ],
+                vvi: [
+                    "SMTP (Email protocol) — 2025 Shift 1 mein direct question",
+                    "VoIP (Voice over IP) — 2025 Shift 1 mein direct question",
+                    "ARP (IP to MAC mapping) — 2025 Shift 2 mein direct question",
+                    "Protocol ki definition — 2025 Shift 2 mein direct question"
+                ],
+                pyq: "2025 (Shift 1): Email bhejne ke liye kaunsa protocol? → SMTP. VoIP ka use? ARP ka function? Protocol kya hai? — yeh sab direct poocha gaya.",
+                example: "Example: SMTP email send, POP3/IMAP receive. Router Layer 3 par. Loopback = 127.0.0.1.",
+                examPoint: "TCP 3-way handshake: SYN, SYN-ACK, ACK. Private IP: 10.0.0.0/8, 192.168.0.0/16."
+            },
+            {
+                day: 2,
+                title: "DBMS + Operating System",
+                icon: "🗄️",
+                focus: [
+                    "DBMS: 3-Level Architecture, Keys, Normalization (1NF-BCNF)",
+                    "SQL: DDL, DML, UPDATE, DELETE",
+                    "ACID Properties",
+                    "OS: Process States, CPU Scheduling (FCFS, SJF, RR)",
+                    "Deadlock: 4 conditions, Banker's Algorithm",
+                    "Memory Management: Paging, Segmentation, Virtual Memory"
+                ],
+                vvi: [
+                    "Physical Level (Data abstraction) — 2025 Shift 1 mein direct question",
+                    "SQL UPDATE statement — 2025 Shift 2 mein direct question",
+                    "Load Control ka primary goal — 2025 Shift 2 mein direct question",
+                    "IPC (Inter-Process Communication) — 2025 Shift 1 mein direct question"
+                ],
+                pyq: "2025 (Shift 1): Data abstraction ka kaunsa level batata hai ki data actually kaise store hota hai? → Physical Level. 2025 (Shift 2): Database mein data update karne ke liye? → UPDATE.",
+                example: "Example: 2NF = 1NF + no partial dependency. ACID = Atomicity, Consistency, Isolation, Durability.",
+                examPoint: "DELETE rows delete karta hai, TRUNCATE all rows, DROP table delete karta hai."
+            },
+            {
+                day: 3,
+                title: "Digital Logic + Algorithms",
+                icon: "🔌",
+                focus: [
+                    "Number Systems: Binary, Octal, Hex, BCD",
+                    "Boolean Algebra, De Morgan's Laws, Logic Gates",
+                    "K-Map simplification (2, 3, 4 variable)",
+                    "Combinational Circuits: Adder, MUX, Priority Encoder",
+                    "Sequential Circuits: SR, JK, D, T Flip-Flops",
+                    "Algorithm Complexity: Big-O, NP-Completeness"
+                ],
+                vvi: [
+                    "K-Map se SOP/POS form nikalna — 2025 mein direct question",
+                    "Priority Encoder ka use — 2025 mein direct question",
+                    "NP-Completeness (Stephen Cook) — 2025 Shift 2 mein direct question"
+                ],
+                pyq: "2025: K-Map se Boolean function simplify karna tha. Priority Encoder ka use poocha gaya. NP-Completeness kisne introduce kiya? → Stephen Cook.",
+                example: "Example: Binary 1010 = Decimal 10. 2^n:1 MUX mein n select lines. JK Flip-Flop mein race-around condition.",
+                examPoint: "De Morgan's: (A+B)' = A'·B'. NAND aur NOR universal gates hain."
+            },
+            {
+                day: 4,
+                title: "Data Structures + Programming",
+                icon: "📊",
+                focus: [
+                    "Array, Linked List (Singly, Doubly, Circular)",
+                    "Stack (LIFO), Queue (FIFO), applications",
+                    "Trees: Binary Tree, BST, Traversals",
+                    "Sorting: Bubble, Selection, Insertion, Merge, Quick",
+                    "Searching: Linear, Binary, Hashing",
+                    "Python/C++ basics (loops, functions, string)"
+                ],
+                vvi: [
+                    "Stack (LIFO) — 2025 Shift 1 mein direct question",
+                    "Binary Search ki Time Complexity (O(log n)) — 2025 mein direct question",
+                    "Binary Tree edges (n-1) — 2025 mein direct question",
+                    "Python string find/print ka output — 2025 Shift 2 mein direct question"
+                ],
+                pyq: "2025 (Shift 1): Stack kis principle par kaam karta hai? → LIFO. Binary search ki time complexity? → O(log n). 2025 (Shift 2): Python string code ka output.",
+                example: "Example: Stack LIFO, Queue FIFO. BST mein search O(log n) average. Inorder traversal of BST sorted order deta hai.",
+                examPoint: "Merge sort O(n log n). Binary search ke liye array sorted hona chahiye."
+            },
+            {
+                day: 5,
+                title: "Software Engineering + OOP",
+                icon: "🔧",
+                focus: [
+                    "SDLC Models: Waterfall, Prototype, Spiral, Agile",
+                    "Testing: Unit, Integration, System, Black Box, White Box",
+                    "Verification vs Validation",
+                    "Maintenance Types: Corrective, Adaptive, Perfective, Preventive",
+                    "OOP: 4 Pillars, Class & Object, Constructor/Destructor",
+                    "Function Overloading vs Overriding, Virtual Functions"
+                ],
+                vvi: [
+                    "Corrective Maintenance (defects fix) — 2025 Shift 1 mein direct question",
+                    "Method Overloading (same name, different parameters) — 2025 Shift 1 mein direct question",
+                    "Overloading vs Overriding ka difference"
+                ],
+                pyq: "2025 (Shift 1): Kaunsa maintenance process defects fix karne par focused hai? → Corrective Maintenance. OOP mein method overloading kya hai? → Same name but different parameters.",
+                example: "Example: Waterfall sequential, Agile iterative. Overloading compile-time, Overriding runtime.",
+                examPoint: "Virtual function = runtime polymorphism. Corrective maintenance bugs fix karta hai."
+            },
+            {
+                day: 6,
+                title: "Computer Organization + Web Technologies",
+                icon: "🖥️",
+                focus: [
+                    "CPU: ALU, Control Unit, Registers",
+                    "Addressing Modes",
+                    "Cache Memory: L1, L2, L3, hit/miss",
+                    "Memory Hierarchy",
+                    "Error Detection: Parity, Hamming Code",
+                    "HTML Basics, CSS Selectors, Box Model",
+                    "JavaScript: Variables, Functions, DOM",
+                    "Internet: URL, HTTP/HTTPS, DNS"
+                ],
+                vvi: [
+                    "Accumulator register ka function — 2023 mein poocha, 2026 ke liye important",
+                    "Addressing Modes — direct question aata hai",
+                    "HTTP vs HTTPS",
+                    "CSS class selector (.class) aur id (#id)"
+                ],
+                pyq: "2023: Accumulator register kis liye use hota hai? Logic family (CMOS) ka question tha. 2025: JavaScript asynchronous request kaise karein? → Fetch API.",
+                example: "Example: L1 cache CPU ke andar, sabse fast. HTML = HyperText Markup Language.",
+                examPoint: "Temporal locality = same data baar-baar. DNS domain ko IP mein convert karta hai."
+            },
+            {
+                day: 7,
+                title: "Pedagogy (Art of Teaching) - Part 1",
+                icon: "👨‍🏫",
+                focus: [
+                    "Teaching Phases: Pre-active, Interactive, Post-active",
+                    "Bloom's Taxonomy: Cognitive Domain (Remember, Understand, Apply, Analyze, Evaluate, Create)",
+                    "Affective Domain, Psychomotor Domain",
+                    "Teaching Methods: Lecture, Discussion, Demonstration, Project",
+                    "Lesson Planning"
+                ],
+                vvi: [
+                    "Bloom's Taxonomy ke levels (Remembering sabse low, Creating sabse high)",
+                    "Teaching ke 3 phases",
+                    "Formative vs Summative assessment"
+                ],
+                pyq: "Pedagogy section 30 marks ka hai aur easy to moderate hota hai. Bloom's Taxonomy aur teaching methods se direct questions aate hain. Yeh scoring section hai.",
+                example: "Example: Bloom's Taxonomy mein Remembering sabse low, Creating sabse high.",
+                examPoint: "Teaching ke 3 phases. CCE = Continuous and Comprehensive Evaluation."
+            },
+            {
+                day: 8,
+                title: "Pedagogy (Art of Teaching) - Part 2 + GK",
+                icon: "📖",
+                focus: [
+                    "Assessment: Formative, Summative, CCE",
+                    "Classroom Management",
+                    "Teaching Aids: Visual, Audio, Audiovisual",
+                    "GK: Bihar Special (History, Geography, Culture)",
+                    "EVS Basics",
+                    "Reasoning: Series, Coding-Decoding",
+                    "Basic Mathematics"
+                ],
+                vvi: [
+                    "Formative assessment (during learning) vs Summative (end)",
+                    "CCE ka full form aur purpose",
+                    "Bihar GK (Bihar STET mein Bihar special poocha jata hai)"
+                ],
+                pyq: "Pedagogy ke 30 marks Art of Teaching se, 5 GK, 5 EVS, 5 Maths, 5 Reasoning se aate hain. Pedagogy easy scoring hai.",
+                example: "Example: Formative assessment learning ke dauraan, Summative end mein.",
+                examPoint: "CCE = Continuous and Comprehensive Evaluation. Bihar GK important."
+            },
+            {
+                day: 9,
+                title: "Full Revision (Saare VVI Topics)",
+                icon: "🔄",
+                focus: [
+                    "Computer Networks: SMTP, VoIP, ARP, Protocol",
+                    "DBMS: Physical Level, SQL UPDATE",
+                    "OS: Load Control, IPC",
+                    "Digital Logic: K-Map, Priority Encoder",
+                    "Algorithms: NP-Completeness (Stephen Cook)",
+                    "SE: Corrective Maintenance",
+                    "OOP: Method Overloading",
+                    "DS: Stack (LIFO), Binary Search O(log n)"
+                ],
+                vvi: [
+                    "Saare VVI topics jo 2025 mein aaye hain, unhe dobara revise karein",
+                    "Exam Point boxes yaad karein"
+                ],
+                pyq: "2025 ke saare direct questions ka revision. Yeh topics 2026 mein bhi aayenge kyunki syllabus same hai.",
+                example: "Example: Har chapter ke VVI topics ko ek baar phir se padho.",
+                examPoint: "Revision ke bina exam mat dena. Kam se kam 2 baar VVI topics revise karein."
+            },
+            {
+                day: 10,
+                title: "Full Mock Test + Analysis",
+                icon: "📝",
+                focus: [
+                    "Full Mock Test do (150 questions, 150 minutes)",
+                    "Apne test app se test generate karo",
+                    "Score analyse karo",
+                    "Weak topics identify karo",
+                    "Un topics ko dobara padho",
+                    "Exam ke liye mentally prepare karo"
+                ],
+                vvi: [
+                    "Mock test mein jo questions galat ho, unke topics dobara padho",
+                    "Time management practice karo",
+                    "Negative marking nahi hai, isliye saare 150 attempt karo"
+                ],
+                pyq: "Mock test se pata chalega ki aap kitne ready hain. 75+ (General) ya 63.75+ (EBC) target rakho.",
+                example: "Example: Test app se 150 questions generate karo, 150 minute mein solve karo, score dekho.",
+                examPoint: "Mock test ke baad weak topics par focus karo. Exam se pehle achhi neend lo."
+            }
         ];
 
         // ================= STATE =================
-        let generatedChapters = JSON.parse(localStorage.getItem('stet_ai_chapters') || '{}');
-        const STORAGE_CHAPTERS = 'stet_ai_chapters';
-        const STORAGE_KEY = 'stet_groq_key';
-        const STORAGE_DARK = 'stet_ai_dark';
-
-        // ================= DARK MODE =================
-        function toggleDark() {
-            document.documentElement.classList.toggle('dark');
-            const isDark = document.documentElement.classList.contains('dark');
-            localStorage.setItem(STORAGE_DARK, isDark ? '1' : '0');
-            document.getElementById('darkToggle').innerText = isDark ? '☀️ Light' : '🌙 Dark';
-        }
-        if (localStorage.getItem(STORAGE_DARK) === '1') {
-            document.documentElement.classList.add('dark');
-            document.getElementById('darkToggle').innerText = '☀️ Light';
-        }
-
-        // ================= SAVE/LOAD KEY =================
-        function saveKey() {
-            const key = document.getElementById('apiKeyInput').value.trim();
-            if (!key) return alert('Groq API Key daalein');
-            localStorage.setItem(STORAGE_KEY, key);
-            document.getElementById('setupScreen').classList.add('hidden');
-            buildGrid();
-        }
-
-        function loadKey() {
-            const key = localStorage.getItem(STORAGE_KEY);
-            if (key) {
-                document.getElementById('apiKeyInput').value = key;
-                document.getElementById('setupScreen').classList.add('hidden');
-                return true;
-            }
-            return false;
-        }
+        let completedDays = JSON.parse(localStorage.getItem('stet_2026_progress') || '{}');
+        const STORAGE_KEY = 'stet_2026_progress';
 
         // ================= BUILD GRID =================
         function buildGrid() {
-            const grid = document.getElementById('chapterGrid');
+            const grid = document.getElementById('dayGrid');
             grid.innerHTML = '';
-            chapters.forEach(ch => {
-                const isGenerated = generatedChapters[ch.id] ? true : false;
+            plan.forEach((day, index) => {
+                const isCompleted = completedDays[index] || false;
                 const card = document.createElement('div');
-                card.className = 'chapter-card bg-white rounded-xl shadow p-5 dark:bg-slate-800 dark:border dark:border-slate-700';
+                card.className = `day-card bg-white rounded-xl shadow p-5 border-2 ${isCompleted ? 'completed' : 'border-transparent'}`;
+                card.id = `day-${index}`;
+                
+                let focusHtml = day.focus.map(f => `<div class="focus-box">• ${f}</div>`).join('');
+                let vviHtml = day.vvi.map(v => `<div class="vvi-box">🔥 ${v}</div>`).join('');
+                
                 card.innerHTML = `
                     <div class="flex justify-between items-start mb-3">
-                        <span class="text-3xl">${ch.icon}</span>
-                        <span class="text-xs px-2 py-1 rounded ${isGenerated ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 'bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-slate-400'}">
-                            ${isGenerated ? '✅ Ready' : '⬜ Not generated'}
-                        </span>
+                        <div class="flex items-center gap-3">
+                            <span class="text-3xl">${day.icon}</span>
+                            <div>
+                                <h3 class="font-bold text-lg topic-title">Day ${day.day}: ${day.title}</h3>
+                                <p class="text-xs text-gray-500">${day.focus.length} topics + PYQ Analysis</p>
+                            </div>
+                        </div>
+                        <label class="flex items-center gap-2 cursor-pointer no-print">
+                            <input type="checkbox" class="topic-check" ${isCompleted ? 'checked' : ''} onchange="toggleComplete(${index}, this.checked)">
+                            <span class="text-xs font-bold ${isCompleted ? 'text-green-600' : 'text-gray-500'}">${isCompleted ? '✅ Complete' : 'Mark Complete'}</span>
+                        </label>
                     </div>
-                    <h3 class="font-bold text-gray-800 dark:text-white mb-2">${ch.title}</h3>
-                    <button onclick="openChapter('${ch.id}')" class="w-full mt-2 ${isGenerated ? 'bg-blue-600 hover:bg-blue-700' : 'bg-green-600 hover:bg-green-700'} text-white font-bold py-2 px-4 rounded-lg text-sm">
-                        ${isGenerated ? '📖 Padho' : '✨ Generate'}
-                    </button>
+                    
+                    <div class="mb-3">
+                        <p class="text-sm font-bold text-gray-700 mb-1">🎯 Focus Topics:</p>
+                        ${focusHtml}
+                    </div>
+
+                    <div class="mb-3">
+                        <p class="text-sm font-bold text-red-600 mb-1">🔥 VVI (2025 Mein Aaya — Pehle Yeh Karein):</p>
+                        ${vviHtml}
+                    </div>
+                    
+                    <div class="pyq-box">
+                        <b>📊 PYQ Analysis:</b> ${day.pyq}
+                    </div>
+                    
+                    <div class="example-box">
+                        <b>📝 Example:</b> ${day.example}
+                    </div>
+                    
+                    <div class="p-3 bg-yellow-50 border-l-4 border-yellow-500 rounded text-sm">
+                        <b>⭐ Exam Point:</b> ${day.examPoint}
+                    </div>
                 `;
                 grid.appendChild(card);
             });
             updateProgress();
         }
 
-        // ================= OPEN CHAPTER =================
-        function openChapter(id) {
-            const ch = chapters.find(c => c.id === id);
-            document.getElementById('viewerTitle').innerText = ch.title;
-            document.getElementById('viewer').classList.remove('hidden');
-            document.getElementById('viewer').scrollIntoView({ behavior: 'smooth' });
-
-            if (generatedChapters[id]) {
-                document.getElementById('viewerBody').innerHTML = generatedChapters[id];
-                document.getElementById('viewerBody').classList.remove('hidden');
-                document.getElementById('viewerLoader').classList.add('hidden');
-                document.getElementById('viewerError').classList.add('hidden');
+        // ================= TOGGLE COMPLETE =================
+        function toggleComplete(index, checked) {
+            completedDays[index] = checked;
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(completedDays));
+            
+            const card = document.getElementById(`day-${index}`);
+            if (checked) {
+                card.classList.add('completed');
             } else {
-                generateChapter(id, ch);
+                card.classList.remove('completed');
             }
-        }
-
-        // ================= GENERATE CHAPTER (Groq) =================
-        async function generateChapter(id, ch) {
-            const key = localStorage.getItem(STORAGE_KEY);
-            if (!key) {
-                document.getElementById('viewerBody').classList.add('hidden');
-                document.getElementById('viewerLoader').classList.add('hidden');
-                document.getElementById('viewerError').classList.remove('hidden');
-                document.getElementById('viewerError').innerText = 'API Key nahi mili. Page refresh karke key daalein.';
-                return;
-            }
-
-            document.getElementById('viewerBody').classList.add('hidden');
-            document.getElementById('viewerLoader').classList.remove('hidden');
-            document.getElementById('viewerError').classList.add('hidden');
-            document.getElementById('loaderText').innerText = 'Groq AI chapter likh raha hai... (30-60 seconds)';
-
-            const prompt = `Tum ek teacher ho jo Bihar STET Paper 2 Computer Science ke liye Hindi/Hinglish mein theory notes bana raha hai. Topic: ${ch.prompt}.
-
-Nirdesh:
-- Chapter ko sections mein divide karo (jaise "Number Systems", "Logic Gates", etc.)
-- Har section mein clear explanation do, Hinglish mein (Hindi + English mix)
-- Important points ke liye "Exam Point:" box banao
-- Formulas ke liye "Formula:" box banao
-- Bilkul simple language use karo, jaise ek teacher student ko samjha raha ho
-- Real book jaisa lagna chahiye, bullet points aur headings ke saath
-- 800-1200 words mein likho
-- Sirf HTML format mein do (h3, p, ul, li, div class="exam-point", div class="formula-box")
-- Koi markdown, koi code block nahi, sirf saaf HTML
-
-Ab is topic ki theory likho.`;
-
-            try {
-                const content = await callGroq(key, prompt);
-                const cleaned = content.replace(/```html/g, '').replace(/```/g, '').trim();
-
-                generatedChapters[id] = cleaned;
-                localStorage.setItem(STORAGE_CHAPTERS, JSON.stringify(generatedChapters));
-
-                document.getElementById('viewerBody').innerHTML = cleaned;
-                document.getElementById('viewerBody').classList.remove('hidden');
-                document.getElementById('viewerLoader').classList.add('hidden');
-                buildGrid();
-            } catch (err) {
-                document.getElementById('viewerLoader').classList.add('hidden');
-                document.getElementById('viewerError').classList.remove('hidden');
-                document.getElementById('viewerError').innerText = err.message;
-            }
-        }
-
-        // ================= GROQ CALL =================
-        async function callGroq(key, prompt) {
-            const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${key}`
-                },
-                body: JSON.stringify({
-                    model: 'openai/gpt-oss-20b',
-                    messages: [{ role: 'user', content: prompt }],
-                    temperature: 0.7,
-                    max_tokens: 3000,          // TPM limit ke andar
-                    reasoning_effort: 'low'
-                })
-            });
-
-            if (!res.ok) {
-                if (res.status === 429) {
-                    throw new Error('⏳ Rate limit (429). 1 minute baad try karein.');
-                }
-                if (res.status === 413) {
-                    throw new Error('❌ Request too large (413). Chapter chhota karne ke liye prompt mein "short" add karein, ya 1 minute baad try karein.');
-                }
-                throw new Error(`Groq Error HTTP ${res.status}`);
-            }
-
-            const data = await res.json();
-            if (!data.choices || !data.choices[0] || !data.choices[0].message) {
-                throw new Error('Response empty hai. Dobara try karein.');
-            }
-            return data.choices[0].message.content;
-        }
-
-        // ================= CLOSE VIEWER =================
-        function closeViewer() {
-            document.getElementById('viewer').classList.add('hidden');
+            
+            const label = card.querySelector('label span');
+            label.innerText = checked ? '✅ Complete' : 'Mark Complete';
+            label.className = `text-xs font-bold ${checked ? 'text-green-600' : 'text-gray-500'}`;
+            
+            updateProgress();
         }
 
         // ================= PROGRESS =================
         function updateProgress() {
-            const total = chapters.length;
-            const done = Object.keys(generatedChapters).length;
-            document.getElementById('progressText').innerText = `${done} / ${total} chapters generated`;
+            const total = plan.length;
+            const done = Object.values(completedDays).filter(v => v).length;
+            document.getElementById('progressText').innerText = `${done} / ${total} days complete`;
             document.getElementById('progressBar').style.width = `${(done / total) * 100}%`;
         }
 
         // ================= INIT =================
-        if (loadKey()) {
-            buildGrid();
-        } else {
-            document.getElementById('setupScreen').classList.remove('hidden');
-        }
+        buildGrid();
     </script>
 </body>
 </html>
