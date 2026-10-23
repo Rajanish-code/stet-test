@@ -25,7 +25,6 @@
 </head>
 <body class="p-4">
     <div class="max-w-4xl mx-auto">
-        <!-- Setup -->
         <div id="setup" class="bg-white p-8 rounded-xl shadow text-center mt-20">
             <h1 class="text-2xl font-bold mb-4">STET Mock Test (Groq)</h1>
             <p class="text-gray-600 mb-4">150 Questions | 150 Minutes | Computer Science + Pedagogy</p>
@@ -35,14 +34,12 @@
             <p class="text-xs text-gray-500 mt-2">Free key: <a href="https://console.groq.com/keys" target="_blank" class="text-blue-500">console.groq.com/keys</a></p>
         </div>
 
-        <!-- Loading -->
         <div id="loading" class="hidden bg-white p-8 rounded-xl shadow text-center mt-20">
             <div class="spinner mx-auto mb-4"></div>
             <p class="text-lg font-medium" id="loadText">Generating questions...</p>
             <div class="w-full bg-gray-200 h-2 rounded mt-4"><div id="progress" class="bg-blue-600 h-2 rounded" style="width:0%"></div></div>
         </div>
 
-        <!-- Quiz -->
         <div id="quiz" class="hidden">
             <div class="bg-white p-4 rounded-lg shadow mb-4 flex justify-between items-center sticky top-0 z-10 no-print">
                 <span class="font-bold">STET Mock Test</span>
@@ -55,7 +52,6 @@
             <div id="questions"></div>
         </div>
 
-        <!-- Result -->
         <div id="result" class="hidden bg-white p-8 rounded-xl shadow text-center mt-20 no-print">
             <h2 class="text-3xl font-bold mb-4">Result</h2>
             <p class="text-5xl font-bold text-blue-600" id="score">0</p>
@@ -73,6 +69,30 @@
 
     <script>
         let questions = [], answers = {}, timerInt, timeLeft = 150 * 60, submitted = false;
+
+        // ✅ Naya function: adhoore JSON se bhi poore questions nikaalta hai
+        function parseAIResponse(rawText) {
+            let cleaned = rawText.replace(/```json/g, '').replace(/```/g, '').trim();
+            try {
+                return JSON.parse(cleaned);
+            } catch (e) {
+                const objects = cleaned.match(/\{[^{}]*\}/g) || [];
+                const salvaged = [];
+                for (const objStr of objects) {
+                    try {
+                        const obj = JSON.parse(objStr);
+                        if (obj.question && Array.isArray(obj.options) && typeof obj.correctIndex === 'number') {
+                            salvaged.push(obj);
+                        }
+                    } catch (e2) {}
+                }
+                if (salvaged.length > 0) {
+                    console.warn(`Salvaged ${salvaged.length} questions from truncated JSON`);
+                    return salvaged;
+                }
+                throw new Error('JSON completely unusable');
+            }
+        }
 
         async function generateTest() {
             const key = document.getElementById('apiKey').value.trim();
@@ -100,15 +120,17 @@
                             model: 'openai/gpt-oss-20b',
                             messages: [{ role: 'user', content: prompt }],
                             temperature: 0.5,
-                            max_tokens: 8000
+                            max_tokens: 16000,          // ✅ 8000 se badhaya
+                            reasoning_effort: 'low'     // ✅ Sochne ka budget kam kiya
                         })
                     });
 
                     if (!res.ok) throw new Error(`HTTP ${res.status}`);
                     const data = await res.json();
                     let text = data.choices[0].message.content;
-                    text = text.replace(/```json/g, '').replace(/```/g, '').trim();
-                    const parsed = JSON.parse(text);
+                    
+                    // ✅ Naya parser use karo
+                    const parsed = parseAIResponse(text);
                     questions = questions.concat(parsed);
                     document.getElementById('progress').style.width = `${((i+1)/3)*100}%`;
                 }
