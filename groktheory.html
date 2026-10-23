@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STET AI Theory Book - Groq</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { darkMode: 'class' }</script>
+    <style>
+        body { font-family: system-ui, sans-serif; background: #f8fafc; }
+        .dark body { background: #0f172a; color: #e2e8f0; }
+        .chapter-card { transition: all 0.2s; cursor: pointer; }
+        .chapter-card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); }
+        .theory-content h3 { font-weight: 700; color: #1e40af; margin-top: 1.5rem; margin-bottom: 0.5rem; font-size: 1.1rem; }
+        .dark .theory-content h3 { color: #93c5fd; }
+        .theory-content p { margin-bottom: 0.75rem; line-height: 1.7; }
+        .theory-content ul { list-style: disc; padding-left: 1.5rem; margin-bottom: 1rem; }
+        .exam-point { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 0.75rem 1rem; margin: 1rem 0; border-radius: 0.375rem; font-size: 0.9rem; }
+        .dark .exam-point { background: #422006; border-left-color: #f59e0b; }
+        .formula-box { background: #e0f2fe; padding: 0.75rem 1rem; border-radius: 0.5rem; font-family: monospace; margin: 0.5rem 0; font-size: 0.9rem; }
+        .dark .formula-box { background: #0c4a6e; }
+        .spinner { border: 4px solid #e2e8f0; border-left-color: #2563eb; width: 50px; height: 50px; border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <nav class="bg-blue-700 text-white shadow-md sticky top-0 z-40 dark:bg-slate-900">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <h1 class="text-lg font-bold">📖 STET AI Theory Book</h1>
+                <span class="text-xs bg-blue-600 px-2 py-1 rounded dark:bg-blue-800">Groq</span>
+            </div>
+            <button id="darkToggle" onclick="toggleDark()" class="bg-blue-800 px-3 py-2 rounded-lg text-sm">🌙 Dark</button>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto px-4 py-6">
+
+        <!-- API Key Setup -->
+        <div id="setupScreen" class="bg-white rounded-xl shadow p-6 mb-6 dark:bg-slate-800">
+            <h2 class="text-xl font-bold mb-4 dark:text-white">🔑 Groq API Key Daalein</h2>
+            <p class="text-sm text-gray-600 mb-3 dark:text-slate-400">Free key: <a href="https://console.groq.com/keys" target="_blank" class="text-blue-600 underline">console.groq.com/keys</a></p>
+            <input type="password" id="apiKeyInput" placeholder="gsk_..." class="w-full p-3 border rounded-lg mb-3 dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+            <button onclick="saveKey()" class="bg-blue-600 text-white px-6 py-2 rounded-lg font-bold">Save Key</button>
+            <p class="text-xs text-gray-500 mt-2 dark:text-slate-400">⚠️ Ek baar mein sirf 1 chapter generate hoga. Daily limit 1,000 requests hai.</p>
+        </div>
+
+        <!-- Progress -->
+        <div class="bg-white rounded-xl shadow p-4 mb-6 dark:bg-slate-800">
+            <div class="flex justify-between items-center mb-2">
+                <span class="text-sm font-bold dark:text-white">📊 Progress</span>
+                <span class="text-sm text-blue-600 dark:text-blue-400" id="progressText">0 / 10 chapters</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-3 dark:bg-slate-700">
+                <div id="progressBar" class="bg-green-500 h-3 rounded-full transition-all" style="width:0%"></div>
+            </div>
+        </div>
+
+        <!-- Chapter Grid -->
+        <div id="chapterGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8"></div>
+
+        <!-- Chapter Viewer -->
+        <div id="viewer" class="hidden bg-white rounded-xl shadow p-6 md:p-8 dark:bg-slate-800">
+            <div class="flex justify-between items-center mb-4">
+                <h2 id="viewerTitle" class="text-2xl font-bold text-gray-900 dark:text-white"></h2>
+                <button onclick="closeViewer()" class="text-gray-500 hover:text-gray-700 dark:text-slate-400 text-2xl">✕</button>
+            </div>
+            <div id="viewerBody" class="theory-content text-gray-700 dark:text-slate-300"></div>
+            <div id="viewerLoader" class="hidden text-center py-8">
+                <div class="spinner mx-auto mb-4"></div>
+                <p class="text-gray-600 dark:text-slate-400" id="loaderText">Groq AI chapter likh raha hai...</p>
+            </div>
+            <div id="viewerError" class="hidden bg-red-50 border border-red-300 p-4 rounded-lg text-red-700 dark:bg-red-900 dark:border-red-700 dark:text-red-200 whitespace-pre-line"></div>
+        </div>
+
+    </main>
+
+    <script>
+        // ================= CHAPTERS =================
+        const chapters = [
+            { id: "digital", title: "Chapter 1: Digital Logic", icon: "🔌", prompt: "Digital Logic: Number systems (Binary, Octal, Hex, BCD), Boolean algebra, Logic gates (AND, OR, NOT, NAND, NOR, XOR), De Morgan's theorem, K-Map simplification, Combinational circuits (Adder, MUX, Decoder), Sequential circuits (Flip-Flops: SR, JK, D, T), Memory (RAM, ROM). Bihar STET Paper 2 level." },
+            { id: "coa", title: "Chapter 2: Computer Organization", icon: "🖥️", prompt: "Computer Organization & Architecture: CPU (ALU, Control Unit, Registers), Von Neumann vs Harvard, Addressing modes, Cache memory (L1, L2, L3, hit/miss, locality), Memory hierarchy, Error detection (Parity, Hamming code). Bihar STET Paper 2 level." },
+            { id: "os", title: "Chapter 3: Operating System", icon: "⚙️", prompt: "Operating System: Process states, CPU Scheduling (FCFS, SJF, Round Robin, Priority), Deadlock (4 conditions, prevention, avoidance), Memory Management (Paging, Segmentation, Virtual Memory, Page fault, Thrashing), File system basics. Bihar STET Paper 2 level." },
+            { id: "dbms", title: "Chapter 4: DBMS", icon: "🗄️", prompt: "DBMS: 3-level architecture, ER model, Keys (Primary, Foreign, Candidate), Normalization (1NF, 2NF, 3NF, BCNF), SQL commands (DDL, DML, DCL), ACID properties, Transactions. Bihar STET Paper 2 level." },
+            { id: "cn", title: "Chapter 5: Computer Networks", icon: "🌐", prompt: "Computer Networks: OSI model (7 layers), TCP/IP model, Protocols (HTTP, FTP, SMTP, DNS, TCP, UDP), IP addressing (IPv4, IPv6, classes, private IP), Network devices (Hub, Switch, Router), Routing basics. Bihar STET Paper 2 level." },
+            { id: "ds", title: "Chapter 6: Data Structures", icon: "📊", prompt: "Data Structures: Array, Linked List (singly, doubly, circular), Stack (LIFO, applications), Queue (FIFO, circular, priority), Trees (Binary Tree, BST, traversals), Sorting (Bubble, Selection, Insertion, Merge, Quick), Searching (Linear, Binary), Hashing. Bihar STET Paper 2 level." },
+            { id: "se", title: "Chapter 7: Software Engineering", icon: "🔧", prompt: "Software Engineering: SDLC models (Waterfall, Prototype, Spiral, Agile), Testing (Unit, Integration, System, Black box, White box), Verification vs Validation, COCOMO, Maintenance types. Bihar STET Paper 2 level." },
+            { id: "oop", title: "Chapter 8: OOP (C++)", icon: "🧩", prompt: "Object Oriented Programming (C++): 4 pillars (Encapsulation, Inheritance, Polymorphism, Abstraction), Class & Object, Constructor/Destructor, Function overloading vs overriding, Virtual functions, Inheritance types. Bihar STET Paper 2 level." },
+            { id: "web", title: "Chapter 9: Web Technologies", icon: "🌍", prompt: "Web Technologies: HTML basics, CSS (selectors, box model), JavaScript basics, Internet (URL, HTTP/HTTPS, DNS), Client vs Server. Bihar STET Paper 2 level." },
+            { id: "pedagogy", title: "Chapter 10: Pedagogy", icon: "👨‍🏫", prompt: "Pedagogy (Art of Teaching): Teaching phases, Bloom's Taxonomy (Cognitive, Affective, Psychomotor), Teaching methods, Lesson planning, Assessment (Formative, Summative, CCE). Bihar STET Paper 2 level." }
+        ];
+
+        // ================= STATE =================
+        let generatedChapters = JSON.parse(localStorage.getItem('stet_ai_chapters') || '{}');
+        const STORAGE_CHAPTERS = 'stet_ai_chapters';
+        const STORAGE_KEY = 'stet_groq_key';
+        const STORAGE_DARK = 'stet_ai_dark';
+
+        // ================= DARK MODE =================
+        function toggleDark() {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            localStorage.setItem(STORAGE_DARK, isDark ? '1' : '0');
+            document.getElementById('darkToggle').innerText = isDark ? '☀️ Light' : '🌙 Dark';
+        }
+        if (localStorage.getItem(STORAGE_DARK) === '1') {
+            document.documentElement.classList.add('dark');
+            document.getElementById('darkToggle').innerText = '☀️ Light';
+        }
+
+        // ================= SAVE/LOAD KEY =================
+        function saveKey() {
+            const key = document.getElementById('apiKeyInput').value.trim();
+            if (!key) return alert('Groq API Key daalein');
+            localStorage.setItem(STORAGE_KEY, key);
+            document.getElementById('setupScreen').classList.add('hidden');
+            buildGrid();
+        }
+
+        function loadKey() {
+            const key = localStorage.getItem(STORAGE_KEY);
+            if (key) {
+                document.getElementById('apiKeyInput').value = key;
+                document.getElementById('setupScreen').classList.add('hidden');
+                return true;
+            }
+            return false;
+        }
+
+        // ================= BUILD GRID =================
+        function buildGrid() {
+            const grid = document.getElementById('chapterGrid');
+            grid.innerHTML = '';
+            chapters.forEach(ch => {
+                const isGenerated = generatedChapters[ch.id] ? true : false;
+                const card = document.createElement('div');
+                card.className = 'chapter-card bg-white rounded-xl shadow p-5 dark:bg-slate-800 dark:border dark:border-slate-700';
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="text-3xl">${ch.icon}</span>
+                        <span class="text-xs px-2 py-1 rounded ${isGenerated ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 'bg-gray-100 text-gray-600 dark:bg-slate-700 dark:text-slate-400'}">
+                            ${isGenerated ? '✅ Ready' : '⬜ Not generated'}
+                        </span>
+                    </div>
+                    <h3 class="font-bold text-gray-800 dark:text-white mb-2">${ch.title}</h3>
+                    <button onclick="openChapter('${ch.id}')" class="w-full mt-2 ${isGenerated ? 'bg-blue-600 hover:bg-blue-700' : 'bg-green-600 hover:bg-green-700'} text-white font-bold py-2 px-4 rounded-lg text-sm">
+                        ${isGenerated ? '📖 Padho' : '✨ Generate'}
+                    </button>
+                `;
+                grid.appendChild(card);
+            });
+            updateProgress();
+        }
+
+        // ================= OPEN CHAPTER =================
+        function openChapter(id) {
+            const ch = chapters.find(c => c.id === id);
+            document.getElementById('viewerTitle').innerText = ch.title;
+            document.getElementById('viewer').classList.remove('hidden');
+            document.getElementById('viewer').scrollIntoView({ behavior: 'smooth' });
+
+            if (generatedChapters[id]) {
+                document.getElementById('viewerBody').innerHTML = generatedChapters[id];
+                document.getElementById('viewerBody').classList.remove('hidden');
+                document.getElementById('viewerLoader').classList.add('hidden');
+                document.getElementById('viewerError').classList.add('hidden');
+            } else {
+                generateChapter(id, ch);
+            }
+        }
+
+        // ================= GENERATE CHAPTER (Groq) =================
+        async function generateChapter(id, ch) {
+            const key = localStorage.getItem(STORAGE_KEY);
+            if (!key) {
+                document.getElementById('viewerBody').classList.add('hidden');
+                document.getElementById('viewerLoader').classList.add('hidden');
+                document.getElementById('viewerError').classList.remove('hidden');
+                document.getElementById('viewerError').innerText = 'API Key nahi mili. Page refresh karke key daalein.';
+                return;
+            }
+
+            document.getElementById('viewerBody').classList.add('hidden');
+            document.getElementById('viewerLoader').classList.remove('hidden');
+            document.getElementById('viewerError').classList.add('hidden');
+            document.getElementById('loaderText').innerText = 'Groq AI chapter likh raha hai... (30-60 seconds)';
+
+            const prompt = `Tum ek teacher ho jo Bihar STET Paper 2 Computer Science ke liye Hindi/Hinglish mein theory notes bana raha hai. Topic: ${ch.prompt}.
+
+Nirdesh:
+- Chapter ko sections mein divide karo (jaise "Number Systems", "Logic Gates", etc.)
+- Har section mein clear explanation do, Hinglish mein (Hindi + English mix)
+- Important points ke liye "Exam Point:" box banao
+- Formulas ke liye "Formula:" box banao
+- Bilkul simple language use karo, jaise ek teacher student ko samjha raha ho
+- Real book jaisa lagna chahiye, bullet points aur headings ke saath
+- 800-1200 words mein likho
+- Sirf HTML format mein do (h3, p, ul, li, div class="exam-point", div class="formula-box")
+- Koi markdown, koi code block nahi, sirf saaf HTML
+
+Ab is topic ki theory likho.`;
+
+            try {
+                const content = await callGroq(key, prompt);
+                const cleaned = content.replace(/```html/g, '').replace(/```/g, '').trim();
+
+                generatedChapters[id] = cleaned;
+                localStorage.setItem(STORAGE_CHAPTERS, JSON.stringify(generatedChapters));
+
+                document.getElementById('viewerBody').innerHTML = cleaned;
+                document.getElementById('viewerBody').classList.remove('hidden');
+                document.getElementById('viewerLoader').classList.add('hidden');
+                buildGrid();
+            } catch (err) {
+                document.getElementById('viewerLoader').classList.add('hidden');
+                document.getElementById('viewerError').classList.remove('hidden');
+                document.getElementById('viewerError').innerText = err.message;
+            }
+        }
+
+        // ================= GROQ CALL =================
+        async function callGroq(key, prompt) {
+            const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${key}`
+                },
+                body: JSON.stringify({
+                    model: 'openai/gpt-oss-20b',
+                    messages: [{ role: 'user', content: prompt }],
+                    temperature: 0.7,
+                    max_tokens: 3000,          // TPM limit ke andar
+                    reasoning_effort: 'low'
+                })
+            });
+
+            if (!res.ok) {
+                if (res.status === 429) {
+                    throw new Error('⏳ Rate limit (429). 1 minute baad try karein.');
+                }
+                if (res.status === 413) {
+                    throw new Error('❌ Request too large (413). Chapter chhota karne ke liye prompt mein "short" add karein, ya 1 minute baad try karein.');
+                }
+                throw new Error(`Groq Error HTTP ${res.status}`);
+            }
+
+            const data = await res.json();
+            if (!data.choices || !data.choices[0] || !data.choices[0].message) {
+                throw new Error('Response empty hai. Dobara try karein.');
+            }
+            return data.choices[0].message.content;
+        }
+
+        // ================= CLOSE VIEWER =================
+        function closeViewer() {
+            document.getElementById('viewer').classList.add('hidden');
+        }
+
+        // ================= PROGRESS =================
+        function updateProgress() {
+            const total = chapters.length;
+            const done = Object.keys(generatedChapters).length;
+            document.getElementById('progressText').innerText = `${done} / ${total} chapters generated`;
+            document.getElementById('progressBar').style.width = `${(done / total) * 100}%`;
+        }
+
+        // ================= INIT =================
+        if (loadKey()) {
+            buildGrid();
+        } else {
+            document.getElementById('setupScreen').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
