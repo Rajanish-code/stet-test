@@ -91,19 +91,19 @@
                 <p class="font-bold text-blue-900 mb-3">🔑 AI Keys (तीनों डालो, जो पहले काम करेगा वो सवाल बनाएगा):</p>
                 
                 <div class="ai-input mb-4">
-                    <label class="text-xs font-bold text-gray-700">1. Groq (Llama 3.1 8B) - सबसे तेज़</label>
+                    <label class="text-xs font-bold text-gray-700">1. Groq (GPT-OSS 20B) - सबसे तेज़</label>
                     <input type="password" id="key-groq" placeholder="gsk_..." class="w-full px-3 py-2 rounded border border-blue-300 text-sm">
                     <p class="text-[10px] text-gray-500 mt-1">Free key: <a href="https://console.groq.com/keys" target="_blank" class="text-blue-600 underline">console.groq.com/keys</a></p>
                 </div>
 
                 <div class="ai-input mb-4">
-                    <label class="text-xs font-bold text-gray-700">2. Google Gemini (Flash) - स्मार्ट</label>
+                    <label class="text-xs font-bold text-gray-700">2. Google Gemini (2.5 Flash) - स्मार्ट</label>
                     <input type="password" id="key-gemini" placeholder="AIza..." class="w-full px-3 py-2 rounded border border-blue-300 text-sm">
                     <p class="text-[10px] text-gray-500 mt-1">Free key: <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-blue-600 underline">aistudio.google.com/app/apikey</a></p>
                 </div>
 
                 <div class="ai-input mb-4">
-                    <label class="text-xs font-bold text-gray-700">3. OpenRouter (Backup) - कई फ्री मॉडल्स</label>
+                    <label class="text-xs font-bold text-gray-700">3. OpenRouter (Gemini 2.5 Flash Backup) - कई फ्री मॉडल्स</label>
                     <input type="password" id="key-openrouter" placeholder="sk-or-..." class="w-full px-3 py-2 rounded border border-blue-300 text-sm">
                     <p class="text-[10px] text-gray-500 mt-1">Free key: <a href="https://openrouter.ai/keys" target="_blank" class="text-blue-600 underline">openrouter.ai/keys</a></p>
                 </div>
@@ -250,24 +250,25 @@
         }
 
         // ================= MULTI-AI ROUTER =================
+        // UPDATED: Replaced all retired/invalid models with currently valid ones
         const AI_LIST = [
             {
                 name: "Groq",
                 keyId: "key-groq",
                 url: "https://api.groq.com/openai/v1/chat/completions",
-                model: "llama-3.1-8b-instant"
+                model: "openai/gpt-oss-20b"  // ✅ Replaces retired llama-3.1-8b-instant
             },
             {
                 name: "Gemini",
                 keyId: "key-gemini",
                 url: "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
-                model: "gemini-2.0-flash"
+                model: "gemini-2.5-flash"  // ✅ Replaces older gemini-2.0-flash
             },
             {
                 name: "OpenRouter",
                 keyId: "key-openrouter",
                 url: "https://openrouter.ai/api/v1/chat/completions",
-                model: "minimax/minimax-m3.1-flash:free"  // ✅ तुम्हारे भेजे JSON वाला मॉडल
+                model: "google/gemini-2.5-flash"  // ✅ Replaces expired minimax free model
             }
         ];
 
