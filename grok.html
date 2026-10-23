@@ -178,18 +178,23 @@
             document.getElementById('loading').classList.remove('hidden');
             questions = []; answers = {}; submitted = false;
 
+            // ✅ 8 chhote batches, har ek mein 20 questions
             const batches = [
-                { topic: 'Operating Systems, DBMS, Computer Networks, Data Structures', count: 50 },
-                { topic: 'Digital Logic, C++, Web Technologies, AI, Software Engineering', count: 50 },
-                { topic: "Pedagogy, Bloom's Taxonomy, Reasoning, Basic Math", count: 50 }
+                { topic: 'Operating Systems', count: 20 },
+                { topic: 'DBMS', count: 20 },
+                { topic: 'Computer Networks', count: 20 },
+                { topic: 'Data Structures', count: 20 },
+                { topic: 'Digital Logic and C++', count: 20 },
+                { topic: 'Web Technologies and AI', count: 20 },
+                { topic: "Pedagogy and Bloom's Taxonomy", count: 20 },
+                { topic: 'Reasoning and Basic Math', count: 20 }
             ];
 
             try {
                 for (let i = 0; i < batches.length; i++) {
-                    document.getElementById('loadText').innerText = `Batch ${i + 1}/3: ${batches[i].topic.substring(0, 30)}...`;
+                    document.getElementById('loadText').innerText = `Batch ${i + 1}/${batches.length}: ${batches[i].topic}...`;
                     const prompt = `Generate exactly ${batches[i].count} Bihar STET MCQs in Hindi. Topics: ${batches[i].topic}. 4 options, correctIndex (0-3), short explanation. Return ONLY JSON array: [{"question":"...","options":["A","B","C","D"],"correctIndex":0,"category":"Topic","explanation":"..."}]`;
 
-                    // ✅ Retry loop with 429 handling
                     let res = null;
                     let attempts = 0;
                     const maxAttempts = 5;
@@ -201,16 +206,15 @@
                                 model: 'openai/gpt-oss-20b',
                                 messages: [{ role: 'user', content: prompt }],
                                 temperature: 0.5,
-                                max_tokens: 16000,
+                                max_tokens: 3000,          // ✅ 16000 se 3000
                                 reasoning_effort: 'low'
                             })
                         });
 
-                        if (res.status === 429) {
+                        if (res.status === 429 || res.status === 413) {
                             attempts++;
-                            const retryAfter = res.headers.get('retry-after');
-                            const waitSec = retryAfter ? parseInt(retryAfter) : Math.pow(2, attempts); // exponential fallback
-                            document.getElementById('loadText').innerText = `Rate limit (429). Waiting ${waitSec}s... (attempt ${attempts}/${maxAttempts})`;
+                            const waitSec = 60; // TPM window reset hone do
+                            document.getElementById('loadText').innerText = `Limit hit (${res.status}). Waiting ${waitSec}s... (attempt ${attempts}/${maxAttempts})`;
                             await new Promise(r => setTimeout(r, waitSec * 1000));
                             continue;
                         }
@@ -219,11 +223,15 @@
 
                     if (!res || !res.ok) throw new Error(`HTTP ${res ? res.status : 'error'}`);
                     const data = await res.json();
-                    let text = data.choices[0].message.content;
-
-                    const parsed = parseAIResponse(text);
+                    const parsed = parseAIResponse(data.choices[0].message.content);
                     questions = questions.concat(parsed);
-                    document.getElementById('progress').style.width = `${((i + 1) / 3) * 100}%`;
+                    document.getElementById('progress').style.width = `${((i + 1) / batches.length) * 100}%`;
+
+                    // ✅ Har batch ke baad 60s wait (aakhri ke baad nahi)
+                    if (i < batches.length - 1) {
+                        document.getElementById('loadText').innerText = `Batch ${i + 1} done. Waiting 60s for token reset...`;
+                        await new Promise(r => setTimeout(r, 60000));
+                    }
                 }
 
                 if (questions.length > 150) questions = questions.slice(0, 150);
