@@ -1,52 +1,125 @@
 <!DOCTYPE html>
 <html lang="hi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>STET Mock Test - Groq</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: system-ui, sans-serif; background: #f8fafc; }
-        .spinner { border: 4px solid #e2e8f0; border-left-color: #2563eb; width: 50px; height: 50px; border-radius: 50%; animation: spin 1s linear infinite; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-        .radio-custom input { display: none; }
-        .radio-custom label { display: flex; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; cursor: pointer; margin-bottom: 8px; background: #fff; }
-        .radio-custom input:checked + label { border-color: #2563eb; background: #eff6ff; }
-        .correct { border-color: #22c55e !important; background: #f0fdf4 !important; }
-        .wrong { border-color: #ef4444 !important; background: #fef2f2 !important; }
+        body {
+            font-family: system-ui, sans-serif;
+            background: #f8fafc;
+        }
+
+        .spinner {
+            border: 4px solid #e2e8f0;
+            border-left-color: #2563eb;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .radio-custom input {
+            display: none;
+        }
+
+        .radio-custom label {
+            display: flex;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 8px;
+            background: #fff;
+        }
+
+        .radio-custom input:checked+label {
+            border-color: #2563eb;
+            background: #eff6ff;
+        }
+
+        .correct {
+            border-color: #22c55e !important;
+            background: #f0fdf4 !important;
+        }
+
+        .wrong {
+            border-color: #ef4444 !important;
+            background: #fef2f2 !important;
+        }
+
         @media print {
-            .no-print { display: none !important; }
-            body { background: #fff !important; }
-            .question-box { break-inside: avoid; page-break-inside: avoid; border: 1px solid #999 !important; margin-bottom: 4mm !important; padding: 2mm 3mm !important; }
-            .radio-custom label { border: none !important; padding: 2px 0 !important; margin: 0 !important; }
-            .radio-custom label span:first-child { border-right: 1px solid #ccc; padding-right: 2mm; margin-right: 2mm; }
+            .no-print {
+                display: none !important;
+            }
+
+            body {
+                background: #fff !important;
+            }
+
+            .question-box {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                border: 1px solid #999 !important;
+                margin-bottom: 4mm !important;
+                padding: 2mm 3mm !important;
+            }
+
+            .radio-custom label {
+                border: none !important;
+                padding: 2px 0 !important;
+                margin: 0 !important;
+            }
+
+            .radio-custom label span:first-child {
+                border-right: 1px solid #ccc;
+                padding-right: 2mm;
+                margin-right: 2mm;
+            }
         }
     </style>
 </head>
+
 <body class="p-4">
     <div class="max-w-4xl mx-auto">
         <div id="setup" class="bg-white p-8 rounded-xl shadow text-center mt-20">
             <h1 class="text-2xl font-bold mb-4">STET Mock Test (Groq)</h1>
             <p class="text-gray-600 mb-4">150 Questions | 150 Minutes | Computer Science + Pedagogy</p>
-            <input type="password" id="apiKey" placeholder="Groq API Key (gsk_...)" class="w-full max-w-md p-3 border rounded-lg mb-4 text-center">
+            <input type="password" id="apiKey" placeholder="Groq API Key (gsk_...)"
+                class="w-full max-w-md p-3 border rounded-lg mb-4 text-center">
             <br>
-            <button onclick="generateTest()" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-bold">Generate Test</button>
-            <p class="text-xs text-gray-500 mt-2">Free key: <a href="https://console.groq.com/keys" target="_blank" class="text-blue-500">console.groq.com/keys</a></p>
+            <button onclick="generateTest()" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-bold">Generate
+                Test</button>
+            <p class="text-xs text-gray-500 mt-2">Free key: <a href="https://console.groq.com/keys" target="_blank"
+                    class="text-blue-500">console.groq.com/keys</a></p>
         </div>
 
         <div id="loading" class="hidden bg-white p-8 rounded-xl shadow text-center mt-20">
             <div class="spinner mx-auto mb-4"></div>
             <p class="text-lg font-medium" id="loadText">Generating questions...</p>
-            <div class="w-full bg-gray-200 h-2 rounded mt-4"><div id="progress" class="bg-blue-600 h-2 rounded" style="width:0%"></div></div>
+            <div class="w-full bg-gray-200 h-2 rounded mt-4">
+                <div id="progress" class="bg-blue-600 h-2 rounded" style="width:0%"></div>
+            </div>
         </div>
 
         <div id="quiz" class="hidden">
-            <div class="bg-white p-4 rounded-lg shadow mb-4 flex justify-between items-center sticky top-0 z-10 no-print">
+            <div
+                class="bg-white p-4 rounded-lg shadow mb-4 flex justify-between items-center sticky top-0 z-10 no-print">
                 <span class="font-bold">STET Mock Test</span>
                 <span id="timer" class="font-mono text-xl font-bold text-blue-600">150:00</span>
                 <div class="flex gap-2">
-                    <button onclick="printTest()" class="bg-gray-600 text-white px-4 py-2 rounded text-sm">🖨️ Print</button>
-                    <button onclick="submitTest()" class="bg-green-600 text-white px-4 py-2 rounded text-sm">Submit</button>
+                    <button onclick="printTest()" class="bg-gray-600 text-white px-4 py-2 rounded text-sm">🖨️
+                        Print</button>
+                    <button onclick="submitTest()"
+                        class="bg-green-600 text-white px-4 py-2 rounded text-sm">Submit</button>
                 </div>
             </div>
             <div id="questions"></div>
@@ -60,9 +133,12 @@
             <p class="text-red-600"><span id="wrongCount">0</span> Wrong</p>
             <p class="text-gray-600"><span id="skippedCount">0</span> Skipped</p>
             <div class="mt-6 flex gap-3 justify-center">
-                <button onclick="reviewTest()" class="bg-blue-100 text-blue-800 px-6 py-2 rounded font-bold">Review Questions</button>
-                <button onclick="printTest()" class="bg-gray-600 text-white px-6 py-2 rounded font-bold">🖨️ Print</button>
-                <button onclick="resetTest()" class="bg-gray-800 text-white px-6 py-2 rounded font-bold">Generate New Test</button>
+                <button onclick="reviewTest()" class="bg-blue-100 text-blue-800 px-6 py-2 rounded font-bold">Review
+                    Questions</button>
+                <button onclick="printTest()" class="bg-gray-600 text-white px-6 py-2 rounded font-bold">🖨️
+                    Print</button>
+                <button onclick="resetTest()" class="bg-gray-800 text-white px-6 py-2 rounded font-bold">Generate New
+                    Test</button>
             </div>
         </div>
     </div>
@@ -84,7 +160,7 @@
                         if (obj.question && Array.isArray(obj.options) && typeof obj.correctIndex === 'number') {
                             salvaged.push(obj);
                         }
-                    } catch (e2) {}
+                    } catch (e2) { }
                 }
                 if (salvaged.length > 0) {
                     console.warn(`Salvaged ${salvaged.length} questions from truncated JSON`);
@@ -110,29 +186,44 @@
 
             try {
                 for (let i = 0; i < batches.length; i++) {
-                    document.getElementById('loadText').innerText = `Batch ${i+1}/3: ${batches[i].topic.substring(0, 30)}...`;
+                    document.getElementById('loadText').innerText = `Batch ${i + 1}/3: ${batches[i].topic.substring(0, 30)}...`;
                     const prompt = `Generate exactly ${batches[i].count} Bihar STET MCQs in Hindi. Topics: ${batches[i].topic}. 4 options, correctIndex (0-3), short explanation. Return ONLY JSON array: [{"question":"...","options":["A","B","C","D"],"correctIndex":0,"category":"Topic","explanation":"..."}]`;
-                    
-                    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}` },
-                        body: JSON.stringify({
-                            model: 'openai/gpt-oss-20b',
-                            messages: [{ role: 'user', content: prompt }],
-                            temperature: 0.5,
-                            max_tokens: 16000,          // ✅ 8000 se badhaya
-                            reasoning_effort: 'low'     // ✅ Sochne ka budget kam kiya
-                        })
-                    });
 
-                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                    // ✅ Retry loop with 429 handling
+                    let res = null;
+                    let attempts = 0;
+                    const maxAttempts = 5;
+                    while (attempts < maxAttempts) {
+                        res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}` },
+                            body: JSON.stringify({
+                                model: 'openai/gpt-oss-20b',
+                                messages: [{ role: 'user', content: prompt }],
+                                temperature: 0.5,
+                                max_tokens: 16000,
+                                reasoning_effort: 'low'
+                            })
+                        });
+
+                        if (res.status === 429) {
+                            attempts++;
+                            const retryAfter = res.headers.get('retry-after');
+                            const waitSec = retryAfter ? parseInt(retryAfter) : Math.pow(2, attempts); // exponential fallback
+                            document.getElementById('loadText').innerText = `Rate limit (429). Waiting ${waitSec}s... (attempt ${attempts}/${maxAttempts})`;
+                            await new Promise(r => setTimeout(r, waitSec * 1000));
+                            continue;
+                        }
+                        break;
+                    }
+
+                    if (!res || !res.ok) throw new Error(`HTTP ${res ? res.status : 'error'}`);
                     const data = await res.json();
                     let text = data.choices[0].message.content;
-                    
-                    // ✅ Naya parser use karo
+
                     const parsed = parseAIResponse(text);
                     questions = questions.concat(parsed);
-                    document.getElementById('progress').style.width = `${((i+1)/3)*100}%`;
+                    document.getElementById('progress').style.width = `${((i + 1) / 3) * 100}%`;
                 }
 
                 if (questions.length > 150) questions = questions.slice(0, 150);
@@ -152,11 +243,11 @@
             const div = document.getElementById('questions');
             div.innerHTML = questions.map((q, i) => `
                 <div class="bg-white p-4 rounded-lg shadow mb-3 question-box" id="q${i}">
-                    <p class="font-bold mb-2">${i+1}. ${q.question}</p>
+                    <p class="font-bold mb-2">${i + 1}. ${q.question}</p>
                     ${q.options.map((opt, j) => `
                         <div class="radio-custom option-wrapper" id="opt-${i}-${j}">
                             <input type="radio" name="q${i}" id="q${i}o${j}" value="${j}" onchange="recordAnswer(${i}, ${j})" ${submitted ? 'disabled' : ''}>
-                            <label for="q${i}o${j}"><span>${String.fromCharCode(65+j)}</span> ${opt}</label>
+                            <label for="q${i}o${j}"><span>${String.fromCharCode(65 + j)}</span> ${opt}</label>
                         </div>
                     `).join('')}
                 </div>
@@ -174,8 +265,8 @@
             clearInterval(timerInt);
             timerInt = setInterval(() => {
                 timeLeft--;
-                const m = Math.floor(timeLeft/60).toString().padStart(2,'0');
-                const s = (timeLeft%60).toString().padStart(2,'0');
+                const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+                const s = (timeLeft % 60).toString().padStart(2, '0');
                 document.getElementById('timer').innerText = `${m}:${s}`;
                 if (timeLeft <= 0) { clearInterval(timerInt); submitTest(); }
             }, 1000);
@@ -228,4 +319,5 @@
         }
     </script>
 </body>
+
 </html>
