@@ -1,171 +1,191 @@
 <!DOCTYPE html>
 <html lang="hi">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STET Mock Test - Groq</title>
+    <title>STET Mock Test - Groq Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { darkMode: 'class' }</script>
     <style>
-        body {
-            font-family: system-ui, sans-serif;
-            background: #f8fafc;
-        }
-
-        .spinner {
-            border: 4px solid #e2e8f0;
-            border-left-color: #2563eb;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        .radio-custom input {
-            display: none;
-        }
-
-        .radio-custom label {
-            display: flex;
-            padding: 12px;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-bottom: 8px;
-            background: #fff;
-        }
-
-        .radio-custom input:checked+label {
-            border-color: #2563eb;
-            background: #eff6ff;
-        }
-
-        .correct {
-            border-color: #22c55e !important;
-            background: #f0fdf4 !important;
-        }
-
-        .wrong {
-            border-color: #ef4444 !important;
-            background: #fef2f2 !important;
-        }
-
+        body { font-family: system-ui, sans-serif; background: #f8fafc; }
+        .dark body { background: #0f172a; color: #e2e8f0; }
+        .spinner { border: 4px solid #e2e8f0; border-left-color: #2563eb; width: 50px; height: 50px; border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .radio-custom input { display: none; }
+        .radio-custom label { display: flex; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; cursor: pointer; margin-bottom: 8px; background: #fff; }
+        .dark .radio-custom label { background: #1e293b; border-color: #334155; color: #e2e8f0; }
+        .radio-custom input:checked + label { border-color: #2563eb; background: #eff6ff; }
+        .dark .radio-custom input:checked + label { background: #1e3a8a; color: #fff; }
+        .correct { border-color: #22c55e !important; background: #f0fdf4 !important; }
+        .dark .correct { background: #14532d !important; }
+        .wrong { border-color: #ef4444 !important; background: #fef2f2 !important; }
+        .dark .wrong { background: #7f1d1d !important; }
+        .flagged { background: #f59e0b !important; color: #fff !important; }
+        .explanation-box { margin-top: 12px; padding: 12px; background: #fefce8; border: 1px solid #fde047; border-radius: 8px; font-size: 14px; }
+        .dark .explanation-box { background: #422006; border-color: #854d0e; color: #fef3c7; }
         @media print {
-            .no-print {
-                display: none !important;
-            }
-
-            body {
-                background: #fff !important;
-            }
-
-            .question-box {
-                break-inside: avoid;
-                page-break-inside: avoid;
-                border: 1px solid #999 !important;
-                margin-bottom: 4mm !important;
-                padding: 2mm 3mm !important;
-            }
-
-            .radio-custom label {
-                border: none !important;
-                padding: 2px 0 !important;
-                margin: 0 !important;
-            }
-
-            .radio-custom label span:first-child {
-                border-right: 1px solid #ccc;
-                padding-right: 2mm;
-                margin-right: 2mm;
-            }
+            .no-print { display: none !important; }
+            body { background: #fff !important; color: #000 !important; }
+            .question-box { break-inside: avoid; page-break-inside: avoid; border: 1px solid #999 !important; margin-bottom: 4mm !important; padding: 2mm 3mm !important; }
+            .radio-custom label { border: none !important; padding: 2px 0 !important; margin: 0 !important; color: #000 !important; }
+            .radio-custom label span:first-child { border-right: 1px solid #ccc; padding-right: 2mm; margin-right: 2mm; }
+            .explanation-box { display: none !important; }
+            #answerKeySection { display: block !important; page-break-before: always; }
+            #answerKeySection h2 { font-size: 16pt; border-bottom: 2px solid #000; padding-bottom: 4px; margin-bottom: 8px; }
+            .answer-key-item { font-size: 10pt; padding: 2px 0; border-bottom: 1px dotted #ccc; color: #000 !important; }
         }
     </style>
 </head>
-
 <body class="p-4">
     <div class="max-w-4xl mx-auto">
-        <div id="setup" class="bg-white p-8 rounded-xl shadow text-center mt-20">
-            <h1 class="text-2xl font-bold mb-4">STET Mock Test (Groq)</h1>
-            <p class="text-gray-600 mb-4">150 Questions | 150 Minutes | Computer Science + Pedagogy</p>
-            <input type="password" id="apiKey" placeholder="Groq API Key (gsk_...)"
-                class="w-full max-w-md p-3 border rounded-lg mb-4 text-center">
-            <br>
-            <button onclick="generateTest()" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-bold">Generate
-                Test</button>
-            <p class="text-xs text-gray-500 mt-2">Free key: <a href="https://console.groq.com/keys" target="_blank"
-                    class="text-blue-500">console.groq.com/keys</a></p>
+        <!-- Navbar -->
+        <div class="flex justify-end mb-4 no-print">
+            <button id="darkToggle" onclick="toggleDark()" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm">🌙 Dark</button>
         </div>
 
-        <div id="loading" class="hidden bg-white p-8 rounded-xl shadow text-center mt-20">
-            <div class="spinner mx-auto mb-4"></div>
-            <p class="text-lg font-medium" id="loadText">Generating questions...</p>
-            <div class="w-full bg-gray-200 h-2 rounded mt-4">
-                <div id="progress" class="bg-blue-600 h-2 rounded" style="width:0%"></div>
-            </div>
-        </div>
-
-        <div id="quiz" class="hidden">
-            <div
-                class="bg-white p-4 rounded-lg shadow mb-4 flex justify-between items-center sticky top-0 z-10 no-print">
-                <span class="font-bold">STET Mock Test</span>
-                <span id="timer" class="font-mono text-xl font-bold text-blue-600">150:00</span>
-                <div class="flex gap-2">
-                    <button onclick="printTest()" class="bg-gray-600 text-white px-4 py-2 rounded text-sm">🖨️
-                        Print</button>
-                    <button onclick="submitTest()"
-                        class="bg-green-600 text-white px-4 py-2 rounded text-sm">Submit</button>
+        <!-- Setup -->
+        <div id="setup" class="bg-white p-8 rounded-xl shadow text-center mt-4 no-print dark:bg-slate-800">
+            <h1 class="text-2xl font-bold mb-4 dark:text-white">STET Mock Test (Groq Pro)</h1>
+            <p class="text-gray-600 mb-4 dark:text-slate-300">Computer Science + Pedagogy</p>
+            <input type="password" id="apiKey" placeholder="Groq API Key (gsk_...)" class="w-full max-w-md p-3 border rounded-lg mb-4 text-center dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+            
+            <div class="max-w-md mx-auto grid grid-cols-2 gap-3 mb-4 text-left">
+                <div>
+                    <label class="text-xs font-bold dark:text-slate-300">Questions</label>
+                    <select id="qCountSelect" class="w-full p-2 border rounded dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                        <option value="150" selected>150</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-xs font-bold dark:text-slate-300">Negative Marking</label>
+                    <select id="negSelect" class="w-full p-2 border rounded dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+                        <option value="0" selected>None</option>
+                        <option value="0.25">−0.25</option>
+                        <option value="0.33">−0.33</option>
+                    </select>
                 </div>
             </div>
-            <div id="questions"></div>
+            <label class="text-sm dark:text-slate-300 block mb-4">
+                <input type="checkbox" id="shuffleCheck" checked> Shuffle questions
+            </label>
+
+            <br>
+            <button onclick="generateTest()" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-bold">Generate Test</button>
+            <button onclick="resumeTest()" id="resumeBtn" class="hidden ml-2 bg-green-600 text-white px-6 py-3 rounded-lg font-bold">📂 Resume</button>
+            <p class="text-xs text-gray-500 mt-2 dark:text-slate-400">Free key: <a href="https://console.groq.com/keys" target="_blank" class="text-blue-500">console.groq.com/keys</a></p>
         </div>
 
-        <div id="result" class="hidden bg-white p-8 rounded-xl shadow text-center mt-20 no-print">
-            <h2 class="text-3xl font-bold mb-4">Result</h2>
+        <!-- Loading -->
+        <div id="loading" class="hidden bg-white p-8 rounded-xl shadow text-center mt-20 no-print dark:bg-slate-800">
+            <div class="spinner mx-auto mb-4"></div>
+            <p class="text-lg font-medium dark:text-white" id="loadText">Generating questions...</p>
+            <div class="w-full bg-gray-200 h-2 rounded mt-4 dark:bg-slate-700"><div id="progress" class="bg-blue-600 h-2 rounded" style="width:0%"></div></div>
+        </div>
+
+        <!-- Quiz -->
+        <div id="quiz" class="hidden">
+            <div class="bg-white p-4 rounded-lg shadow mb-4 flex justify-between items-center sticky top-0 z-10 no-print dark:bg-slate-800">
+                <span class="font-bold dark:text-white">STET Mock Test</span>
+                <span id="timer" class="font-mono text-xl font-bold text-blue-600">150:00</span>
+                <div class="flex gap-2 flex-wrap">
+                    <button onclick="printTest()" class="bg-gray-600 text-white px-3 py-2 rounded text-sm">🖨️ Print</button>
+                    <button onclick="exportJSON()" class="bg-purple-600 text-white px-3 py-2 rounded text-sm">📥 JSON</button>
+                    <button onclick="submitTest()" class="bg-green-600 text-white px-3 py-2 rounded text-sm">Submit</button>
+                </div>
+            </div>
+            <div id="flaggedBar" class="hidden mb-3 p-2 bg-orange-50 border border-orange-300 rounded text-sm no-print dark:bg-orange-900 dark:border-orange-700 dark:text-orange-200">
+                <b>🚩 Flagged:</b> <span id="flaggedList"></span>
+            </div>
+            <div id="questions"></div>
+
+            <div id="answerKeySection" class="hidden mt-8 bg-white p-6 rounded-xl shadow no-print dark:bg-slate-800">
+                <h2 class="text-xl font-bold mb-4 border-b pb-2 dark:text-white">📋 Answer Key</h2>
+                <div id="answerKeyList" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 text-sm"></div>
+            </div>
+        </div>
+
+        <!-- Result -->
+        <div id="result" class="hidden bg-white p-8 rounded-xl shadow text-center mt-20 no-print dark:bg-slate-800">
+            <h2 class="text-3xl font-bold mb-4 dark:text-white">Result</h2>
             <p class="text-5xl font-bold text-blue-600" id="score">0</p>
-            <p class="text-gray-500">out of <span id="totalQ">150</span></p>
+            <p class="text-gray-500 dark:text-slate-400">out of <span id="totalQ">150</span></p>
             <p class="text-green-600 mt-2"><span id="correctCount">0</span> Correct</p>
             <p class="text-red-600"><span id="wrongCount">0</span> Wrong</p>
-            <p class="text-gray-600"><span id="skippedCount">0</span> Skipped</p>
-            <div class="mt-6 flex gap-3 justify-center">
-                <button onclick="reviewTest()" class="bg-blue-100 text-blue-800 px-6 py-2 rounded font-bold">Review
-                    Questions</button>
-                <button onclick="printTest()" class="bg-gray-600 text-white px-6 py-2 rounded font-bold">🖨️
-                    Print</button>
-                <button onclick="resetTest()" class="bg-gray-800 text-white px-6 py-2 rounded font-bold">Generate New
-                    Test</button>
+            <p class="text-gray-600 dark:text-slate-400"><span id="skippedCount">0</span> Skipped</p>
+            <p class="text-gray-600 dark:text-slate-400"><span id="avgTime">0</span>s avg/question</p>
+            <div id="sectionStats" class="mt-4 text-left text-sm bg-gray-50 p-4 rounded dark:bg-slate-700"></div>
+            <div class="mt-6 flex gap-3 justify-center flex-wrap">
+                <button onclick="reviewTest()" class="bg-blue-100 text-blue-800 px-6 py-2 rounded font-bold">Review Questions</button>
+                <button onclick="printTest()" class="bg-gray-600 text-white px-6 py-2 rounded font-bold">🖨️ Print</button>
+                <button onclick="exportJSON()" class="bg-purple-600 text-white px-6 py-2 rounded font-bold">📥 JSON</button>
+                <button onclick="resetTest()" class="bg-gray-800 text-white px-6 py-2 rounded font-bold">New Test</button>
             </div>
         </div>
     </div>
 
     <script>
-        let questions = [], answers = {}, timerInt, timeLeft = 150 * 60, submitted = false;
+        let questions = [], answers = {}, flagged = {}, timerInt, timeLeft = 150 * 60, submitted = false, startTime = 0;
+        const STORAGE_KEY = 'groq_api_key', STORAGE_TEST = 'groq_test_save', STORAGE_DARK = 'groq_dark';
 
-        // ✅ Naya function: adhoore JSON se bhi poore questions nikaalta hai
+        // Dark mode
+        function toggleDark() {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            localStorage.setItem(STORAGE_DARK, isDark ? '1' : '0');
+            document.getElementById('darkToggle').innerText = isDark ? '☀️ Light' : '🌙 Dark';
+        }
+        if (localStorage.getItem(STORAGE_DARK) === '1') {
+            document.documentElement.classList.add('dark');
+            document.getElementById('darkToggle').innerText = '☀️ Light';
+        }
+
+        // API key save
+        document.getElementById('apiKey').addEventListener('input', e => localStorage.setItem(STORAGE_KEY, e.target.value.trim()));
+        const savedKey = localStorage.getItem(STORAGE_KEY);
+        if (savedKey) document.getElementById('apiKey').value = savedKey;
+
+        // Resume check
+        (function checkResume() {
+            try {
+                const s = JSON.parse(localStorage.getItem(STORAGE_TEST) || 'null');
+                if (s && s.questions && s.questions.length > 0 && !s.submitted) {
+                    document.getElementById('resumeBtn').classList.remove('hidden');
+                }
+            } catch(e) {}
+        })();
+
+        function saveTest() {
+            try {
+                localStorage.setItem(STORAGE_TEST, JSON.stringify({ questions, answers, flagged, timeLeft, submitted, startTime }));
+            } catch(e) {}
+        }
+
+        function resumeTest() {
+            try {
+                const s = JSON.parse(localStorage.getItem(STORAGE_TEST));
+                if (!s) return;
+                questions = s.questions; answers = s.answers || {}; flagged = s.flagged || {};
+                timeLeft = s.timeLeft || 150*60; startTime = s.startTime || Date.now(); submitted = s.submitted || false;
+                document.getElementById('setup').classList.add('hidden');
+                document.getElementById('quiz').classList.remove('hidden');
+                renderQuestions();
+                buildAnswerKey();
+                if (!submitted) startTimer();
+            } catch(e) { alert('Resume failed: ' + e.message); }
+        }
+
         function parseAIResponse(rawText) {
             let cleaned = rawText.replace(/```json/g, '').replace(/```/g, '').trim();
-            try {
-                return JSON.parse(cleaned);
-            } catch (e) {
-                const objects = cleaned.match(/\{[^{}]*\}/g) || [];
+            try { return JSON.parse(cleaned); }
+            catch (e) {
+                const objs = cleaned.match(/\{[^{}]*\}/g) || [];
                 const salvaged = [];
-                for (const objStr of objects) {
-                    try {
-                        const obj = JSON.parse(objStr);
-                        if (obj.question && Array.isArray(obj.options) && typeof obj.correctIndex === 'number') {
-                            salvaged.push(obj);
-                        }
-                    } catch (e2) { }
+                for (const s of objs) {
+                    try { const o = JSON.parse(s); if (o.question && Array.isArray(o.options) && typeof o.correctIndex === 'number') salvaged.push(o); } catch(e2) {}
                 }
-                if (salvaged.length > 0) {
-                    console.warn(`Salvaged ${salvaged.length} questions from truncated JSON`);
-                    return salvaged;
-                }
+                if (salvaged.length) return salvaged;
                 throw new Error('JSON completely unusable');
             }
         }
@@ -173,74 +193,62 @@
         async function generateTest() {
             const key = document.getElementById('apiKey').value.trim();
             if (!key) return alert('API Key daalein');
+            const total = parseInt(document.getElementById('qCountSelect').value);
 
             document.getElementById('setup').classList.add('hidden');
             document.getElementById('loading').classList.remove('hidden');
-            questions = []; answers = {}; submitted = false;
+            questions = []; answers = {}; flagged = {}; submitted = false; startTime = Date.now();
 
-            // ✅ 8 chhote batches, har ek mein 20 questions
-            const batches = [
-                { topic: 'Operating Systems', count: 20 },
-                { topic: 'DBMS', count: 20 },
-                { topic: 'Computer Networks', count: 20 },
-                { topic: 'Data Structures', count: 20 },
-                { topic: 'Digital Logic and C++', count: 20 },
-                { topic: 'Web Technologies and AI', count: 20 },
-                { topic: "Pedagogy and Bloom's Taxonomy", count: 20 },
-                { topic: 'Reasoning and Basic Math', count: 20 }
-            ];
+            const topics = ['Operating Systems','DBMS','Computer Networks','Data Structures','Digital Logic','C++','Web Technologies','AI','Pedagogy','Reasoning'];
+            const perBatch = 20;
+            const numBatches = Math.ceil(total / perBatch);
+            timeLeft = total * 60;
 
             try {
-                for (let i = 0; i < batches.length; i++) {
-                    document.getElementById('loadText').innerText = `Batch ${i + 1}/${batches.length}: ${batches[i].topic}...`;
-                    const prompt = `Generate exactly ${batches[i].count} Bihar STET MCQs in Hindi. Topics: ${batches[i].topic}. 4 options, correctIndex (0-3), short explanation. Return ONLY JSON array: [{"question":"...","options":["A","B","C","D"],"correctIndex":0,"category":"Topic","explanation":"..."}]`;
+                for (let i = 0; i < numBatches; i++) {
+                    const cnt = Math.min(perBatch, total - i*perBatch);
+                    const topic = topics[i % topics.length];
+                    document.getElementById('loadText').innerText = `Batch ${i+1}/${numBatches}: ${topic}...`;
+                    const prompt = `Generate exactly ${cnt} Bihar STET MCQs in Hindi. Topic: ${topic}. 4 options, correctIndex (0-3), short explanation. Return ONLY JSON array: [{"question":"...","options":["A","B","C","D"],"correctIndex":0,"category":"${topic}","explanation":"..."}]`;
 
-                    let res = null;
-                    let attempts = 0;
-                    const maxAttempts = 5;
-                    while (attempts < maxAttempts) {
+                    let res = null, attempts = 0, maxA = 5;
+                    while (attempts < maxA) {
                         res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}` },
                             body: JSON.stringify({
                                 model: 'openai/gpt-oss-20b',
                                 messages: [{ role: 'user', content: prompt }],
-                                temperature: 0.5,
-                                max_tokens: 3000,          // ✅ 16000 se 3000
-                                reasoning_effort: 'low'
+                                temperature: 0.5, max_tokens: 3000, reasoning_effort: 'low'
                             })
                         });
-
                         if (res.status === 429 || res.status === 413) {
                             attempts++;
-                            const waitSec = 60; // TPM window reset hone do
-                            document.getElementById('loadText').innerText = `Limit hit (${res.status}). Waiting ${waitSec}s... (attempt ${attempts}/${maxAttempts})`;
-                            await new Promise(r => setTimeout(r, waitSec * 1000));
+                            document.getElementById('loadText').innerText = `Limit (${res.status}). Waiting 60s... (${attempts}/${maxA})`;
+                            await new Promise(r => setTimeout(r, 60000));
                             continue;
                         }
                         break;
                     }
-
-                    if (!res || !res.ok) throw new Error(`HTTP ${res ? res.status : 'error'}`);
+                    if (!res || !res.ok) throw new Error(`HTTP ${res ? res.status : 'err'}`);
                     const data = await res.json();
                     const parsed = parseAIResponse(data.choices[0].message.content);
                     questions = questions.concat(parsed);
-                    document.getElementById('progress').style.width = `${((i + 1) / batches.length) * 100}%`;
+                    document.getElementById('progress').style.width = `${((i+1)/numBatches)*100}%`;
 
-                    // ✅ Har batch ke baad 60s wait (aakhri ke baad nahi)
-                    if (i < batches.length - 1) {
-                        document.getElementById('loadText').innerText = `Batch ${i + 1} done. Waiting 60s for token reset...`;
+                    if (i < numBatches - 1) {
+                        document.getElementById('loadText').innerText = `Batch ${i+1} done. Waiting 60s...`;
                         await new Promise(r => setTimeout(r, 60000));
                     }
                 }
 
-                if (questions.length > 150) questions = questions.slice(0, 150);
-                if (questions.length === 0) throw new Error('No questions');
+                if (questions.length > total) questions = questions.slice(0, total);
+                if (!questions.length) throw new Error('No questions');
+                if (document.getElementById('shuffleCheck').checked) questions.sort(() => Math.random() - 0.5);
 
                 document.getElementById('loading').classList.add('hidden');
                 document.getElementById('quiz').classList.remove('hidden');
-                renderQuestions();
-                startTimer();
+                renderQuestions(); buildAnswerKey(); startTimer(); saveTest();
             } catch (e) {
                 alert('Error: ' + e.message);
                 location.reload();
@@ -250,65 +258,116 @@
         function renderQuestions() {
             const div = document.getElementById('questions');
             div.innerHTML = questions.map((q, i) => `
-                <div class="bg-white p-4 rounded-lg shadow mb-3 question-box" id="q${i}">
-                    <p class="font-bold mb-2">${i + 1}. ${q.question}</p>
+                <div class="bg-white p-4 rounded-lg shadow mb-3 question-box dark:bg-slate-800" id="q${i}">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 font-bold">${q.category || 'General'}</span>
+                        <button onclick="toggleFlag(${i})" id="flagBtn-${i}" class="text-lg no-print">${flagged[i]?'🚩':'🏳️'}</button>
+                    </div>
+                    <p class="font-bold mb-2 dark:text-white">${i+1}. ${q.question}</p>
                     ${q.options.map((opt, j) => `
                         <div class="radio-custom option-wrapper" id="opt-${i}-${j}">
-                            <input type="radio" name="q${i}" id="q${i}o${j}" value="${j}" onchange="recordAnswer(${i}, ${j})" ${submitted ? 'disabled' : ''}>
-                            <label for="q${i}o${j}"><span>${String.fromCharCode(65 + j)}</span> ${opt}</label>
+                            <input type="radio" name="q${i}" id="q${i}o${j}" value="${j}" ${answers[i]===j?'checked':''} onchange="recordAnswer(${i},${j})" ${submitted?'disabled':''}>
+                            <label for="q${i}o${j}" class="dark:text-slate-200"><span>${String.fromCharCode(65+j)}</span> ${opt}</label>
                         </div>
                     `).join('')}
+                    <div class="mt-2 no-print">
+                        <button onclick="revealAnswer(${i})" class="text-blue-600 text-sm font-semibold dark:text-blue-400">👁️ Show Answer</button>
+                    </div>
+                    <div id="explanation-${i}" class="explanation-box hidden">
+                        <p class="font-bold text-green-700 dark:text-green-400">Correct: ${String.fromCharCode(65 + q.correctIndex)}. ${q.options[q.correctIndex] || '—'}</p>
+                        <p><b>Trick:</b> ${q.explanation || 'N/A'}</p>
+                    </div>
                 </div>
             `).join('');
+        }
+
+        function buildAnswerKey() {
+            const list = document.getElementById('answerKeyList');
+            list.innerHTML = '';
+            questions.forEach((q, i) => {
+                const d = document.createElement('div');
+                d.className = 'answer-key-item p-1 bg-gray-50 rounded border border-gray-200 dark:bg-slate-700 dark:border-slate-600';
+                d.innerHTML = `<b>Q${i+1}.</b> <span class="text-green-700 dark:text-green-400 font-bold">${String.fromCharCode(65 + q.correctIndex)}</span> ${(q.options[q.correctIndex]||'').substring(0,30)}`;
+                list.appendChild(d);
+            });
         }
 
         function recordAnswer(qIndex, oIndex) {
             if (submitted) return;
             answers[qIndex] = oIndex;
+            saveTest();
+        }
+
+        function toggleFlag(i) {
+            flagged[i] = !flagged[i];
+            document.getElementById(`flagBtn-${i}`).innerText = flagged[i] ? '🚩' : '🏳️';
+            const ids = Object.keys(flagged).filter(k => flagged[k]);
+            const bar = document.getElementById('flaggedBar');
+            if (ids.length === 0) bar.classList.add('hidden');
+            else {
+                bar.classList.remove('hidden');
+                document.getElementById('flaggedList').innerHTML = ids.map(k => `<a href="#q${k}" class="underline mr-2">Q${parseInt(k)+1}</a>`).join('');
+            }
+            saveTest();
+        }
+
+        function revealAnswer(i) {
+            const el = document.getElementById(`explanation-${i}`);
+            el.classList.toggle('hidden');
+            document.getElementById(`opt-${i}-${questions[i].correctIndex}`).classList.add('correct');
+            if (!el.classList.contains('hidden')) document.getElementsByName(`q${i}`).forEach(r => r.disabled = true);
         }
 
         function startTimer() {
-            timeLeft = 150 * 60;
-            document.getElementById('timer').innerText = '150:00';
+            document.getElementById('timer').innerText = '';
             clearInterval(timerInt);
+            updateTimer();
             timerInt = setInterval(() => {
-                timeLeft--;
-                const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
-                const s = (timeLeft % 60).toString().padStart(2, '0');
-                document.getElementById('timer').innerText = `${m}:${s}`;
+                timeLeft--; updateTimer();
+                if (timeLeft <= 300) document.getElementById('timer').classList.add('text-red-500');
                 if (timeLeft <= 0) { clearInterval(timerInt); submitTest(); }
+                if (timeLeft % 15 === 0) saveTest();
             }, 1000);
+        }
+
+        function updateTimer() {
+            const m = Math.floor(timeLeft/60).toString().padStart(2,'0');
+            const s = (timeLeft%60).toString().padStart(2,'0');
+            document.getElementById('timer').innerText = `${m}:${s}`;
         }
 
         function submitTest() {
             if (submitted) return;
             submitted = true;
             clearInterval(timerInt);
-            let score = 0, correct = 0, wrong = 0, skipped = 0;
+            const neg = parseFloat(document.getElementById('negSelect').value) || 0;
+            let correct = 0, wrong = 0, skipped = 0;
+            const catStats = {};
             questions.forEach((q, i) => {
-                const radios = document.getElementsByName(`q${i}`);
-                radios.forEach(r => r.disabled = true);
+                document.getElementsByName(`q${i}`).forEach(r => r.disabled = true);
+                const cat = q.category || 'General';
+                if (!catStats[cat]) catStats[cat] = { c: 0, w: 0, t: 0 };
+                catStats[cat].t++;
                 if (answers[i] !== undefined) {
-                    if (answers[i] === q.correctIndex) {
-                        score++; correct++;
-                        document.getElementById(`opt-${i}-${answers[i]}`).classList.add('correct');
-                    } else {
-                        wrong++;
-                        document.getElementById(`opt-${i}-${answers[i]}`).classList.add('wrong');
-                        document.getElementById(`opt-${i}-${q.correctIndex}`).classList.add('correct');
-                    }
-                } else {
-                    skipped++;
-                    document.getElementById(`opt-${i}-${q.correctIndex}`).classList.add('correct');
-                }
+                    if (answers[i] === q.correctIndex) { correct++; catStats[cat].c++; document.getElementById(`opt-${i}-${answers[i]}`).classList.add('correct'); }
+                    else { wrong++; catStats[cat].w++; document.getElementById(`opt-${i}-${answers[i]}`).classList.add('wrong'); document.getElementById(`opt-${i}-${q.correctIndex}`).classList.add('correct'); }
+                } else { skipped++; document.getElementById(`opt-${i}-${q.correctIndex}`).classList.add('correct'); }
             });
-            document.getElementById('quiz').classList.add('hidden');
-            document.getElementById('result').classList.remove('hidden');
-            document.getElementById('score').innerText = score;
+            const score = correct - wrong * neg;
+            document.getElementById('score').innerText = score.toFixed(2);
             document.getElementById('totalQ').innerText = questions.length;
             document.getElementById('correctCount').innerText = correct;
             document.getElementById('wrongCount').innerText = wrong;
             document.getElementById('skippedCount').innerText = skipped;
+            const elapsed = Math.floor((Date.now() - startTime)/1000);
+            document.getElementById('avgTime').innerText = (elapsed/questions.length).toFixed(1);
+            document.getElementById('sectionStats').innerHTML = '<h3 class="font-bold mb-2 dark:text-white">📊 Section-wise</h3>' +
+                Object.entries(catStats).map(([c, s]) => `<div class="flex justify-between py-1 border-b dark:border-slate-600"><span>${c}</span><span>${s.c}/${s.t} (${Math.round(s.c/s.t*100)}%)</span></div>`).join('');
+            buildAnswerKey();
+            document.getElementById('answerKeySection').classList.remove('hidden');
+            document.getElementById('quiz').classList.add('hidden');
+            document.getElementById('result').classList.remove('hidden');
+            saveTest();
         }
 
         function reviewTest() {
@@ -318,14 +377,28 @@
         }
 
         function printTest() {
+            buildAnswerKey();
+            document.getElementById('answerKeySection').classList.remove('hidden');
             window.print();
         }
 
+        function exportJSON() {
+            const data = { questions, answers, flagged, generatedAt: new Date().toISOString() };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a'); a.href = url; a.download = `stet-test-${Date.now()}.json`; a.click();
+            URL.revokeObjectURL(url);
+        }
+
         function resetTest() {
+            localStorage.removeItem(STORAGE_TEST);
             clearInterval(timerInt);
             location.reload();
         }
+
+        window.addEventListener('beforeunload', (e) => {
+            if (questions.length > 0 && !submitted) { e.preventDefault(); e.returnValue = ''; }
+        });
     </script>
 </body>
-
 </html>
