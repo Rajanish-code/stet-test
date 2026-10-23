@@ -3,630 +3,552 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bihar STET CS Mock Test (150 Questions)</title>
+    <title>Bihar STET CS Mock Test Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = { darkMode: 'class' }
+    </script>
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; scroll-behavior: smooth; }
-        
-        /* Loading Spinner */
-        .spinner {
-            border: 4px solid rgba(37, 99, 235, 0.1);
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            border-left-color: #2563eb;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        
-        /* Custom Radio Buttons */
+        body { font-family: system-ui, sans-serif; background-color: #f8fafc; scroll-behavior: smooth; }
+        .dark body { background-color: #0f172a; color: #e2e8f0; }
+        .spinner { border: 4px solid rgba(37,99,235,0.1); width:56px; height:56px; border-radius:50%; border-left-color:#2563eb; animation: spin 1s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
         .radio-custom input[type="radio"] { display: none; }
-        .radio-custom label {
-            display: flex;
-            align-items: flex-start;
-            padding: 1rem;
-            border: 1px solid #e2e8f0;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            background: #ffffff;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
-        }
-        .radio-custom label:hover { border-color: #93c5fd; background-color: #f0f9ff; }
-        .radio-custom input[type="radio"]:checked + label {
-            border-color: #2563eb;
-            background-color: #eff6ff;
-            font-weight: 500;
-            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
-        }
-        .radio-custom input[type="radio"]:disabled + label { cursor: not-allowed; opacity: 0.8; }
-        
-        /* Review States */
-        .correct-answer label { 
-            border-color: #22c55e !important; 
-            background-color: #f0fdf4 !important; 
-            color: #166534; 
-            box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.3) !important;
-        }
-        .wrong-answer label { 
-            border-color: #ef4444 !important; 
-            background-color: #fef2f2 !important; 
-            color: #991b1b; 
-        }
-
-        /* Question Palette */
-        .palette-btn {
-            width: 36px; height: 36px;
-            display: flex; align-items: center; justify-content: center;
-            border-radius: 0.375rem; border: 1px solid #cbd5e1;
-            font-size: 0.875rem; cursor: pointer; transition: all 0.2s;
-            background: #fff;
-        }
-        .palette-btn.answered { background: #2563eb; color: #fff; border-color: #1d4ed8; }
-        .palette-btn.correct { background: #22c55e; color: #fff; border-color: #16a34a; }
-        .palette-btn.wrong { background: #ef4444; color: #fff; border-color: #dc2626; }
-        
+        .radio-custom label { display:flex; align-items:flex-start; padding:1rem; border:1px solid #e2e8f0; border-radius:0.5rem; cursor:pointer; transition:all 0.2s; background:#fff; }
+        .dark .radio-custom label { background:#1e293b; border-color:#334155; color:#e2e8f0; }
+        .radio-custom label:hover { border-color:#93c5fd; background-color:#f0f9ff; }
+        .dark .radio-custom label:hover { background:#334155; }
+        .radio-custom input[type="radio"]:checked + label { border-color:#2563eb; background-color:#eff6ff; font-weight:500; box-shadow:0 0 0 2px rgba(37,99,235,0.2); }
+        .dark .radio-custom input[type="radio"]:checked + label { background:#1e3a8a; color:#fff; }
+        .radio-custom input[type="radio"]:disabled + label { cursor:not-allowed; opacity:0.8; }
+        .correct-answer label { border-color:#22c55e !important; background-color:#f0fdf4 !important; color:#166534; }
+        .wrong-answer label { border-color:#ef4444 !important; background-color:#fef2f2 !important; color:#991b1b; }
+        .palette-btn { width:36px; height:36px; display:flex; align-items:center; justify-content:center; border-radius:0.375rem; border:1px solid #cbd5e1; font-size:0.875rem; cursor:pointer; transition:all 0.2s; background:#fff; }
+        .dark .palette-btn { background:#1e293b; border-color:#334155; color:#e2e8f0; }
+        .palette-btn.answered { background:#2563eb; color:#fff; border-color:#1d4ed8; }
+        .palette-btn.correct { background:#22c55e; color:#fff; border-color:#16a34a; }
+        .palette-btn.wrong { background:#ef4444; color:#fff; border-color:#dc2626; }
+        .palette-btn.flagged { background:#f59e0b; color:#fff; border-color:#d97706; }
         .progress-bar-fill { transition: width 0.3s ease; }
+        @media print {
+            @page { size: A4; margin: 10mm 8mm 8mm 8mm; }
+            body { background:#fff !important; color:#000 !important; font-size:10.5pt; }
+            nav, #timerContainer, #quizSidebarArea, #resultScreen, #customModal, #welcomeScreen, #loadingScreen, .no-print, #allAnswersSection.no-print, #dayPlanBanner, #darkToggle, #sectionBreakdown, #bookmarkBar { display:none !important; }
+            #quizContentArea { width:100% !important; max-width:100% !important; padding:0 !important; margin:0 !important; }
+            #questionsContainer { display:block !important; }
+            .question-box { break-inside:avoid; page-break-inside:avoid; margin:0 0 3mm 0 !important; padding:2mm 3mm !important; border:1px solid #999 !important; border-radius:2px !important; box-shadow:none !important; background:#fff !important; color:#000 !important; }
+            .question-box button, .question-box [id^="explanation-"], .no-print-inline, .bookmark-btn { display:none !important; }
+            .question-box .flex.justify-between.items-start { margin-bottom:1mm !important; }
+            .question-box h3 { font-size:10.5pt !important; line-height:1.25 !important; margin:0 0 2mm 0 !important; font-weight:600 !important; color:#000 !important; }
+            .radio-custom { display:grid !important; grid-template-columns:1fr 1fr !important; gap:1mm 4mm !important; }
+            .radio-custom > div { margin:0 !important; }
+            .radio-custom label { display:flex !important; padding:0.5mm 0 !important; border:none !important; background:none !important; box-shadow:none !important; font-size:9.5pt !important; line-height:1.2 !important; color:#000 !important; }
+            .radio-custom label span:first-child { margin-right:1.5mm !important; padding-right:1.5mm !important; border-right:1px solid #ccc !important; font-size:8.5pt !important; color:#333 !important; min-width:5mm; }
+            .correct-answer label, .wrong-answer label { border:none !important; background:none !important; color:#000 !important; box-shadow:none !important; }
+            #allAnswersSection { break-before:page !important; page-break-before:always !important; margin:0 !important; padding:3mm 0 !important; border:none !important; box-shadow:none !important; background:#fff !important; display:block !important; }
+            #allAnswersSection h2 { font-size:12pt !important; margin:0 0 2mm 0 !important; padding:0 0 1mm 0 !important; border-bottom:1.5px solid #000 !important; color:#000 !important; }
+            #answerKeyList { display:grid !important; grid-template-columns:repeat(4,1fr) !important; gap:0.8mm 3mm !important; font-size:8.5pt !important; line-height:1.25 !important; }
+            .print-answer-line { padding:0.4mm 1mm !important; border:none !important; background:none !important; border-bottom:1px dotted #bbb !important; border-radius:0 !important; font-size:8.5pt !important; color:#000 !important; }
+            .print-answer-line span:first-child { font-weight:700; color:#000 !important; }
+        }
     </style>
 </head>
-<body class="text-slate-800 flex flex-col min-h-screen">
+<body class="text-slate-800 flex flex-col min-h-screen dark:text-slate-200">
 
-    <!-- Header / Navbar -->
-    <nav class="bg-blue-700 text-white shadow-md sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
+    <nav class="bg-blue-700 text-white shadow-md sticky top-0 z-40 no-print dark:bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center space-x-3">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                <h1 class="text-xl font-bold tracking-wide hidden sm:block">Bihar STET Portal</h1>
+                <h1 class="text-xl font-bold hidden sm:block">Bihar STET Pro</h1>
             </div>
-            <div id="timerContainer" class="hidden flex items-center space-x-4 bg-blue-800 px-4 py-2 rounded-lg shadow-inner">
-                <div class="text-sm uppercase tracking-wider text-blue-200">Time Left</div>
-                <div class="font-mono text-2xl font-bold text-yellow-300" id="timerDisplay">150:00</div>
+            <div class="flex items-center gap-3">
+                <button id="darkToggle" onclick="toggleDark()" class="bg-blue-800 px-3 py-2 rounded-lg text-sm">🌙 Dark</button>
+                <div id="timerContainer" class="hidden flex items-center space-x-2 bg-blue-800 px-4 py-2 rounded-lg">
+                    <span class="text-xs uppercase text-blue-200">Time</span>
+                    <span class="font-mono text-xl font-bold text-yellow-300" id="timerDisplay">150:00</span>
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- Main Workspace -->
-    <main class="flex-grow w-full max-w-7xl mx-auto px-4 py-6 md:py-8 flex flex-col lg:flex-row gap-6 relative">
-        
-        <!-- Welcome Screen -->
-        <div id="welcomeScreen" class="w-full bg-white rounded-2xl shadow-xl p-8 md:p-16 text-center lg:col-span-3 lg:mx-auto max-w-4xl mt-10 border border-gray-100">
-            <div class="inline-block p-4 bg-blue-50 rounded-full mb-6">
-                <svg class="w-16 h-16 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-            </div>
-            <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">Bihar STET CS Mock Test</h2>
-            <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-                Click the button below to generate a comprehensive, syllabus-aligned test of <strong class="text-blue-600">150 unique questions</strong>.
-                <br><br>
-                <span class="inline-block bg-gray-100 rounded-lg px-4 py-2 text-sm">100 Computer Science Core</span>
-                <span class="inline-block bg-gray-100 rounded-lg px-4 py-2 text-sm mt-2 md:mt-0">50 Art of Teaching & General</span>
-            </p>
+    <main class="flex-grow w-full max-w-7xl mx-auto px-4 py-6 flex flex-col lg:flex-row gap-6">
+
+        <!-- ================= SETUP SCREEN ================= -->
+        <div id="welcomeScreen" class="w-full bg-white rounded-2xl shadow-xl p-8 md:p-12 text-center max-w-4xl mx-auto mt-6 border border-gray-100 no-print dark:bg-slate-800 dark:border-slate-700">
+            <h2 class="text-3xl font-extrabold mb-4 dark:text-white">Bihar STET CS Mock Test</h2>
+            <p class="text-gray-600 mb-6 dark:text-slate-300">150 Questions | 150 Minutes | CS + Pedagogy</p>
             
-            <div class="mb-8 max-w-md mx-auto">
-                <label for="apiKeyInput" class="block text-sm font-medium text-gray-700 mb-2 text-left">Gemini API Key (Required)</label>
-                <input type="password" id="apiKeyInput" placeholder="AIzaSy..." class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition shadow-sm" />
-                <p class="text-xs text-gray-500 mt-2 text-left">Get your free API key from <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-blue-600 hover:underline font-medium">Google AI Studio</a>.</p>
+            <div class="max-w-md mx-auto text-left space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-1 dark:text-slate-300">Gemini API Key</label>
+                    <input type="password" id="apiKeyInput" placeholder="AIzaSy..." class="w-full px-4 py-2 rounded-lg border dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+                    <p class="text-xs text-gray-500 mt-1">Saved automatically.</p>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-sm font-medium mb-1 dark:text-slate-300">Difficulty</label>
+                        <select id="difficultySelect" class="w-full px-3 py-2 rounded-lg border dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+                            <option value="Class 9-10 level">Easy</option>
+                            <option value="Class 11-12 teacher level" selected>Medium</option>
+                            <option value="Advanced graduation level">Hard</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1 dark:text-slate-300">Questions</label>
+                        <select id="questionCountSelect" class="w-full px-3 py-2 rounded-lg border dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="150" selected>150</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1 dark:text-slate-300">Negative Marking</label>
+                    <select id="negativeSelect" class="w-full px-3 py-2 rounded-lg border dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+                        <option value="0" selected>No negative marking</option>
+                        <option value="0.25">−0.25 per wrong</option>
+                        <option value="0.33">−0.33 per wrong</option>
+                    </select>
+                </div>
+                <label class="flex items-center gap-2 text-sm dark:text-slate-300">
+                    <input type="checkbox" id="shuffleCheck" checked class="w-4 h-4"> Shuffle questions
+                </label>
             </div>
 
-            <button onclick="generateFullTest()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-10 rounded-xl shadow-lg transition transform hover:-translate-y-1 hover:shadow-xl text-xl w-full sm:w-auto">
-                Generate 150 Questions
-            </button>
-            <p class="text-sm text-gray-400 mt-6">System will make sequential API calls to compile the full paper. This takes ~45 seconds.</p>
+            <button onclick="generateFullTest()" class="mt-6 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-xl shadow-lg text-lg w-full">Generate Test</button>
+            <button onclick="resumeSavedTest()" id="resumeBtn" class="mt-2 hidden bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg">📂 Resume Saved Test</button>
         </div>
 
-        <!-- Loading Screen -->
-        <div id="loadingScreen" class="hidden w-full bg-white rounded-2xl shadow-lg p-16 text-center max-w-3xl mx-auto mt-10 border border-gray-100 flex-col items-center justify-center">
-            <div class="spinner mb-8 mx-auto"></div>
-            <h3 class="text-2xl font-bold text-gray-800 mb-4">AI is Drafting Your Exam...</h3>
-            
-            <!-- Progress Bar -->
-            <div class="w-full bg-gray-200 rounded-full h-3 mb-4 overflow-hidden">
-                <div id="loadingProgress" class="bg-blue-600 h-3 rounded-full progress-bar-fill" style="width: 0%"></div>
-            </div>
-            
-            <p class="text-gray-600 font-medium text-lg" id="loadingText">Initializing AI models...</p>
-            <ul class="text-sm text-gray-400 mt-6 text-left max-w-xs mx-auto space-y-2 list-disc pl-4" id="loadingSteps">
-                <li id="step1">Fetching CS Core (Part 1)...</li>
-                <li id="step2">Fetching CS Core (Part 2)...</li>
-                <li id="step3">Fetching Pedagogy & GK...</li>
-            </ul>
+        <!-- ================= LOADING ================= -->
+        <div id="loadingScreen" class="hidden w-full bg-white rounded-2xl shadow-lg p-8 text-center max-w-3xl mx-auto mt-10 flex-col items-center justify-center no-print dark:bg-slate-800">
+            <div class="spinner mb-6 mx-auto"></div>
+            <h3 class="text-2xl font-bold mb-4 dark:text-white">AI is Drafting Your Exam...</h3>
+            <div class="w-full bg-gray-200 rounded-full h-3 mb-4 dark:bg-slate-700"><div id="loadingProgress" class="bg-blue-600 h-3 rounded-full progress-bar-fill" style="width:0%"></div></div>
+            <p class="text-gray-600 dark:text-slate-300" id="loadingText">Initializing...</p>
         </div>
 
-        <!-- Quiz Screen (Left: Questions, Right: Palette) -->
+        <!-- ================= QUIZ ================= -->
         <div id="quizContentArea" class="hidden w-full lg:w-3/4 order-2 lg:order-1">
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6 sticky top-[76px] z-30 flex justify-between items-center backdrop-blur-md bg-opacity-95">
+            <div class="bg-white rounded-xl shadow-sm border p-4 mb-6 sticky top-[70px] z-30 flex flex-wrap justify-between items-center gap-2 no-print dark:bg-slate-800 dark:border-slate-700">
                 <div>
-                    <h2 class="text-lg font-bold text-gray-800">Exam in Progress</h2>
-                    <p class="text-sm font-medium text-blue-600" id="answeredCountDisplay">Answered: 0 / 150</p>
+                    <h2 class="text-lg font-bold dark:text-white">Exam in Progress</h2>
+                    <p class="text-sm text-blue-600 dark:text-blue-400" id="answeredCountDisplay">Answered: 0 / 150</p>
                 </div>
-                <button onclick="confirmSubmit()" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-5 rounded-lg shadow transition flex items-center gap-2">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                    Submit Test
-                </button>
+                <div class="flex gap-2 flex-wrap">
+                    <button onclick="printTest()" class="bg-gray-600 text-white px-3 py-2 rounded-lg text-sm">🖨️ Print</button>
+                    <button onclick="exportJSON()" class="bg-purple-600 text-white px-3 py-2 rounded-lg text-sm">📥 JSON</button>
+                    <button onclick="confirmSubmit()" class="bg-green-600 text-white px-3 py-2 rounded-lg text-sm">Submit</button>
+                </div>
             </div>
 
-            <div id="questionsContainer" class="space-y-6">
-                <!-- Questions injected here -->
+            <div id="bookmarkBar" class="hidden mb-4 p-3 bg-orange-50 border border-orange-300 rounded-lg text-sm dark:bg-orange-900 dark:border-orange-700 dark:text-orange-200">
+                <b>🚩 Flagged:</b> <span id="flaggedList"></span>
             </div>
 
-            <div class="mt-10 mb-20 text-center" id="bottomSubmitContainer">
-                <button onclick="confirmSubmit()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-12 rounded-xl shadow-lg text-lg transition hover:shadow-xl">
-                    Final Submit & Check Score
-                </button>
+            <div id="questionsContainer" class="space-y-6"></div>
+
+            <div id="allAnswersSection" class="hidden mt-8 bg-white p-6 rounded-xl shadow-sm border dark:bg-slate-800 dark:border-slate-700">
+                <h2 class="text-2xl font-bold mb-4 border-b pb-2 dark:text-white">📋 Answer Key</h2>
+                <div id="answerKeyList" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 text-sm"></div>
+            </div>
+
+            <div class="mt-10 mb-20 text-center no-print" id="bottomSubmitContainer">
+                <button onclick="confirmSubmit()" class="bg-green-600 text-white font-bold py-3 px-8 rounded-xl shadow-lg">Final Submit</button>
+                <button onclick="printTest()" class="ml-3 bg-gray-600 text-white font-bold py-3 px-8 rounded-xl shadow-lg">Print / PDF</button>
             </div>
         </div>
 
-        <!-- Sidebar / Question Palette -->
-        <div id="quizSidebarArea" class="hidden w-full lg:w-1/4 order-1 lg:order-2">
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 sticky top-[76px] max-h-[85vh] flex flex-col">
-                <h3 class="font-bold text-gray-800 mb-4 border-b pb-2">Question Palette</h3>
-                
-                <div class="flex gap-4 text-xs text-gray-600 mb-4 justify-center">
-                    <div class="flex items-center gap-1"><div class="w-3 h-3 bg-blue-600 rounded-sm"></div> Answered</div>
-                    <div class="flex items-center gap-1"><div class="w-3 h-3 bg-white border border-gray-300 rounded-sm"></div> Unanswered</div>
+        <!-- ================= SIDEBAR ================= -->
+        <div id="quizSidebarArea" class="hidden w-full lg:w-1/4 order-1 lg:order-2 no-print">
+            <div class="bg-white rounded-xl shadow-sm border p-5 sticky top-[70px] max-h-[85vh] flex flex-col dark:bg-slate-800 dark:border-slate-700">
+                <h3 class="font-bold mb-3 border-b pb-2 dark:text-white">Question Palette</h3>
+                <div class="text-xs text-gray-600 mb-3 dark:text-slate-400 space-y-1">
+                    <div>🔵 Answered</div>
+                    <div>⚪ Unanswered</div>
+                    <div>🟠 Flagged</div>
                 </div>
-
-                <div id="questionPalette" class="grid grid-cols-5 gap-2 overflow-y-auto pb-4 px-1 flex-grow scrollbar-thin">
-                    <!-- Buttons injected here -->
-                </div>
+                <div id="questionPalette" class="grid grid-cols-5 gap-2 overflow-y-auto pb-4"></div>
             </div>
         </div>
 
-        <!-- Result Screen -->
-        <div id="resultScreen" class="hidden w-full bg-white rounded-2xl shadow-xl p-8 md:p-16 text-center max-w-4xl mx-auto mt-10 border border-gray-100">
-            <div class="inline-block p-4 bg-green-100 rounded-full mb-6">
-                <svg class="w-20 h-20 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </div>
-            <h2 class="text-4xl font-extrabold text-gray-900 mb-2">Exam Completed!</h2>
-            <p class="text-gray-500 mb-8">Detailed performance analysis</p>
-            
-            <div class="bg-gray-50 rounded-xl p-8 mb-8 flex justify-center items-center gap-12 border border-gray-200">
+        <!-- ================= RESULT ================= -->
+        <div id="resultScreen" class="hidden w-full bg-white rounded-2xl shadow-xl p-8 text-center max-w-4xl mx-auto mt-6 border no-print dark:bg-slate-800 dark:border-slate-700">
+            <h2 class="text-3xl font-extrabold mb-4 dark:text-white">Exam Completed!</h2>
+            <div class="bg-gray-50 rounded-xl p-6 mb-6 flex justify-center items-center gap-8 dark:bg-slate-700">
                 <div>
-                    <p class="text-sm font-semibold text-gray-500 uppercase">Total Score</p>
-                    <p class="text-5xl font-black text-blue-600 mt-1" id="scoreDisplay">0</p>
-                    <p class="text-md text-gray-400 mt-1">out of <span id="totalDisplay">150</span></p>
+                    <p class="text-sm text-gray-500 dark:text-slate-400">Total Score</p>
+                    <p class="text-5xl font-black text-blue-600" id="scoreDisplay">0</p>
+                    <p class="text-sm text-gray-400">out of <span id="totalDisplay">150</span></p>
                 </div>
-                <div class="h-20 w-px bg-gray-300"></div>
-                <div class="text-left space-y-2">
-                    <p class="text-green-600 font-medium"><span id="correctCount">0</span> Correct Answers</p>
-                    <p class="text-red-600 font-medium"><span id="wrongCount">0</span> Wrong Answers</p>
-                    <p class="text-gray-600 font-medium"><span id="skippedCount">0</span> Skipped</p>
+                <div class="h-20 w-px bg-gray-300 dark:bg-slate-600"></div>
+                <div class="text-left space-y-1 text-sm">
+                    <p class="text-green-600"><span id="correctCount">0</span> Correct</p>
+                    <p class="text-red-600"><span id="wrongCount">0</span> Wrong</p>
+                    <p class="text-gray-600 dark:text-slate-400"><span id="skippedCount">0</span> Skipped</p>
+                    <p class="text-gray-600 dark:text-slate-400"><span id="avgTime">0</span>s avg/question</p>
                 </div>
             </div>
-            
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <button onclick="reviewAnswers()" class="bg-blue-100 hover:bg-blue-200 text-blue-800 font-bold py-3 px-8 rounded-xl transition">
-                    Review Question Paper
-                </button>
-                <button onclick="resetApp()" class="bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 px-8 rounded-xl transition shadow-lg hover:shadow-xl">
-                    Generate New 150Q Test
-                </button>
+            <div id="sectionBreakdown" class="bg-gray-50 rounded-xl p-4 mb-6 text-left text-sm dark:bg-slate-700"></div>
+            <div class="flex flex-col sm:flex-row justify-center gap-3">
+                <button onclick="reviewAnswers()" class="bg-blue-100 text-blue-800 font-bold py-2 px-6 rounded-lg">Review</button>
+                <button onclick="printTest()" class="bg-gray-600 text-white font-bold py-2 px-6 rounded-lg">🖨️ Print</button>
+                <button onclick="exportJSON()" class="bg-purple-600 text-white font-bold py-2 px-6 rounded-lg">📥 JSON</button>
+                <button onclick="resetApp()" class="bg-slate-800 text-white font-bold py-2 px-6 rounded-lg">New Test</button>
             </div>
         </div>
-
     </main>
 
-    <!-- Custom Modal -->
-    <div id="customModal" class="fixed inset-0 bg-slate-900 bg-opacity-60 hidden flex-col items-center justify-center z-50 p-4 transition-opacity backdrop-blur-sm">
-        <div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md transform transition-all border border-gray-100">
-            <h3 id="modalTitle" class="text-2xl font-bold text-gray-900 mb-4">Message</h3>
-            <p id="modalMessage" class="text-gray-600 mb-8 leading-relaxed text-lg"></p>
-            <div class="flex justify-end gap-3" id="modalActions">
-                <!-- Buttons injected here -->
-            </div>
+    <div id="customModal" class="fixed inset-0 bg-slate-900 bg-opacity-60 hidden flex-col items-center justify-center z-50 p-4 no-print">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md dark:bg-slate-800">
+            <h3 id="modalTitle" class="text-2xl font-bold mb-4 dark:text-white">Message</h3>
+            <p id="modalMessage" class="text-gray-600 mb-6 dark:text-slate-300 whitespace-pre-line"></p>
+            <div class="flex justify-end gap-3" id="modalActions"></div>
         </div>
     </div>
 
     <script>
-        // Data & State Management
-        let testData = [];
-        let userAnswers = {};
-        let timerInterval = null;
-        let timeLeft = 150 * 60; // 150 minutes
+        let testData = [], userAnswers = {}, flagged = {}, timerInterval = null, timeLeft = 0, testStartTime = 0, submitted = false, currentDifficulty = '', totalMinutes = 150;
+        const STORAGE_TEST = 'stet_test_v2', STORAGE_KEY = 'stet_key_v2', STORAGE_DARK = 'stet_dark';
 
-        // System Prompts for Batching (To bypass output limits and get 150 questions)
-        const batches = [
-            {
-                name: "Computer Science (OS, DBMS, Networks, DSA)",
-                count: 50,
-                prompt: `Generate exactly 50 unique Bihar STET Computer Science multiple-choice questions in Hindi. Topics: Operating Systems, Database Management Systems, Computer Networks, Data Structures and Algorithms. Difficulty: Class 11-12 teacher level. Provide a short trick or clear explanation for the answer in Hindi in the 'explanation' field. Do not provide markdown formatting outside the JSON. Ensure valid strict JSON.`
-            },
-            {
-                name: "Computer Science (Logic, C++, AI, Web, SE)",
-                count: 50,
-                prompt: `Generate exactly 50 unique Bihar STET Computer Science multiple-choice questions in Hindi. Topics: Digital Logic, C++/Java, Web Technologies, Artificial Intelligence, IoT, Software Engineering. Difficulty: Class 11-12 teacher level. Provide a short trick or clear explanation for the answer in Hindi in the 'explanation' field. Do not provide markdown formatting outside the JSON. Ensure valid strict JSON.`
-            },
-            {
-                name: "Art of Teaching & Reasoning",
-                count: 50,
-                prompt: `Generate exactly 50 unique Bihar STET multiple-choice questions in Hindi. Topics: Art of Teaching (Pedagogy), Bloom's Taxonomy, Teaching Methods, Reasoning, and Basic Mathematics. Difficulty: Teacher eligibility test level. Provide a short trick or clear explanation for the answer in Hindi in the 'explanation' field. Do not provide markdown formatting outside the JSON. Ensure valid strict JSON.`
-            }
-        ];
-
-        // API Call with Retry Logic
-       async function fetchQuestionsFromGemini(promptText, apiKey, retries = 3) {
-    // ✅ Model name badla: gemini-1.5-flash → gemini-3.8-flash
-    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${apiKey}`;
-    
-    const payload = {
-        contents: [{ parts: [{ text: promptText }] }],
-        generationConfig: {
-            responseMimeType: "application/json",
-            responseSchema: {
-                type: "ARRAY",
-                items: {
-                    type: "OBJECT",
-                    properties: {
-                        question: { type: "STRING" },
-                        options: { type: "ARRAY", items: { type: "STRING" } },
-                        correctIndex: { type: "INTEGER" },
-                        category: { type: "STRING" },
-                        explanation: { type: "STRING" }
-                    },
-                    required: ["question", "options", "correctIndex", "category", "explanation"]
-                }
-            }
+        // ---------- Dark Mode ----------
+        function toggleDark() {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            localStorage.setItem(STORAGE_DARK, isDark ? '1' : '0');
+            document.getElementById('darkToggle').innerText = isDark ? '☀️ Light' : '🌙 Dark';
         }
-    };
+        if (localStorage.getItem(STORAGE_DARK) === '1') {
+            document.documentElement.classList.add('dark');
+            document.getElementById('darkToggle').innerText = '☀️ Light';
+        }
 
-    try {
-        const response = await fetch(apiUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
+        // ---------- API Key Save ----------
+        document.getElementById('apiKeyInput').addEventListener('input', e => {
+            localStorage.setItem(STORAGE_KEY, e.target.value.trim());
         });
-        
-        if (!response.ok) {
-            if (response.status === 429 && retries > 0) {
-                await new Promise(r => setTimeout(r, 2000));
-                return fetchQuestionsFromGemini(promptText, apiKey, retries - 1);
-            }
-            throw new Error(`HTTP Error: ${response.status}`);
+        const savedKey = localStorage.getItem(STORAGE_KEY);
+        if (savedKey) document.getElementById('apiKeyInput').value = savedKey;
+
+        // ---------- Resume saved test ----------
+        function checkSavedTest() {
+            try {
+                const saved = JSON.parse(localStorage.getItem(STORAGE_TEST) || 'null');
+                if (saved && saved.testData && saved.testData.length > 0) {
+                    document.getElementById('resumeBtn').classList.remove('hidden');
+                }
+            } catch(e) {}
+        }
+        checkSavedTest();
+
+        function saveTest() {
+            try {
+                localStorage.setItem(STORAGE_TEST, JSON.stringify({
+                    testData, userAnswers, flagged, timeLeft, submitted, testStartTime, totalMinutes
+                }));
+            } catch(e) { console.warn('save failed', e); }
         }
 
-        const result = await response.json();
-        if (result.candidates && result.candidates[0].content?.parts[0]?.text) {
-            const parsed = JSON.parse(result.candidates[0].content.parts[0].text);
-            return Array.isArray(parsed) ? parsed : [];
+        function resumeSavedTest() {
+            try {
+                const saved = JSON.parse(localStorage.getItem(STORAGE_TEST));
+                if (!saved) return;
+                testData = saved.testData; userAnswers = saved.userAnswers || {}; flagged = saved.flagged || {};
+                timeLeft = saved.timeLeft || 0; submitted = saved.submitted || false; testStartTime = saved.testStartTime || Date.now();
+                totalMinutes = saved.totalMinutes || 150;
+                document.getElementById('welcomeScreen').classList.add('hidden');
+                document.getElementById('quizContentArea').classList.remove('hidden');
+                document.getElementById('quizSidebarArea').classList.remove('hidden');
+                buildQuizUI(); buildAnswerKey(); renderFlaggedList();
+                if (!submitted) startTimer();
+                window.scrollTo(0,0);
+            } catch(e) { alert('Resume failed: ' + e.message); }
         }
-        return [];
-    } catch (error) {
-        if (retries > 0) {
-            await new Promise(r => setTimeout(r, 2000));
-            return fetchQuestionsFromGemini(promptText, apiKey, retries - 1);
-        }
-        throw error;
-    }
-}
-        // Generate Full 150 Question Test
-        async function generateFullTest() {
-            const apiKey = document.getElementById('apiKeyInput').value.trim();
-            if (!apiKey) {
-                showModal('API Key Required', 'कृपया अपना Gemini API Key दर्ज करें। आप इसे Google AI Studio से मुफ्त में प्राप्त कर सकते हैं।', [
-                    { text: 'OK', className: 'bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg' }
-                ]);
-                return;
+
+        // ---------- Parse ----------
+        function parseAIResponse(raw) {
+            let c = raw.replace(/```json/g,'').replace(/```/g,'').trim();
+            try { return JSON.parse(c); } catch(e) {
+                const objs = c.match(/\{[^{}]*\}/g) || [];
+                const out = [];
+                for (const s of objs) { try { const o = JSON.parse(s); if (o.question && Array.isArray(o.options)) out.push(o); } catch(e2) {} }
+                if (out.length) return out;
+                throw new Error('JSON unusable');
             }
+        }
+
+        async function fetchGemini(prompt, key, retries = 3) {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${key}`;
+            const body = { contents:[{parts:[{text:prompt}]}], generationConfig:{ responseMimeType:"application/json", responseSchema:{ type:"ARRAY", items:{ type:"OBJECT", properties:{ question:{type:"STRING"}, options:{type:"ARRAY",items:{type:"STRING"}}, correctIndex:{type:"INTEGER"}, category:{type:"STRING"}, explanation:{type:"STRING"} }, required:["question","options","correctIndex","category","explanation"] } } } };
+            try {
+                const r = await fetch(url, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
+                if (!r.ok) {
+                    if ((r.status===429||r.status===503) && retries>0) { await new Promise(x=>setTimeout(x,3000)); return fetchGemini(prompt,key,retries-1); }
+                    throw new Error('HTTP ' + r.status);
+                }
+                const d = await r.json();
+                if (d.candidates?.[0]?.content?.parts?.[0]?.text) return parseAIResponse(d.candidates[0].content.parts[0].text);
+                return [];
+            } catch(e) {
+                if (retries>0) { await new Promise(x=>setTimeout(x,3000)); return fetchGemini(prompt,key,retries-1); }
+                throw e;
+            }
+        }
+
+        // ---------- Generate ----------
+        async function generateFullTest() {
+            const key = document.getElementById('apiKeyInput').value.trim();
+            if (!key) return showModal('API Key Required', 'Gemini key daalein.', [{text:'OK', className:'bg-blue-600 text-white px-5 py-2 rounded-lg'}]);
+            const total = parseInt(document.getElementById('questionCountSelect').value);
+            currentDifficulty = document.getElementById('difficultySelect').value;
+            totalMinutes = total;
+            const perBatch = 20;
+            const numBatches = Math.ceil(total / perBatch);
 
             document.getElementById('welcomeScreen').classList.add('hidden');
             document.getElementById('loadingScreen').classList.remove('hidden');
             document.getElementById('loadingScreen').classList.add('flex');
-            
-            testData = [];
-            
+            testData = []; userAnswers = {}; flagged = {}; submitted = false;
+
+            const topics = ['Operating Systems','DBMS','Computer Networks','Data Structures','Digital Logic','C++/Java','Web Technologies','AI','Software Engineering','Pedagogy','Reasoning','Basic Math'];
+
             try {
-                for (let i = 0; i < batches.length; i++) {
-                    const batch = batches[i];
-                    document.getElementById('loadingText').innerText = `कंपाइलिंग: ${batch.name} (${i+1}/3)`;
-                    document.getElementById(`step${i+1}`).classList.add('text-blue-600', 'font-bold');
-                    
-                    // Fetch
-                    let questions = await fetchQuestionsFromGemini(batch.prompt, apiKey);
-                    
-                    // Failsafe if AI returned too few (optional padding, but we rely on Gemini strictly following count)
-                    testData = testData.concat(questions);
-                    
-                    // Update Progress bar
-                    const progress = ((i + 1) / batches.length) * 100;
-                    document.getElementById('loadingProgress').style.width = `${progress}%`;
-                    document.getElementById(`step${i+1}`).innerText = `✓ Completed: ${batch.name} (${questions.length} Qs)`;
+                for (let i = 0; i < numBatches; i++) {
+                    const cnt = Math.min(perBatch, total - i*perBatch);
+                    const topic = topics[i % topics.length];
+                    document.getElementById('loadingText').innerText = `Batch ${i+1}/${numBatches}: ${topic} (${cnt} Qs)`;
+                    const prompt = `Generate exactly ${cnt} unique Bihar STET MCQs in Hindi. Topic: ${topic}. Difficulty: ${currentDifficulty}. 4 options, correctIndex 0-3, short explanation. Return ONLY JSON array: [{"question":"...","options":["A","B","C","D"],"correctIndex":0,"category":"${topic}","explanation":"..."}]`;
+                    const qs = await fetchGemini(prompt, key);
+                    testData = testData.concat(qs);
+                    document.getElementById('loadingProgress').style.width = `${((i+1)/numBatches)*100}%`;
                 }
+                if (testData.length > total) testData = testData.slice(0, total);
+                if (!testData.length) throw new Error('No questions generated');
+                if (document.getElementById('shuffleCheck').checked) testData.sort(() => Math.random() - 0.5);
 
-                if (testData.length > 0) {
-                    // Force exact 150 if it overgenerated, or just use what we have (usually 148-150)
-                    if(testData.length > 150) testData = testData.slice(0, 150);
-                    
-                    userAnswers = {};
-                    buildQuizUI();
-                    
-                    document.getElementById('loadingScreen').classList.add('hidden');
-                    document.getElementById('loadingScreen').classList.remove('flex');
-                    document.getElementById('quizContentArea').classList.remove('hidden');
-                    document.getElementById('quizSidebarArea').classList.remove('hidden');
-                    
-                    startTimer();
-                    window.scrollTo(0, 0);
-                } else {
-                    throw new Error("No questions returned.");
-                }
-
-            } catch (error) {
-                console.error("Compilation Error:", error);
+                testStartTime = Date.now();
+                timeLeft = totalMinutes * 60;
+                buildQuizUI(); buildAnswerKey(); renderFlaggedList();
+                document.getElementById('loadingScreen').classList.add('hidden');
+                document.getElementById('loadingScreen').classList.remove('flex');
+                document.getElementById('quizContentArea').classList.remove('hidden');
+                document.getElementById('quizSidebarArea').classList.remove('hidden');
+                startTimer(); saveTest(); window.scrollTo(0,0);
+            } catch(e) {
                 document.getElementById('loadingScreen').classList.add('hidden');
                 document.getElementById('loadingScreen').classList.remove('flex');
                 document.getElementById('welcomeScreen').classList.remove('hidden');
-                
-                showModal('सर्वर त्रुटि (Error)', 'प्रश्न जनरेट करने में तकनीकी समस्या आई है। कृपया पुनः प्रयास करें।', [
-                    { text: 'OK', className: 'bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg' }
-                ]);
+                showModal('Error', 'Failed: ' + e.message, [{text:'OK', className:'bg-red-600 text-white px-5 py-2 rounded-lg'}]);
             }
         }
 
-        // Build the Quiz Interface & Palette
+        // ---------- Build UI ----------
         function buildQuizUI() {
-            const container = document.getElementById('questionsContainer');
-            const palette = document.getElementById('questionPalette');
-            
-            container.innerHTML = '';
-            palette.innerHTML = '';
-            
+            const c = document.getElementById('questionsContainer');
+            const p = document.getElementById('questionPalette');
+            c.innerHTML = ''; p.innerHTML = '';
             document.getElementById('answeredCountDisplay').innerText = `Answered: 0 / ${testData.length}`;
 
-            testData.forEach((item, qIndex) => {
-                const qNum = qIndex + 1;
-
-                // 1. Build Question Box
-                const qDiv = document.createElement('div');
-                qDiv.className = 'bg-white p-6 rounded-xl shadow-sm border border-gray-100 question-box';
-                qDiv.id = `qbox-${qIndex}`;
-
-                const badgeColor = item.category.includes("Teaching") ? "bg-purple-100 text-purple-800" : "bg-blue-100 text-blue-800";
-                
-                const headerHtml = `
-                    <div class="flex justify-between items-start mb-4">
-                        <span class="inline-block ${badgeColor} text-xs px-3 py-1 rounded-full font-bold uppercase tracking-wider">${item.category}</span>
-                        <span class="text-sm font-bold text-gray-400">Q ${qNum}</span>
-                    </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-5 leading-relaxed">${qNum}. ${item.question}</h3>
-                `;
-                
-                let optionsHtml = '<div class="space-y-3 radio-custom">';
-                item.options.forEach((opt, oIndex) => {
-                    optionsHtml += `
-                        <div class="option-wrapper" id="opt-wrapper-${qIndex}-${oIndex}">
-                            <input type="radio" id="q${qIndex}o${oIndex}" name="q${qIndex}" value="${oIndex}" onchange="recordAnswer(${qIndex}, ${oIndex})">
-                            <label for="q${qIndex}o${oIndex}" class="w-full text-gray-700 text-md">
-                                <span class="mr-4 font-bold text-gray-400 border-r border-gray-200 pr-4">${String.fromCharCode(65 + oIndex)}</span> 
-                                <span>${opt}</span>
-                            </label>
-                        </div>
-                    `;
+            testData.forEach((item, i) => {
+                const n = i+1;
+                const div = document.createElement('div');
+                div.className = 'bg-white p-6 rounded-xl shadow-sm border question-box dark:bg-slate-800 dark:border-slate-700';
+                div.id = `qbox-${i}`;
+                const badge = (item.category||'').includes('Pedagogy') ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800';
+                let opts = '<div class="space-y-3 radio-custom">';
+                item.options.forEach((o, j) => {
+                    opts += `<div class="option-wrapper" id="opt-wrapper-${i}-${j}">
+                        <input type="radio" id="q${i}o${j}" name="q${i}" value="${j}" ${userAnswers[i]===j?'checked':''} onchange="recordAnswer(${i},${j})">
+                        <label for="q${i}o${j}"><span class="mr-3 font-bold border-r pr-3">${String.fromCharCode(65+j)}</span><span>${o}</span></label>
+                    </div>`;
                 });
-                optionsHtml += '</div>';
-
-                const answerBtnHtml = `
-                    <div class="mt-6 border-t pt-4">
-                        <button onclick="revealAnswer(${qIndex})" class="text-sm font-semibold text-blue-600 hover:text-blue-800 transition flex items-center gap-2">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
-                            उत्तर और Short Trick देखें
-                        </button>
+                opts += '</div>';
+                div.innerHTML = `
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="inline-block ${badge} text-xs px-2 py-1 rounded-full font-bold uppercase">${item.category||'General'}</span>
+                        <div class="flex items-center gap-2">
+                            <button onclick="toggleFlag(${i})" id="flagBtn-${i}" class="bookmark-btn text-lg">${flagged[i]?'🚩':'🏳️'}</button>
+                            <span class="text-xs font-bold text-gray-400">Q ${n}</span>
+                        </div>
                     </div>
-                    <div id="explanation-${qIndex}" class="hidden mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg text-sm text-gray-800 shadow-inner">
-                        <p class="font-bold text-green-700 mb-2 text-base">सही उत्तर: ${String.fromCharCode(65 + item.correctIndex)}. ${item.options[item.correctIndex]}</p>
-                        <p><span class="font-bold text-yellow-800">Short Trick / व्याख्या:</span> ${item.explanation || 'कोई व्याख्या उपलब्ध नहीं है।'}</p>
+                    <h3 class="text-lg font-bold mb-4 dark:text-white">${n}. ${item.question}</h3>
+                    ${opts}
+                    <div class="mt-4 border-t pt-3 no-print">
+                        <button onclick="revealAnswer(${i})" class="text-sm text-blue-600">👁️ Show Answer</button>
                     </div>
-                `;
+                    <div id="explanation-${i}" class="hidden mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded text-sm dark:bg-yellow-900 dark:border-yellow-700 dark:text-yellow-100">
+                        <p class="font-bold text-green-700 dark:text-green-400">Answer: ${String.fromCharCode(65+item.correctIndex)}. ${item.options[item.correctIndex]||'—'}</p>
+                        <p><b>Trick:</b> ${item.explanation||'N/A'}</p>
+                    </div>`;
+                c.appendChild(div);
 
-                qDiv.innerHTML = headerHtml + optionsHtml + answerBtnHtml;
-                container.appendChild(qDiv);
-
-                // 2. Build Palette Button
-                const pBtn = document.createElement('button');
-                pBtn.className = 'palette-btn';
-                pBtn.id = `pbtn-${qIndex}`;
-                pBtn.innerText = qNum;
-                pBtn.onclick = () => {
-                    document.getElementById(`qbox-${qIndex}`).scrollIntoView({ behavior: 'smooth', block: 'center' });
-                };
-                palette.appendChild(pBtn);
+                const b = document.createElement('button');
+                b.className = 'palette-btn' + (userAnswers[i]!==undefined?' answered':'') + (flagged[i]?' flagged':'');
+                b.id = `pbtn-${i}`; b.innerText = n;
+                b.onclick = () => document.getElementById(`qbox-${i}`).scrollIntoView({behavior:'smooth', block:'center'});
+                p.appendChild(b);
             });
         }
 
-        // Record Answer and Update UI
-        function recordAnswer(qIndex, oIndex) {
-            userAnswers[qIndex] = oIndex;
-            
-            // Update Palette
-            const pBtn = document.getElementById(`pbtn-${qIndex}`);
-            pBtn.classList.add('answered');
-
-            // Update Header Count
-            const answeredCount = Object.keys(userAnswers).length;
-            document.getElementById('answeredCountDisplay').innerText = `Answered: ${answeredCount} / ${testData.length}`;
+        function buildAnswerKey() {
+            const l = document.getElementById('answerKeyList');
+            l.innerHTML = '';
+            testData.forEach((it, i) => {
+                const d = document.createElement('div');
+                d.className = 'print-answer-line p-2 bg-gray-50 rounded border dark:bg-slate-700 dark:border-slate-600';
+                d.innerHTML = `<span class="font-bold text-blue-700 dark:text-blue-300">Q${i+1}.</span> <span class="font-semibold text-green-700 dark:text-green-400">${String.fromCharCode(65+it.correctIndex)}</span> <span class="text-sm">${(it.options[it.correctIndex]||'').substring(0,30)}</span>`;
+                l.appendChild(d);
+            });
         }
 
-        // Reveal Answer and Explanation (Practice Mode)
-        function revealAnswer(qIndex) {
-            const expDiv = document.getElementById(`explanation-${qIndex}`);
-            expDiv.classList.toggle('hidden');
-
-            const correctIndex = testData[qIndex].correctIndex;
-            const correctLabel = document.getElementById(`opt-wrapper-${qIndex}-${correctIndex}`);
-            
-            if (!expDiv.classList.contains('hidden')) {
-                correctLabel.classList.add('correct-answer');
-                
-                // Disable radio buttons so user can't answer after seeing the trick
-                const radios = document.getElementsByName(`q${qIndex}`);
-                radios.forEach(r => r.disabled = true);
-            }
+        function recordAnswer(i, j) {
+            if (submitted) return;
+            userAnswers[i] = j;
+            document.getElementById(`pbtn-${i}`).classList.add('answered');
+            document.getElementById('answeredCountDisplay').innerText = `Answered: ${Object.keys(userAnswers).length} / ${testData.length}`;
+            saveTest();
         }
 
-        // Timer Logic
+        function toggleFlag(i) {
+            flagged[i] = !flagged[i];
+            document.getElementById(`flagBtn-${i}`).innerText = flagged[i] ? '🚩' : '🏳️';
+            document.getElementById(`pbtn-${i}`).classList.toggle('flagged', flagged[i]);
+            renderFlaggedList(); saveTest();
+        }
+
+        function renderFlaggedList() {
+            const ids = Object.keys(flagged).filter(k => flagged[k]);
+            const bar = document.getElementById('bookmarkBar');
+            if (ids.length === 0) { bar.classList.add('hidden'); return; }
+            bar.classList.remove('hidden');
+            document.getElementById('flaggedList').innerHTML = ids.map(i => `<a href="#qbox-${i}" class="underline mr-2">Q${parseInt(i)+1}</a>`).join('');
+        }
+
+        function revealAnswer(i) {
+            const e = document.getElementById(`explanation-${i}`);
+            e.classList.toggle('hidden');
+            document.getElementById(`opt-wrapper-${i}-${testData[i].correctIndex}`).classList.add('correct-answer');
+            if (!e.classList.contains('hidden')) document.getElementsByName(`q${i}`).forEach(r => r.disabled = true);
+        }
+
+        // ---------- Timer ----------
         function startTimer() {
             document.getElementById('timerContainer').classList.remove('hidden');
-            timeLeft = 150 * 60; // 150 mins
-            updateTimerDisplay();
-            
             clearInterval(timerInterval);
             timerInterval = setInterval(() => {
-                timeLeft--;
-                updateTimerDisplay();
-                
-                if(timeLeft <= 300) {
-                    // Turn red at last 5 mins
-                    document.getElementById('timerDisplay').classList.remove('text-yellow-300');
-                    document.getElementById('timerDisplay').classList.add('text-red-400');
-                }
-
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    forceSubmit();
-                }
+                timeLeft--; updateTimerDisplay();
+                if (timeLeft <= 300) document.getElementById('timerDisplay').classList.add('text-red-400');
+                if (timeLeft <= 0) { clearInterval(timerInterval); forceSubmit(); }
+                if (timeLeft % 10 === 0) saveTest();
             }, 1000);
+            updateTimerDisplay();
         }
-
         function updateTimerDisplay() {
-            const h = Math.floor(timeLeft / 3600);
-            const m = Math.floor((timeLeft % 3600) / 60).toString().padStart(2, '0');
-            const s = (timeLeft % 60).toString().padStart(2, '0');
-            
-            let displayString = h > 0 ? `${h}:${m}:${s}` : `${m}:${s}`;
-            document.getElementById('timerDisplay').innerText = displayString;
+            const h = Math.floor(timeLeft/3600), m = Math.floor((timeLeft%3600)/60).toString().padStart(2,'0'), s = (timeLeft%60).toString().padStart(2,'0');
+            document.getElementById('timerDisplay').innerText = h>0 ? `${h}:${m}:${s}` : `${m}:${s}`;
         }
 
-        function stopTimer() {
-            clearInterval(timerInterval);
-        }
-
-        // Custom Modal Function
-        function showModal(title, message, buttons) {
+        function showModal(title, msg, btns) {
             document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalMessage').innerText = message;
-            
-            const actionsContainer = document.getElementById('modalActions');
-            actionsContainer.innerHTML = '';
-            
-            buttons.forEach(btn => {
-                const buttonEl = document.createElement('button');
-                buttonEl.innerText = btn.text;
-                buttonEl.className = btn.className || 'bg-gray-200 hover:bg-gray-300 text-gray-800 px-5 py-2 rounded-lg font-semibold transition';
-                buttonEl.onclick = () => {
-                    document.getElementById('customModal').classList.add('hidden');
-                    document.getElementById('customModal').classList.remove('flex');
-                    if (btn.onClick) btn.onClick();
-                };
-                actionsContainer.appendChild(buttonEl);
+            document.getElementById('modalMessage').innerText = msg;
+            const c = document.getElementById('modalActions'); c.innerHTML = '';
+            btns.forEach(b => {
+                const el = document.createElement('button');
+                el.innerText = b.text; el.className = b.className;
+                el.onclick = () => { document.getElementById('customModal').classList.add('hidden'); document.getElementById('customModal').classList.remove('flex'); if (b.onClick) b.onClick(); };
+                c.appendChild(el);
             });
-            
             document.getElementById('customModal').classList.remove('hidden');
             document.getElementById('customModal').classList.add('flex');
         }
 
-        // Submission Logic
+        function printTest() { buildAnswerKey(); document.getElementById('allAnswersSection').classList.remove('hidden'); window.print(); }
+
+        function exportJSON() {
+            const data = { testData, userAnswers, flagged, generatedAt: new Date().toISOString() };
+            const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a'); a.href = url; a.download = `stet-test-${Date.now()}.json`; a.click();
+            URL.revokeObjectURL(url);
+        }
+
         function confirmSubmit() {
-            const answeredCount = Object.keys(userAnswers).length;
-            const total = testData.length;
-            
-            let msg = `आपने ${total} में से ${answeredCount} प्रश्नों के उत्तर दिए हैं।\n`;
-            if (answeredCount < total) {
-                msg += `आपके ${total - answeredCount} प्रश्न अभी बाकी हैं। क्या आप निश्चित रूप से टेस्ट सबमिट करना चाहते हैं?`;
-            } else {
-                msg += `क्या आप अपना रिजल्ट देखने के लिए तैयार हैं?`;
-            }
-
-            showModal('टेस्ट सबमिट करें', msg, [
-                { text: 'रद्द करें (Cancel)', className: 'bg-gray-200 hover:bg-gray-300 text-gray-800 px-5 py-2 rounded-lg' },
-                { text: 'सबमिट करें (Submit)', className: 'bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg font-bold shadow-md', onClick: processSubmission }
+            const a = Object.keys(userAnswers).length, t = testData.length;
+            showModal('Submit?', `Answered ${a}/${t}. Submit now?`, [
+                {text:'Cancel', className:'bg-gray-200 px-5 py-2 rounded-lg dark:bg-slate-600 dark:text-white'},
+                {text:'Submit', className:'bg-green-600 text-white px-5 py-2 rounded-lg font-bold', onClick: processSubmission}
             ]);
         }
 
-        function forceSubmit() {
-            showModal('समय समाप्त!', 'आपके 150 मिनट पूरे हो गए हैं। टेस्ट ऑटो-सबमिट हो रहा है।', [
-                { text: 'अपना स्कोर देखें', className: 'bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-bold', onClick: processSubmission }
-            ]);
-        }
+        function forceSubmit() { showModal('Time Over!', 'Auto-submitting...', [{text:'View Score', className:'bg-blue-600 text-white px-5 py-2 rounded-lg', onClick: processSubmission}]); }
 
         function processSubmission() {
-            stopTimer();
-            let score = 0;
-            let correct = 0;
-            let wrong = 0;
-            let skipped = 0;
-
-            testData.forEach((item, qIndex) => {
-                const userAns = userAnswers[qIndex];
-                const correctAns = item.correctIndex;
-                const pBtn = document.getElementById(`pbtn-${qIndex}`);
-
-                // Disable inputs
-                const radios = document.getElementsByName(`q${qIndex}`);
-                radios.forEach(r => r.disabled = true);
-
-                if (userAns !== undefined) {
-                    if (userAns === correctAns) {
-                        score++; correct++;
-                        document.getElementById(`opt-wrapper-${qIndex}-${userAns}`).classList.add('correct-answer');
-                        pBtn.className = 'palette-btn correct';
-                    } else {
-                        wrong++;
-                        document.getElementById(`opt-wrapper-${qIndex}-${userAns}`).classList.add('wrong-answer');
-                        document.getElementById(`opt-wrapper-${qIndex}-${correctAns}`).classList.add('correct-answer');
-                        pBtn.className = 'palette-btn wrong';
-                    }
-                } else {
-                    skipped++;
-                    document.getElementById(`opt-wrapper-${qIndex}-${correctAns}`).classList.add('correct-answer');
-                    pBtn.className = 'palette-btn bg-gray-100 text-gray-400';
-                }
+            clearInterval(timerInterval); submitted = true;
+            const neg = parseFloat(document.getElementById('negativeSelect').value) || 0;
+            let correct=0, wrong=0, skipped=0;
+            const catStats = {};
+            testData.forEach((it, i) => {
+                const ua = userAnswers[i], ca = it.correctIndex;
+                document.getElementsByName(`q${i}`).forEach(r => r.disabled = true);
+                const pb = document.getElementById(`pbtn-${i}`);
+                const cat = it.category || 'General';
+                if (!catStats[cat]) catStats[cat] = {correct:0, wrong:0, total:0};
+                catStats[cat].total++;
+                if (ua !== undefined) {
+                    if (ua === ca) { correct++; catStats[cat].correct++; document.getElementById(`opt-wrapper-${i}-${ua}`).classList.add('correct-answer'); pb.className = 'palette-btn correct'; }
+                    else { wrong++; catStats[cat].wrong++; document.getElementById(`opt-wrapper-${i}-${ua}`).classList.add('wrong-answer'); document.getElementById(`opt-wrapper-${i}-${ca}`).classList.add('correct-answer'); pb.className='palette-btn wrong'; }
+                } else { skipped++; document.getElementById(`opt-wrapper-${i}-${ca}`).classList.add('correct-answer'); pb.className='palette-btn bg-gray-100 text-gray-400'; }
             });
-
-            // Update Result Screen
-            document.getElementById('scoreDisplay').innerText = score;
+            const score = correct - (wrong * neg);
+            document.getElementById('scoreDisplay').innerText = score.toFixed(2);
             document.getElementById('totalDisplay').innerText = testData.length;
             document.getElementById('correctCount').innerText = correct;
             document.getElementById('wrongCount').innerText = wrong;
             document.getElementById('skippedCount').innerText = skipped;
-
+            const elapsed = Math.floor((Date.now() - testStartTime) / 1000);
+            document.getElementById('avgTime').innerText = (elapsed / testData.length).toFixed(1);
+            // Section breakdown
+            const sb = document.getElementById('sectionBreakdown');
+            sb.innerHTML = '<h3 class="font-bold mb-2">📊 Section-wise Score</h3>' + Object.entries(catStats).map(([cat, s]) =>
+                `<div class="flex justify-between border-b py-1 dark:border-slate-600"><span>${cat}</span><span>${s.correct}/${s.total} (${Math.round(s.correct/s.total*100)}%)</span></div>`
+            ).join('');
+            buildAnswerKey();
+            document.getElementById('allAnswersSection').classList.remove('hidden');
             document.getElementById('quizContentArea').classList.add('hidden');
             document.getElementById('quizSidebarArea').classList.add('hidden');
             document.getElementById('resultScreen').classList.remove('hidden');
-            window.scrollTo(0, 0);
+            saveTest(); window.scrollTo(0,0);
         }
 
         function reviewAnswers() {
             document.getElementById('resultScreen').classList.add('hidden');
             document.getElementById('quizContentArea').classList.remove('hidden');
             document.getElementById('quizSidebarArea').classList.remove('hidden');
-            
-            // Hide submit buttons during review
             document.getElementById('bottomSubmitContainer').classList.add('hidden');
-            const topHeader = document.querySelector('#quizContentArea .sticky');
-            if(topHeader) topHeader.classList.add('hidden');
-            
-            window.scrollTo(0, 0);
+            const h = document.querySelector('#quizContentArea .sticky'); if (h) h.classList.add('hidden');
+            window.scrollTo(0,0);
         }
 
         function resetApp() {
-            testData = [];
-            userAnswers = {};
-            
+            localStorage.removeItem(STORAGE_TEST);
+            testData = []; userAnswers = {}; flagged = {}; submitted = false;
             document.getElementById('timerContainer').classList.add('hidden');
             document.getElementById('bottomSubmitContainer').classList.remove('hidden');
-            const topHeader = document.querySelector('#quizContentArea .sticky');
-            if(topHeader) topHeader.classList.remove('hidden');
-            
-            // Reset loading steps UI
-            ['step1', 'step2', 'step3'].forEach(id => {
-                document.getElementById(id).classList.remove('text-blue-600', 'font-bold');
-                document.getElementById(id).innerText = `Fetching ${id}...`;
-            });
+            const h = document.querySelector('#quizContentArea .sticky'); if (h) h.classList.remove('hidden');
             document.getElementById('loadingProgress').style.width = '0%';
-
             document.getElementById('resultScreen').classList.add('hidden');
+            document.getElementById('allAnswersSection').classList.add('hidden');
             document.getElementById('welcomeScreen').classList.remove('hidden');
-            window.scrollTo(0, 0);
+            document.getElementById('resumeBtn').classList.add('hidden');
+            document.getElementById('bookmarkBar').classList.add('hidden');
+            window.scrollTo(0,0);
         }
+
+        // Auto-save every 15 seconds
+        setInterval(() => { if (testData.length > 0 && !submitted) saveTest(); }, 15000);
+
+        // Warn before leaving
+        window.addEventListener('beforeunload', (e) => {
+            if (testData.length > 0 && !submitted) { e.preventDefault(); e.returnValue = ''; }
+        });
     </script>
 </body>
 </html>
