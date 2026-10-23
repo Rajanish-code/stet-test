@@ -3,329 +3,271 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STET 2026 - Kya Aa Sakta Hai? (Prediction)</title>
+    <title>STET Final Revision - Theory + YouTube</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { font-family: system-ui, sans-serif; background: #f8fafc; }
-        .prediction-card { transition: all 0.2s; }
-        .prediction-card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); }
-        .topic-check { width: 1.25rem; height: 1.25rem; cursor: pointer; accent-color: #16a34a; }
+        .topic-card { transition: all 0.2s; }
+        .topic-card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); }
+        .vvi-box { background: #fef2f2; border-left: 4px solid #ef4444; padding: 0.5rem 0.75rem; margin: 0.25rem 0; border-radius: 0.25rem; font-size: 0.85rem; }
+        .pyq-box { background: #f5f3ff; border-left: 4px solid #8b5cf6; padding: 0.5rem 0.75rem; margin: 0.25rem 0; border-radius: 0.25rem; font-size: 0.85rem; }
+        .yt-box { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 0.5rem 0.75rem; margin: 0.25rem 0; border-radius: 0.25rem; font-size: 0.85rem; }
+        .yt-box a { color: #b45309; font-weight: 600; text-decoration: underline; }
+        .theory-box { background: #eff6ff; border: 1px solid #2563eb; padding: 0.75rem; border-radius: 0.5rem; font-size: 0.85rem; margin: 0.5rem 0; }
+        .checkbox-custom { width: 1.25rem; height: 1.25rem; cursor: pointer; accent-color: #16a34a; }
         .completed { background: #f0fdf4 !important; border-color: #22c55e !important; }
         .completed .topic-title { text-decoration: line-through; color: #16a34a; }
-        .high-box { background: #fef2f2; border-left: 4px solid #ef4444; padding: 0.5rem 0.75rem; margin: 0.25rem 0; border-radius: 0.25rem; font-size: 0.85rem; font-weight: 600; }
-        .medium-box { background: #fefce8; border-left: 4px solid #eab308; padding: 0.5rem 0.75rem; margin: 0.25rem 0; border-radius: 0.25rem; font-size: 0.85rem; }
-        .low-box { background: #f0fdf4; border-left: 4px solid #22c55e; padding: 0.5rem 0.75rem; margin: 0.25rem 0; border-radius: 0.25rem; font-size: 0.85rem; }
-        .pyq-proof { background: #f5f3ff; border-left: 4px solid #8b5cf6; padding: 0.5rem 0.75rem; margin: 0.25rem 0; border-radius: 0.25rem; font-size: 0.8rem; }
-        .pattern-box { background: #eff6ff; border: 1px solid #2563eb; padding: 0.75rem; border-radius: 0.5rem; font-size: 0.85rem; }
+        .day-badge { background: #2563eb; color: white; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 700; }
     </style>
 </head>
 <body class="min-h-screen">
 
     <nav class="bg-blue-700 text-white shadow-md sticky top-0 z-40">
         <div class="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
-            <h1 class="text-lg font-bold">🔮 STET 2026 Prediction</h1>
-            <span class="text-xs bg-purple-600 px-2 py-1 rounded">Exam Pattern Based</span>
+            <h1 class="text-lg font-bold">📖 STET Final Revision</h1>
+            <span class="text-xs bg-red-600 px-2 py-1 rounded">2 Din</span>
         </div>
     </nav>
 
     <main class="max-w-5xl mx-auto px-4 py-6">
 
-        <!-- Exam Pattern Summary -->
-        <div class="pattern-box mb-6">
-            <h2 class="font-bold text-blue-800 mb-2">📋 Exam Pattern (2026)</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
-                <div class="bg-white p-2 rounded"><b>Total:</b> 150 Q / 150 Marks</div>
-                <div class="bg-white p-2 rounded"><b>CS Subject:</b> 100 Q</div>
-                <div class="bg-white p-2 rounded"><b>Pedagogy/GK:</b> 50 Q</div>
-                <div class="bg-white p-2 rounded"><b>Negative:</b> Nahi hai</div>
-            </div>
-            <p class="text-xs text-gray-600 mt-2">Paper 2 (Class 11-12) ke liye. Time: 150 minutes. Mode: CBT (Online) [citation:1][citation:5]</p>
+        <!-- Exam Info -->
+        <div class="bg-red-50 border border-red-300 rounded-xl p-4 mb-6">
+            <h2 class="font-bold text-red-800 mb-2">⏰ Aapka Exam: 9 November</h2>
+            <p class="text-sm text-red-700">Aapke paas sirf <b>2 din</b> hain. Isliye <b>sirf VVI topics</b> karein jo 2025 mein direct aaye hain. YouTube par 2x speed use karein. Theory ke liye apne banaye hue Prediction app ka use karein.</p>
         </div>
 
         <!-- Progress -->
         <div class="bg-white rounded-xl shadow p-4 mb-6 no-print">
             <div class="flex justify-between items-center mb-2">
-                <span class="text-sm font-bold">📊 Prediction Progress</span>
-                <span class="text-sm text-blue-600" id="progressText">0 / 10 topics covered</span>
+                <span class="text-sm font-bold">📊 Revision Progress</span>
+                <span class="text-sm text-blue-600" id="progressText">0 / 10 topics</span>
             </div>
             <div class="w-full bg-gray-200 rounded-full h-3">
                 <div id="progressBar" class="bg-green-500 h-3 rounded-full transition-all" style="width:0%"></div>
             </div>
         </div>
 
-        <!-- Prediction Cards -->
-        <div id="predictionGrid" class="space-y-4"></div>
+        <!-- Topic Cards -->
+        <div id="topicGrid" class="space-y-4"></div>
 
         <!-- Footer -->
         <div class="mt-8 p-4 bg-yellow-50 border border-yellow-300 rounded-lg text-sm no-print">
-            <b>📌 Prediction Basis:</b> Yeh analysis 2025 ke actual question papers (3 Nov Shift 1, 3 Nov Shift 2, 4 Nov Shift 2) aur 2023 ke papers par based hai. Jo topic 2025 mein aaya, woh 2026 mein bhi aane ke chances high hain kyunki syllabus same hai.
+            <b>📌 Note:</b> YouTube links search results se liye gaye hain. Agar koi link kaam na kare, to YouTube par topic ka naam search karein (jaise "SMTP protocol STET"). Theory ke liye apne banaye hue <b>Prediction app</b> aur <b>Static Plan</b> ka use karein. All the best! 🎯
         </div>
 
     </main>
 
     <script>
-        // ================= PREDICTION DATA =================
-        // Har topic ke liye: kya aa sakta hai, chance (High/Medium/Low), aur 2025 ka proof
-        const predictions = [
+        // ================= TOPIC DATA (VVI + YouTube) =================
+        const topics = [
             {
                 id: "cn",
                 title: "Computer Networks",
                 icon: "🌐",
-                chance: "HIGH",
-                high: [
-                    "SMTP (Email bhejne ke liye) — 2025 Shift 1 mein direct aaya",
-                    "VoIP (Voice over IP) — 2025 Shift 2 mein direct aaya",
-                    "ARP (IP to MAC mapping) — 2025 Shift 2 mein direct aaya",
-                    "Protocol ki definition ('communication karne wale parties ke beech agreement') — 2025 Shift 2 mein direct aaya",
-                    "OSI Model ke layers ka function"
+                day: "Din 1 (7 Nov)",
+                vvi: [
+                    "SMTP (Email bhejne ke liye) — 2025 Shift 1 mein direct aaya [citation:2]",
+                    "VoIP (Voice over IP) — 2025 Shift 2 mein direct aaya [citation:2]",
+                    "ARP (IP to MAC mapping) — 2025 Shift 2 mein direct aaya [citation:2]",
+                    "Protocol ki definition — 2025 Shift 2 mein direct aaya [citation:10]"
                 ],
-                medium: [
-                    "TCP vs UDP ka difference",
-                    "Router vs Switch vs Hub",
-                    "IP Address classes (A, B, C)"
-                ],
-                low: [
-                    "Network Topology (Star, Ring, Mesh)",
-                    "DNS ka kaam"
-                ],
-                pyq: "2025 Shift 1: Email bhejne ke liye kaunsa protocol? → SMTP. VoIP ka use? ARP ka function? Protocol kya hai? — yeh sab direct poocha gaya [citation:3][citation:7]."
+                pyq: "2025 Shift 1: Email bhejne ke liye? → SMTP. 2025 Shift 2: VoIP ka use? ARP ka function? Protocol kya hai? — sab direct poocha gaya.",
+                youtube: "Networking Masterclass (OSI Model) — 14 videos, free [citation:5]",
+                ytLink: "https://lnkd.in/gGv494UB",
+                theory: "OSI Model ke 7 layers, TCP/IP ke 4 layers, SMTP/HTTP/FTP/DNS/TCP/UDP/ARP/VoIP ke functions yaad karein."
             },
             {
                 id: "dbms",
                 title: "DBMS",
                 icon: "🗄️",
-                chance: "HIGH",
-                high: [
-                    "Physical Level (Data abstraction) — 2025 Shift 2 mein direct aaya",
-                    "SQL UPDATE statement — 2025 Shift 2 mein direct aaya",
+                day: "Din 1 (7 Nov)",
+                vvi: [
+                    "Physical Level (Data abstraction) — 2025 Shift 2 mein direct aaya [citation:2]",
+                    "SQL UPDATE statement — 2025 Shift 2 mein direct aaya [citation:10]",
                     "Primary Key vs Foreign Key",
                     "Normalization (1NF, 2NF, 3NF, BCNF)"
                 ],
-                medium: [
-                    "ACID properties",
-                    "SQL DELETE vs TRUNCATE vs DROP",
-                    "ER Model ke components"
-                ],
-                low: [
-                    "Transaction isolation levels",
-                    "Indexing ka concept"
-                ],
-                pyq: "2025 Shift 2: Data abstraction ka kaunsa level batata hai ki data actually kaise store hota hai? → Physical Level. Database mein data update karne ke liye? → UPDATE [citation:3][citation:7]."
+                pyq: "2025 Shift 2: Data abstraction ka kaunsa level batata hai ki data actually kaise store hota hai? → Physical Level. Database mein data update karne ke liye? → UPDATE.",
+                youtube: "freeCodeCamp DBMS Course (9 hours) — theory + practical [citation:7]",
+                ytLink: "https://lnkd.in/dvVwA94j",
+                theory: "Physical level data storage batata hai. UPDATE data modify karta hai. 2NF = 1NF + no partial dependency."
             },
             {
                 id: "os",
                 title: "Operating System",
                 icon: "⚙️",
-                chance: "HIGH",
-                high: [
-                    "Load Control ka primary goal (CPU time equally distribute) — 2025 Shift 2 mein direct aaya",
-                    "IPC (Inter-Process Communication) ka purpose — 2025 Shift 2 mein direct aaya",
+                day: "Din 1 (7 Nov)",
+                vvi: [
+                    "Load Control ka primary goal (CPU time equally distribute) — 2025 Shift 2 mein direct aaya [citation:10]",
+                    "IPC (Inter-Process Communication) — 2025 Shift 2 mein direct aaya [citation:2]",
                     "CPU Scheduling (FCFS, SJF, Round Robin)",
                     "Deadlock ki 4 conditions"
                 ],
-                medium: [
-                    "Paging vs Segmentation",
-                    "Page Fault kya hai",
-                    "Thrashing ka matlab"
-                ],
-                low: [
-                    "File allocation methods",
-                    "Disk scheduling algorithms"
-                ],
-                pyq: "2025 Shift 2: Load control ka primary goal? → CPU time equally distribute. IPC kis liye use hota hai? → Processes ko synchronize karne ke liye [citation:3][citation:7]."
+                pyq: "2025 Shift 2: Load control ka primary goal? → CPU time equally distribute. IPC kis liye? → Processes ko synchronize karna.",
+                youtube: "IIT Delhi OS Lectures (Prof. Smruti Sarangi) — full course [citation:14]",
+                ytLink: "https://www.cse.iitd.ac.in/~srsarangi/os-videos.html",
+                theory: "Load control CPU time equally distribute karta hai. IPC processes ke beech communication ke liye. Deadlock: Mutual Exclusion, Hold and Wait, No Preemption, Circular Wait."
             },
             {
                 id: "digital",
                 title: "Digital Logic",
                 icon: "🔌",
-                chance: "HIGH",
-                high: [
-                    "K-Map se SOP/POS form nikalna — 2025 mein direct aaya (numerical)",
-                    "Priority Encoder ka use — 2025 mein direct aaya",
-                    "Full Adder ke inputs (3) — 2025 Shift 2 mein direct aaya",
+                day: "Din 1 (7 Nov)",
+                vvi: [
+                    "K-Map se SOP/POS form nikalna — 2025 Shift 1 mein direct aaya [citation:3]",
+                    "Full Adder ke inputs (3) — 2025 Shift 2 mein direct aaya [citation:2]",
+                    "Priority Encoder ka use",
                     "K-Map mein 'Group' ka matlab — 2025 Shift 2 mein direct aaya"
                 ],
-                medium: [
-                    "Flip-Flops (SR, JK, D, T) ke properties",
-                    "Logic gates ke truth tables",
-                    "De Morgan's Laws"
-                ],
-                low: [
-                    "PLA ke components (AND-OR gates) — 2023 mein aaya",
-                    "Logic families (TTL, CMOS) — 2023 mein aaya"
-                ],
-                pyq: "2025 Shift 2: Full Adder mein kitne inputs? → 3. K-Map mein adjacent cells ke group ko kya kehte hain? → Group. 2023: K-Map se Boolean function simplify karna tha [citation:4][citation:6]."
+                pyq: "2025 Shift 1: K-Map se Boolean function simplify karna tha [citation:3]. 2025 Shift 2: Full adder mein kitne inputs? → 3. K-Map mein adjacent cells ke group ko kya kehte hain? → Group.",
+                youtube: "Digital Logic basics YouTube par search karein: 'K-Map simplification STET'",
+                ytLink: "",
+                theory: "K-Map mein pairs (2), quads (4), octets (8) banakar simplify karo. Full Adder: 3 inputs (A, B, Cin), 2 outputs (Sum, Cout)."
             },
             {
                 id: "algo",
-                title: "Algorithms",
-                icon: "📐",
-                chance: "HIGH",
-                high: [
-                    "NP-Completeness kisne introduce kiya? (Stephen Cook) — 2025 Shift 2 mein direct aaya",
-                    "Time Complexity (Big-O) — Binary Search O(log n)",
-                    "Postfix expression ka evaluation (Stack se)"
-                ],
-                medium: [
-                    "Sorting algorithms ki complexity (Merge, Quick)",
-                    "Greedy vs Dynamic Programming"
-                ],
-                low: [
-                    "Graph algorithms (Dijkstra, BFS, DFS)",
-                    "Backtracking ka concept"
-                ],
-                pyq: "2025 Shift 2: NP-Completeness ka concept kisne introduce kiya? → Stephen Cook. Postfix expression evaluate karna tha (Stack se) [citation:6][citation:7]."
-            },
-            {
-                id: "ds",
-                title: "Data Structures",
+                title: "Algorithms + Data Structures",
                 icon: "📊",
-                chance: "HIGH",
-                high: [
+                day: "Din 1 (7 Nov)",
+                vvi: [
+                    "NP-Completeness (Stephen Cook) — 2025 Shift 2 mein direct aaya [citation:10]",
                     "Stack (LIFO) — 2025 Shift 1 mein direct aaya",
-                    "Binary Search ki Time Complexity (O(log n)) — 2025 mein direct aaya",
-                    "Binary Tree edges (n-1) — 2025 mein direct aaya",
-                    "Python string find/print ka output — 2025 Shift 2 mein direct aaya"
+                    "Binary Search ki Time Complexity (O(log n))",
+                    "Python string find/print ka output — 2025 Shift 2 mein direct aaya [citation:10]"
                 ],
-                medium: [
-                    "Queue (FIFO) vs Stack",
-                    "BST traversal (Inorder, Preorder, Postorder)",
-                    "Linked List vs Array"
-                ],
-                low: [
-                    "Hashing aur collision resolution",
-                    "AVL Tree ka balance factor"
-                ],
-                pyq: "2025 Shift 1: Stack kis principle par? → LIFO. Binary search ki complexity? → O(log n). 2025 Shift 2: Python string code ka output [citation:3][citation:7]."
+                pyq: "2025 Shift 2: NP-Completeness kisne introduce kiya? → Stephen Cook. Python code output: S.find('a', 2). 2025 Shift 1: Stack kis principle par? → LIFO.",
+                youtube: "Apna College DSA Series (C++) — beginner friendly [citation:8]",
+                ytLink: "https://youtu.be/VTLCoHnyACE",
+                theory: "NP-Completeness Stephen Cook ne diya. Stack LIFO. Binary search O(log n). Python find() index return karta hai."
             },
             {
                 id: "se",
                 title: "Software Engineering",
                 icon: "🔧",
-                chance: "HIGH",
-                high: [
+                day: "Din 2 (8 Nov)",
+                vvi: [
                     "Corrective Maintenance (defects fix) — 2025 Shift 1 mein direct aaya",
                     "SDLC models (Waterfall, Agile, Spiral)",
                     "Verification vs Validation"
                 ],
-                medium: [
-                    "Black Box vs White Box testing",
-                    "Unit vs Integration testing"
-                ],
-                low: [
-                    "COCOMO model",
-                    "Function Points"
-                ],
-                pyq: "2025 Shift 1: Kaunsa maintenance process defects fix karne par focused hai? → Corrective Maintenance [citation:3]."
+                pyq: "2025 Shift 1: Kaunsa maintenance process defects fix karne par focused hai? → Corrective Maintenance.",
+                youtube: "YouTube par search karein: 'Corrective Maintenance STET'",
+                ytLink: "",
+                theory: "Corrective maintenance bugs fix karta hai. Verification = 'product right?', Validation = 'right product?'."
             },
             {
                 id: "oop",
                 title: "OOP (C++)",
                 icon: "🧩",
-                chance: "HIGH",
-                high: [
+                day: "Din 2 (8 Nov)",
+                vvi: [
                     "Method Overloading (same name, different parameters) — 2025 Shift 1 mein direct aaya",
-                    "Overloading vs Overriding ka difference",
+                    "Overloading vs Overriding",
                     "4 Pillars (Encapsulation, Inheritance, Polymorphism, Abstraction)"
                 ],
-                medium: [
-                    "Virtual Functions",
-                    "Constructor vs Destructor"
+                pyq: "2025 Shift 1: OOP mein method overloading kya hai? → Same name but different parameters.",
+                youtube: "YouTube par search karein: 'Method Overloading STET OOP'",
+                ytLink: "",
+                theory: "Overloading compile-time (same name, different parameters). Overriding runtime (same name, same parameters)."
+            },
+            {
+                id: "pedagogy",
+                title: "Pedagogy (Sabse Important)",
+                icon: "👨‍🏫",
+                day: "Din 2 (8 Nov)",
+                vvi: [
+                    "Bloom's Taxonomy ke levels (Remembering low, Creating high)",
+                    "Teaching ke 3 phases (Pre-active, Interactive, Post-active)",
+                    "Formative vs Summative assessment",
+                    "Piaget ka Pre-operational stage — 2025 mein direct aaya [citation:4]"
                 ],
-                low: [
-                    "Inheritance types (Multiple, Multilevel)",
-                    "Abstract class"
-                ],
-                pyq: "2025 Shift 1: OOP mein method overloading kya hai? → Same name but different parameters [citation:3]."
+                pyq: "2025 Shift 1: Pre-operational thought ki seema nahi hai? → Symbolic thought ka development (yeh capability hai, limitation nahi) [citation:4]. Pedagogy 50 marks ka scoring section hai.",
+                youtube: "YouTube par search karein: 'Bloom's Taxonomy Bihar STET'",
+                ytLink: "",
+                theory: "Bloom's: Remember, Understand, Apply, Analyze, Evaluate, Create. Teaching phases: Pre-active (planning), Interactive (classroom), Post-active (evaluation)."
             },
             {
                 id: "coa",
                 title: "Computer Organization",
                 icon: "🖥️",
-                chance: "MEDIUM",
-                high: [
-                    "Accumulator register ka function — 2023 mein direct aaya (2026 ke liye important)",
+                day: "Din 2 (8 Nov)",
+                vvi: [
+                    "Accumulator register ka function — 2023 mein aaya, important",
                     "Addressing Modes",
                     "Cache Memory (L1, L2, L3) aur hit/miss"
                 ],
-                medium: [
-                    "Von Neumann vs Harvard architecture",
-                    "Error detection (Parity, Hamming Code)"
-                ],
-                low: [
-                    "Microprocessor vs Microcontroller",
-                    "RISC vs CISC"
-                ],
-                pyq: "2023: Accumulator register kis liye use hota hai? Logic family (CMOS) ka question tha. 2025 mein direct COA ka question kam tha, lekin 2023 mein poocha gaya tha [citation:4]."
+                pyq: "2023: Accumulator register kis liye use hota hai? Logic family (CMOS) ka question tha.",
+                youtube: "YouTube par search karein: 'Accumulator register STET'",
+                ytLink: "",
+                theory: "Accumulator ALU ke calculations store karta hai. L1 cache fastest. Addressing modes: Immediate, Direct, Indirect, Register."
             },
             {
                 id: "web",
                 title: "Web Technologies + Programming",
                 icon: "🌍",
-                chance: "MEDIUM",
-                high: [
-                    "JavaScript asynchronous request kaise karein? (Fetch API) — 2025 Shift 2 mein direct aaya",
-                    "Python string code ka output — 2025 Shift 2 mein direct aaya",
-                    "HTML vs CSS vs JavaScript ka role"
+                day: "Din 2 (8 Nov)",
+                vvi: [
+                    "JavaScript asynchronous request (Fetch API) — 2025 Shift 2 mein direct aaya [citation:2]",
+                    "HTML vs CSS vs JavaScript",
+                    "HTTP vs HTTPS"
                 ],
-                medium: [
-                    "HTTP vs HTTPS",
-                    "CSS selectors (.class, #id)"
-                ],
-                low: [
-                    "HTML5 naye tags",
-                    "DOM manipulation"
-                ],
-                pyq: "2025 Shift 2: JavaScript mein asynchronous request kaise karein? → Fetch API. Python string find ka output [citation:3][citation:7]."
+                pyq: "2025 Shift 2: JavaScript mein asynchronous request kaise karein? → Fetch API ya XMLHttpRequest [citation:2].",
+                youtube: "YouTube par search karein: 'JavaScript Fetch API STET'",
+                ytLink: "",
+                theory: "Fetch API asynchronous requests ke liye. HTML structure, CSS styling, JavaScript behavior."
             }
         ];
 
         // ================= STATE =================
-        let completedTopics = JSON.parse(localStorage.getItem('stet_prediction_progress') || '{}');
-        const STORAGE_KEY = 'stet_prediction_progress';
+        let completedTopics = JSON.parse(localStorage.getItem('stet_final_revision') || '{}');
+        const STORAGE_KEY = 'stet_final_revision';
 
         // ================= BUILD GRID =================
         function buildGrid() {
-            const grid = document.getElementById('predictionGrid');
+            const grid = document.getElementById('topicGrid');
             grid.innerHTML = '';
-            predictions.forEach((pred, index) => {
+            topics.forEach((topic, index) => {
                 const isCompleted = completedTopics[index] || false;
                 const card = document.createElement('div');
-                card.className = `prediction-card bg-white rounded-xl shadow p-5 border-2 ${isCompleted ? 'completed' : 'border-transparent'}`;
-                card.id = `pred-${index}`;
+                card.className = `topic-card bg-white rounded-xl shadow p-5 border-2 ${isCompleted ? 'completed' : 'border-transparent'}`;
+                card.id = `topic-${index}`;
 
-                const chanceColor = pred.chance === 'HIGH' ? 'bg-red-100 text-red-800' : (pred.chance === 'MEDIUM' ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800');
+                let vviHtml = topic.vvi.map(v => `<div class="vvi-box">🔴 ${v}</div>`).join('');
                 
-                let highHtml = pred.high.map(h => `<div class="high-box">🔴 ${h}</div>`).join('');
-                let mediumHtml = pred.medium.map(m => `<div class="medium-box">🟡 ${m}</div>`).join('');
-                let lowHtml = pred.low.map(l => `<div class="low-box">🟢 ${l}</div>`).join('');
+                let ytHtml = '';
+                if (topic.ytLink) {
+                    ytHtml = `<div class="yt-box">🎥 <b>Tutorial:</b> ${topic.youtube}<br><a href="${topic.ytLink}" target="_blank">▶️ YouTube par dekhein (2x speed)</a></div>`;
+                } else {
+                    ytHtml = `<div class="yt-box">🎥 <b>Tutorial:</b> ${topic.youtube}</div>`;
+                }
 
                 card.innerHTML = `
                     <div class="flex justify-between items-start mb-3">
                         <div class="flex items-center gap-3">
-                            <span class="text-3xl">${pred.icon}</span>
+                            <span class="text-3xl">${topic.icon}</span>
                             <div>
-                                <h3 class="font-bold text-lg topic-title">${pred.title}</h3>
-                                <span class="text-xs px-2 py-1 rounded ${chanceColor}">Chance: ${pred.chance}</span>
+                                <span class="day-badge">${topic.day}</span>
+                                <h3 class="font-bold text-lg topic-title mt-1">${topic.title}</h3>
                             </div>
                         </div>
                         <label class="flex items-center gap-2 cursor-pointer no-print">
-                            <input type="checkbox" class="topic-check" ${isCompleted ? 'checked' : ''} onchange="toggleComplete(${index}, this.checked)">
+                            <input type="checkbox" class="checkbox-custom" ${isCompleted ? 'checked' : ''} onchange="toggleComplete(${index}, this.checked)">
                             <span class="text-xs font-bold ${isCompleted ? 'text-green-600' : 'text-gray-500'}">${isCompleted ? '✅ Done' : 'Mark'}</span>
                         </label>
                     </div>
 
-                    <p class="text-sm font-bold text-red-600 mb-1">🔴 HIGH Chance (Yeh Zaroor Karein):</p>
-                    ${highHtml}
+                    <p class="text-sm font-bold text-red-600 mb-1">🔥 VVI Topics (2025 Mein Aaya):</p>
+                    ${vviHtml}
 
-                    <p class="text-sm font-bold text-yellow-600 mb-1 mt-3">🟡 MEDIUM Chance:</p>
-                    ${mediumHtml}
+                    <div class="pyq-box mt-3">
+                        <b>📊 PYQ Proof:</b> ${topic.pyq}
+                    </div>
 
-                    <p class="text-sm font-bold text-green-600 mb-1 mt-3">🟢 LOW Chance:</p>
-                    ${lowHtml}
+                    ${ytHtml}
 
-                    <div class="pyq-proof mt-3">
-                        <b>📊 2025 Proof:</b> ${pred.pyq}
+                    <div class="theory-box">
+                        <b>📖 Quick Theory:</b> ${topic.theory}
                     </div>
                 `;
                 grid.appendChild(card);
@@ -338,7 +280,7 @@
             completedTopics[index] = checked;
             localStorage.setItem(STORAGE_KEY, JSON.stringify(completedTopics));
 
-            const card = document.getElementById(`pred-${index}`);
+            const card = document.getElementById(`topic-${index}`);
             if (checked) {
                 card.classList.add('completed');
             } else {
@@ -354,9 +296,9 @@
 
         // ================= PROGRESS =================
         function updateProgress() {
-            const total = predictions.length;
+            const total = topics.length;
             const done = Object.values(completedTopics).filter(v => v).length;
-            document.getElementById('progressText').innerText = `${done} / ${total} topics covered`;
+            document.getElementById('progressText').innerText = `${done} / ${total} topics`;
             document.getElementById('progressBar').style.width = `${(done / total) * 100}%`;
         }
 
